@@ -48,12 +48,15 @@ DJANGO_APPS = (
 PROJECT_APPS = (
     "apps.accounts.apps.AccountsConfig",
     "apps.settings.apps.SettingsConfig",
+    "apps.services.apps.ServicesConfig",
 )
 
 THIRD_PARTY_APPS = (
     "corsheaders",
     "ninja",
     "ninja_extra",
+    "modeltranslation",
+    "markdownx",
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -91,9 +94,9 @@ TEMPLATES = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -107,9 +110,13 @@ AUTH_PASSWORD_VALIDATORS = (
 )
 
 # Internationalization Settings
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "bg"
+LANGUAGES = [
+    ('bg', 'Bulgarian'),
+    ('en', 'English'),
+]
 TIME_ZONE = "UTC"
-USE_I18N = False
+USE_I18N = True
 USE_TZ = True
 
 # Static Files Settings
@@ -129,3 +136,10 @@ if not MEDIA_ROOT.exists():
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# MarkdownX Settings
+MARKDOWNX_EDITOR_RESIZABLE = True
+MARKDOWNX_MARKDOWN_EXTENSIONS = [
+    "markdown.extensions.extra",
+    "markdown.extensions.codehilite",
+]
