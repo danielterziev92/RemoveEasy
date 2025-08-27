@@ -5,6 +5,8 @@ from pathlib import Path
 
 from environ import Env
 
+from apps import accounts
+
 # Path Settings
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = Env()
@@ -44,6 +46,7 @@ DJANGO_APPS = (
 )
 
 PROJECT_APPS = (
+    "apps.accounts.apps.AccountsConfig",
 )
 
 THIRD_PARTY_APPS = (
@@ -94,7 +97,7 @@ DATABASES = {
 }
 
 # Authentication Settings
-
+AUTH_USER_MODEL = "accounts.Account"
 AUTH_PASSWORD_VALIDATORS = (
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator", },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
