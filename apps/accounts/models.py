@@ -35,6 +35,8 @@ class Account(auth_models.AbstractBaseUser, auth_models.PermissionsMixin, TimeSt
         indexes = (
             models.Index(fields=("email",)),
         )
+        verbose_name = "Акаунт"
+        verbose_name_plural = "Акаунти"
 
     def __str__(self):
         return self.email

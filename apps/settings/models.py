@@ -35,3 +35,5 @@ class EmailSettings(models.Model):
 
     class Meta:
         db_table = "email_settings"
+        verbose_name = "Имейл настройки"
+        verbose_name_plural = "Имейл настройки"

@@ -54,3 +54,5 @@ class MovingService(models.Model):
 
     class Meta:
         db_table = "moving_services"
+        verbose_name = "Услуга"
+        verbose_name_plural = "Услуги"
