@@ -30,5 +30,8 @@ class EmailSettings(models.Model):
         null=False,
     )
 
+    def __str__(self):
+        return f"SMTP: {self.server} (TLS: {'Yes' if self.tls else 'No'})"
+
     class Meta:
         db_table = "email_settings"
