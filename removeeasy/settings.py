@@ -47,6 +47,7 @@ DJANGO_APPS = (
 
 PROJECT_APPS = (
     "apps.accounts.apps.AccountsConfig",
+    "apps.settings.apps.SettingsConfig",
 )
 
 THIRD_PARTY_APPS = (
