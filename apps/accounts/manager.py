@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import make_password
 
 class AccountAppManager(BaseUserManager):
     use_in_migrations = True
+    SUPERUSER_REQUIRED_FIELDS = ("is_staff", "is_superuser", "is_active")
 
     def _create_account(self, email, password, **extra_fields):
         """Create and save an account with the given email and password."""
@@ -26,11 +27,13 @@ class AccountAppManager(BaseUserManager):
         )
 
     def create_super_account(self, email=None, password=None, **extra_fields):
-        for field, value in self.__prepare_extra_fields(is_staff=True, is_superuser=True, is_active=True).items():
+        superuser_defaults = {field: True for field in self.SUPERUSER_REQUIRED_FIELDS}
+
+        for field, value in self.__prepare_extra_fields(**superuser_defaults).items():
             extra_fields.setdefault(field, value)
 
-        for field in ("is_staff", "is_superuser", "is_active"):
-            if extra_fields.get(field):
+        for field in self.SUPERUSER_REQUIRED_FIELDS:
+            if not extra_fields.get(field):
                 raise ValueError(f"Superuser must have {field}=True.")
 
         return self._create_account(email, password, **extra_fields)

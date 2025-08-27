@@ -2,6 +2,7 @@ import getpass
 import sys
 
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.core.management import BaseCommand
 
 AccountModel = get_user_model()
