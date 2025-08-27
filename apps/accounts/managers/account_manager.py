@@ -38,6 +38,17 @@ class AccountAppManager(BaseUserManager):
 
         return self._create_account(email, password, **extra_fields)
 
+    def update_account(self, account, **extra_fields):
+        for field, value in extra_fields.items():
+            setattr(account, field, value)
+        account.full_clean()
+        account.save(using=self._db)
+        return account
+
+    @staticmethod
+    def delete_account(account):
+        account.delete()
+
     @staticmethod
     def __prepare_extra_fields(
             is_staff: bool = False,
