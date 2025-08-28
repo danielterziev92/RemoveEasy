@@ -82,7 +82,7 @@ class Order(models.Model):
     )
 
     description = models.TextField(
-        null=False,
+        null=True,
     )
 
     items = models.ManyToManyField(
@@ -90,3 +90,11 @@ class Order(models.Model):
         related_name="orders",
         blank=True,
     )
+
+    def __str__(self):
+        return f"Order #{self.id}"
+
+    class Meta:
+        db_table = "orders"
+        verbose_name = "Поръчка"
+        verbose_name_plural = "Поръчки"
