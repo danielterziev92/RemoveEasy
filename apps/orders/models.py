@@ -1,6 +1,7 @@
 from django.db import models
 
 from apps.inventory.models import InventoryItem
+from apps.orders.manager import OrderManager
 
 
 class Order(models.Model):
@@ -90,6 +91,8 @@ class Order(models.Model):
         related_name="orders",
         blank=True,
     )
+
+    objects = OrderManager()
 
     def __str__(self):
         return f"Order #{self.id}"
