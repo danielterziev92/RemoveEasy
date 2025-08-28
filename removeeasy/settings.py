@@ -50,6 +50,7 @@ PROJECT_APPS = (
     "apps.settings.apps.SettingsConfig",
     "apps.services.apps.ServicesConfig",
     "apps.inventory.apps.InventoryConfig",
+    "apps.orders.apps.OrdersConfig",
 )
 
 THIRD_PARTY_APPS = (
