@@ -15,6 +15,7 @@ class MovingService(models.Model):
     icon_class = models.CharField(
         max_length=ICON_CLASS_MAX_LENGTH,
         null=False,
+        help_text='Класа за икона. Можете да намерите икони на: <a href="https://lucide.dev/icons/" target="_blank">Lucide Icons</a>'
     )
 
     price_from = models.DecimalField(
