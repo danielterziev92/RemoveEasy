@@ -1,4 +1,5 @@
 import type {ISectionErrorMessages} from "../types/ISectionErrorMessages.ts";
+import type {ITranslationService} from "../../shared/localization/types/ITranslationService.ts";
 
 export class Section {
     public static readonly MIN_STRING_LENGTH = 1;
@@ -7,12 +8,20 @@ export class Section {
     readonly icon_class: string;
     readonly title: string;
     private errorMessages: ISectionErrorMessages;
+    private translationService: ITranslationService;
 
-    constructor(icon_class: string, title: string, errorMessages: ISectionErrorMessages) {
+    constructor(
+        icon_class: string,
+        title: string,
+        errorMessages: ISectionErrorMessages,
+        translationService: ITranslationService
+    ) {
+        this.errorMessages = errorMessages;
+        this.translationService = translationService;
+
         this.validate(icon_class, title);
         this.icon_class = icon_class;
         this.title = title;
-        this.errorMessages = errorMessages;
     }
 
     /**
@@ -23,17 +32,17 @@ export class Section {
      */
     private validate(icon_class: string, title: string): void {
         if (!icon_class || icon_class.trim().length < Section.MIN_STRING_LENGTH) {
-            throw new Error(this.errorMessages.sectionIconRequired);
+            throw new Error(this.translationService.t(this.errorMessages.sectionIconRequired));
         }
         if (icon_class.length > Section.MAX_STRING_LENGTH) {
-            throw new Error(this.errorMessages.sectionIconRequired);
+            throw new Error(this.translationService.t(this.errorMessages.sectionIconRequired));
         }
 
         if (!title || title.trim().length < Section.MIN_STRING_LENGTH) {
-            throw new Error(this.errorMessages.sectionIconTooLong);
+            throw new Error(this.translationService.t(this.errorMessages.sectionIconTooLong));
         }
         if (title.length > Section.MAX_STRING_LENGTH) {
-            throw new Error(this.errorMessages.sectionTitleTooLong);
+            throw new Error(this.translationService.t(this.errorMessages.sectionTitleTooLong));
         }
     }
 
@@ -41,14 +50,19 @@ export class Section {
      * Creates a new Section instance from API response data
      * @param data - The API response data containing icon_class and title
      * @param errorMessages - The error messages interface implementation
+     * @param translationService - The translation service for error messages
      * @returns A new Section instance
      * @throws Error if data is invalid
      */
-    static fromApiData(data: { icon_class: string; title: string }, errorMessages: ISectionErrorMessages): Section {
+    static fromApiData(
+        data: { icon_class: string; title: string },
+        errorMessages: ISectionErrorMessages,
+        translationService: ITranslationService
+    ): Section {
         if (!data || typeof data !== 'object') {
-            throw new Error(errorMessages.invalidSectionData);
+            throw new Error(translationService.t(errorMessages.invalidSectionData));
         }
-        return new Section(data.icon_class, data.title, errorMessages);
+        return new Section(data.icon_class, data.title, errorMessages, translationService);
     }
 
     /**
