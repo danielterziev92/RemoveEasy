@@ -1,5 +1,4 @@
 import type {Section} from "./Section";
-import {ERROR_MESSAGES} from "../../shared/constants/errors.ts";
 import type {IItemErrorMessages} from "../types/IItemErrorMessages.ts";
 
 export class Item {
@@ -24,18 +23,18 @@ export class Item {
 
     private validate(id: number, icon_class: string, title: string, section: Section): void {
         if (id < Item.MIN_ID) {
-            throw new Error(ERROR_MESSAGES.ITEM_ID_REQUIRED);
+            throw new Error(this.errorMessages.itemIdRequired);
         }
 
         if (!icon_class || icon_class.trim().length < Item.MIN_STRING_LENGTH) {
-            throw new Error(ERROR_MESSAGES.ITEM_ICON_REQUIRED);
+            throw new Error(this.errorMessages.itemIconRequired);
         }
         if (icon_class.length > Item.MAX_STRING_LENGTH) {
             throw new Error(this.errorMessages.itemIconTooLong);
         }
 
         if (!title || title.trim().length < Item.MIN_STRING_LENGTH) {
-            throw new Error(ERROR_MESSAGES.ITEM_TITLE_REQUIRED);
+            throw new Error(this.errorMessages.itemTitleRequired);
         }
         if (title.length > Item.MAX_STRING_LENGTH) {
             throw new Error(this.errorMessages.itemTitleTooLong);
