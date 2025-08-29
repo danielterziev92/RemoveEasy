@@ -1,26 +1,22 @@
-import type {IInventoryErrorMessages} from "../../domain/types/IInventoryErrorMessages.ts";
-import type {ITranslationService} from "../../shared/localization/types/ITranslationService.ts";
+import type {IInventoryErrorMessages} from "../../domain/types/IInventoryErrorMessages";
+import {createTranslationKeysAdapter} from "../../shared/localization/createTranslationKeysAdapter.ts";
 
 export class InventoryErrorMessagesAdapter implements IInventoryErrorMessages {
-    private translationService: ITranslationService;
-
-    constructor(translationService: ITranslationService) {
-        this.translationService = translationService;
-    }
+    private static readonly KEYS = createTranslationKeysAdapter<IInventoryErrorMessages>('inventory.errors');
 
     get invalidSectionTitle(): string {
-        return this.translationService.t('inventory.errors.invalidSectionTitle');
-    }
-
-    get storeNotAvailable(): string {
-        return this.translationService.t('inventory.errors.storeNotAvailable');
+        return InventoryErrorMessagesAdapter.KEYS.invalidSectionTitle;
     }
 
     get invalidInventoryData(): string {
-        return this.translationService.t('inventory.errors.invalidInventoryData');
+        return InventoryErrorMessagesAdapter.KEYS.invalidInventoryData;
+    }
+
+    get storeNotAvailable(): string {
+        return InventoryErrorMessagesAdapter.KEYS.storeNotAvailable;
     }
 
     get dataFetchFailed(): string {
-        return this.translationService.t('inventory.errors.dataFetchFailed');
+        return InventoryErrorMessagesAdapter.KEYS.dataFetchFailed;
     }
 }

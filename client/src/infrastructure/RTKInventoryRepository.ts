@@ -10,14 +10,21 @@ import {
 } from "../application/store/slices/inventorySlice.ts";
 import type {Store} from "@reduxjs/toolkit";
 import type {IInventoryErrorMessages} from "../domain/types/IInventoryErrorMessages.ts";
+import type {ITranslationService} from "../shared/localization/types/ITranslationService.ts";
 
 export class RTKInventoryRepository implements IInventoryRepository {
     private store: Store<RootState>
     private errorMessages: IInventoryErrorMessages;
+    private translationService: ITranslationService;
 
-    constructor(store: Store<RootState>, errorMessages: IInventoryErrorMessages) {
+    constructor(
+        store: Store<RootState>,
+        errorMessages: IInventoryErrorMessages,
+        translationService: ITranslationService
+    ) {
         this.store = store;
         this.errorMessages = errorMessages;
+        this.translationService = translationService;
     }
 
     getAllSections(): Section[] {
@@ -32,12 +39,12 @@ export class RTKInventoryRepository implements IInventoryRepository {
 
     getItemsBySection(sectionTitle: string): Item[] {
         if (!sectionTitle) {
-            throw new Error(this.errorMessages.invalidSectionTitle);
+            throw new Error(this.translationService.t(this.errorMessages.invalidSectionTitle));
         }
 
         const state = this.store.getState();
         if (!state) {
-            throw new Error(this.errorMessages.storeNotAvailable);
+            throw new Error(this.translationService.t(this.errorMessages.storeNotAvailable));
         }
 
         return state.inventory.items.filter(item => item.belongsToSection(sectionTitle));
@@ -45,7 +52,7 @@ export class RTKInventoryRepository implements IInventoryRepository {
 
     storeInventoryData(sections: Section[], items: Item[]): void {
         if (!Array.isArray(sections) || !Array.isArray(items)) {
-            throw new Error(this.errorMessages.invalidInventoryData);
+            throw new Error(this.translationService.t(this.errorMessages.invalidInventoryData));
         }
 
         store.dispatch(setInventoryData({sections, items}));

@@ -20,6 +20,7 @@ export class Section {
         this.translationService = translationService;
 
         this.validate(icon_class, title);
+
         this.icon_class = icon_class;
         this.title = title;
     }
