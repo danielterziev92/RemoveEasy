@@ -1,5 +1,6 @@
 import type {Section} from "./Section";
 import {ERROR_MESSAGES} from "../../shared/constants/errors.ts";
+import type {IItemErrorMessages} from "../types/IItemErrorMessages.ts";
 
 export class Item {
     public static readonly MIN_ID = 1;
@@ -10,13 +11,15 @@ export class Item {
     readonly icon_class: string;
     readonly title: string;
     readonly section: Section;
+    private errorMessages: IItemErrorMessages;
 
-    constructor(id: number, icon_class: string, title: string, section: Section) {
+    constructor(id: number, icon_class: string, title: string, section: Section, errorMessages: IItemErrorMessages) {
         this.validate(id, icon_class, title, section);
         this.id = id;
         this.icon_class = icon_class;
         this.title = title;
         this.section = section;
+        this.errorMessages = errorMessages;
     }
 
     private validate(id: number, icon_class: string, title: string, section: Section): void {
@@ -28,26 +31,31 @@ export class Item {
             throw new Error(ERROR_MESSAGES.ITEM_ICON_REQUIRED);
         }
         if (icon_class.length > Item.MAX_STRING_LENGTH) {
-            throw new Error(`Иконата на елемента не трябва да надвишава ${Item.MAX_STRING_LENGTH} символа`);
+            throw new Error(this.errorMessages.itemIconTooLong);
         }
 
         if (!title || title.trim().length < Item.MIN_STRING_LENGTH) {
             throw new Error(ERROR_MESSAGES.ITEM_TITLE_REQUIRED);
         }
         if (title.length > Item.MAX_STRING_LENGTH) {
-            throw new Error(`Заглавието на елемента не трябва да надвишава ${Item.MAX_STRING_LENGTH} символа`);
+            throw new Error(this.errorMessages.itemTitleTooLong);
         }
 
         if (!section || !section.isValid()) {
-            throw new Error(ERROR_MESSAGES.ITEM_SECTION_REQUIRED);
+            throw new Error(this.errorMessages.itemSectionRequired);
         }
     }
 
-    static fromApiData(itemData: { id: number; icon_class: string; title: string }, section: Section): Item {
+    static fromApiData(
+        itemData: { id: number; icon_class: string; title: string },
+        section: Section,
+        errorMessages: IItemErrorMessages
+    ): Item {
         if (!itemData || typeof itemData !== 'object') {
-            throw new Error(ERROR_MESSAGES.INVALID_ITEM_DATA);
+            throw new Error(errorMessages.invalidItemData);
         }
-        return new Item(itemData.id, itemData.icon_class, itemData.title, section);
+
+        return new Item(itemData.id, itemData.icon_class, itemData.title, section, errorMessages);
     }
 
     getFullDisplayName(): string {
