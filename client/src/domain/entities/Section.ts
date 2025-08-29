@@ -1,4 +1,4 @@
-import {ERROR_MESSAGES} from "../../shared/constants/errors.ts";
+import type {ISectionErrorMessages} from "../types/ISectionErrorMessages.ts";
 
 export class Section {
     public static readonly MIN_STRING_LENGTH = 1;
@@ -6,11 +6,13 @@ export class Section {
 
     readonly icon_class: string;
     readonly title: string;
+    private errorMessages: ISectionErrorMessages;
 
-    constructor(icon_class: string, title: string) {
-        this.validateAndAssign(icon_class, title);
+    constructor(icon_class: string, title: string, errorMessages: ISectionErrorMessages) {
+        this.validate(icon_class, title);
         this.icon_class = icon_class;
         this.title = title;
+        this.errorMessages = errorMessages;
     }
 
     /**
@@ -19,33 +21,34 @@ export class Section {
      * @param title - The display title of the section
      * @throws Error if icon_class or title is invalid
      */
-    private validateAndAssign(icon_class: string, title: string): void {
+    private validate(icon_class: string, title: string): void {
         if (!icon_class || icon_class.trim().length < Section.MIN_STRING_LENGTH) {
-            throw new Error(ERROR_MESSAGES.SECTION_ICON_REQUIRED);
+            throw new Error(this.errorMessages.sectionIconRequired);
         }
         if (icon_class.length > Section.MAX_STRING_LENGTH) {
-            throw new Error(`Иконата на секцията не трябва да надвишава ${Section.MAX_STRING_LENGTH} символа`);
+            throw new Error(this.errorMessages.sectionIconRequired);
         }
 
         if (!title || title.trim().length < Section.MIN_STRING_LENGTH) {
-            throw new Error(ERROR_MESSAGES.SECTION_TITLE_REQUIRED);
+            throw new Error(this.errorMessages.sectionIconTooLong);
         }
         if (title.length > Section.MAX_STRING_LENGTH) {
-            throw new Error(`Заглавието на секцията не трябва да надвишава ${Section.MAX_STRING_LENGTH} символа`);
+            throw new Error(this.errorMessages.sectionTitleTooLong);
         }
     }
 
     /**
      * Creates a new Section instance from API response data
      * @param data - The API response data containing icon_class and title
+     * @param errorMessages - The error messages interface implementation
      * @returns A new Section instance
      * @throws Error if data is invalid
      */
-    static fromApiData(data: { icon_class: string; title: string }): Section {
+    static fromApiData(data: { icon_class: string; title: string }, errorMessages: ISectionErrorMessages): Section {
         if (!data || typeof data !== 'object') {
-            throw new Error(ERROR_MESSAGES.INVALID_SECTION_DATA);
+            throw new Error(errorMessages.invalidSectionData);
         }
-        return new Section(data.icon_class, data.title);
+        return new Section(data.icon_class, data.title, errorMessages);
     }
 
     /**
@@ -73,7 +76,7 @@ export class Section {
      */
     isValid(): boolean {
         try {
-            this.validateAndAssign(this.icon_class, this.title);
+            this.validate(this.icon_class, this.title);
             return true;
         } catch {
             return false;
