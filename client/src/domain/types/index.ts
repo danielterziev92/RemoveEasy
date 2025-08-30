@@ -3,3 +3,7 @@ export type {IItemErrorMessages} from "./IItemErrorMessages";
 export type {IInventoryErrorMessages} from "./IInventoryErrorMessages";
 export type {IInventoryServiceErrorMessages} from "./IInventoryServiceErrorMessages";
 export type {IInventoryApiErrorMessages} from "./IInventoryApiErrorMessages";
+export type {NavigationType} from "./NavigationType";
+export type {HeaderProps} from "./HeaderProps";
+export type {LanguageConfig} from "./LanguageConfig";
+export type {ContactInfo} from "./ContactInfo";
