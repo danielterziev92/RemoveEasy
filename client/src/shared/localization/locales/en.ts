@@ -40,5 +40,24 @@ export const en = {
             invalidResponse: "Invalid response",
             missingData: "Missing data"
         }
+    },
+    header: {
+        navigation: {
+            about: "About",
+            services: "Services",
+            howItWorks: "How It Works",
+            testimonials: "Testimonials",
+            contact: "Contact"
+        },
+        actions: {
+            openMenu: "Open menu",
+            closeMenu: "Close menu",
+            navigation: "Navigation",
+            close: "Close"
+        },
+        company: {
+            name: "Re Move Easy",
+            tagline: "MEN & VAN SERVICES"
+        }
     }
 };

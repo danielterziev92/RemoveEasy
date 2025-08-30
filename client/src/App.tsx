@@ -1,9 +1,13 @@
-function App() {
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+
+import Index from "@/presentation/pages/Index.tsx";
+
+export default function App() {
     return (
-        <div>
-            <h1>Hello World</h1>
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path={"/"} element={<Index/>}/>
+            </Routes>
+        </BrowserRouter>
     )
 }
-
-export default App

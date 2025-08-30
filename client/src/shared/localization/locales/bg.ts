@@ -40,5 +40,24 @@ export const bg = {
             invalidResponse: "Невалиден отговор",
             missingData: "Липсващи данни"
         }
+    },
+    header: {
+        navigation: {
+            about: "За нас",
+            services: "Услуги",
+            howItWorks: "Как работи",
+            testimonials: "Отзиви",
+            contact: "Контакти"
+        },
+        actions: {
+            openMenu: "Отвори меню",
+            closeMenu: "Затвори меню",
+            navigation: "Навигация",
+            close: "Затвори"
+        },
+        company: {
+            name: "Re Move Easy",
+            tagline: "MEN & VAN SERVICES"
+        }
     }
 };
