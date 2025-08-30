@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {ChevronDown, Menu, MessageCircle, Phone} from "lucide-react";
+import {Menu, MessageCircle, Phone} from "lucide-react";
 
 import {cn} from "@/lib/utils";
 import {
@@ -8,15 +8,10 @@ import {
     NavigationMenuLink,
     NavigationMenuList
 } from "@/components/ui/navigation-menu";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu.tsx";
 import {Button} from "@/components/ui/button";
-import {SheetContent, SheetHeader, SheetTitle, SheetTrigger, Sheet} from "@/components/ui/sheet.tsx";
+import {Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet.tsx";
 import useTranslation from "@/hooks/useTranslation";
+import LanguageSelector from "@/components/LanguageSelector.tsx";
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -96,24 +91,12 @@ export default function Header() {
 
                     <div className="flex items-center gap-4">
                         {/* Language Dropdown */}
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline" size="sm">
-                                    {getLanguageLabel(currentLocale)}
-                                    <ChevronDown className="h-4 w-4 ml-1"/>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                {availableLocales.map((locale) => (
-                                    <DropdownMenuItem
-                                        key={locale}
-                                        onClick={() => changeLanguage(locale)}
-                                    >
-                                        {getLanguageLabel(locale)}
-                                    </DropdownMenuItem>
-                                ))}
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <LanguageSelector
+                            currentLocale={currentLocale}
+                            availableLocales={availableLocales}
+                            changeLanguage={changeLanguage}
+                            getLanguageLabel={getLanguageLabel}
+                        />
 
                         {/* Phone Link */}
                         <Button variant="ghost" size="sm" asChild>
@@ -136,24 +119,12 @@ export default function Header() {
                 {/* Mobile Menu */}
                 <div className="md:hidden flex items-center gap-3 z-20">
                     {/* Mobile Language Dropdown */}
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="outline" size="sm">
-                                {getLanguageLabel(currentLocale)}
-                                <ChevronDown className="h-4 w-4 ml-1"/>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            {availableLocales.map((locale) => (
-                                <DropdownMenuItem
-                                    key={locale}
-                                    onClick={() => changeLanguage(locale)}
-                                >
-                                    {getLanguageLabel(locale)}
-                                </DropdownMenuItem>
-                            ))}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <LanguageSelector
+                        currentLocale={currentLocale}
+                        availableLocales={availableLocales}
+                        changeLanguage={changeLanguage}
+                        getLanguageLabel={getLanguageLabel}
+                    />
 
                     {/* Mobile Menu Sheet */}
                     <Sheet>
