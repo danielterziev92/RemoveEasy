@@ -1,10 +1,10 @@
-import type {IInventoryRepository} from "../../domain/repositories";
-import type {IInventoryService} from "../../domain/services";
-import type {InventoryApiClient} from "../../infrastructure/clients";
-import type {IInventoryServiceErrorMessages, IItemErrorMessages, ISectionErrorMessages} from "../../domain/types";
-import type {InventoryApiResponse, ItemApiData, SectionApiData} from "../../infrastructure/types";
-import type {ITranslationService} from "../../shared/localization/types";
-import {Item, Section} from "../../domain/entities";
+import type {IInventoryRepository} from "@/domain/repositories";
+import type {IInventoryService} from "@/domain/services";
+import type {InventoryApiClient} from "@/infrastructure/clients";
+import type {IInventoryServiceErrorMessages, IItemErrorMessages, ISectionErrorMessages} from "@/domain/types";
+import type {InventoryApiResponse, ItemApiData, SectionApiData} from "@/infrastructure/types";
+import type {ITranslationService} from "@/shared/localization/types";
+import {Item, Section} from "@/domain/entities";
 
 export class InventoryService implements IInventoryService {
     private readonly repository: IInventoryRepository;

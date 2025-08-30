@@ -1,14 +1,14 @@
-import {InventoryService, TranslationService} from "../../application/services";
-import {InventoryApiClient} from "../../infrastructure/clients";
-import {RTKInventoryRepository} from "../../infrastructure/repositories";
-import {store} from "../../application/store/store.ts";
+import {InventoryService, TranslationService} from "@/application/services";
+import {InventoryApiClient} from "@/infrastructure/clients";
+import {RTKInventoryRepository} from "@/infrastructure/repositories";
+import {store} from "@/application/store/store.ts";
 import {
     INVENTORY_API_ERROR_KEYS,
     INVENTORY_ERROR_KEYS,
     INVENTORY_SERVICE_ERROR_KEYS,
     ITEM_ERROR_KEYS,
     SECTION_ERROR_KEYS
-} from "../../application/messages/error_messages.ts";
+} from "@/application/messages/error_messages.ts";
 import {API_CONFIG} from "../constants/api.ts";
 
 // Localization layer

@@ -1,4 +1,4 @@
-import {createTranslationKeysAdapter} from "../../shared/localization/createTranslationKeysAdapter.ts";
+import {createTranslationKeysAdapter} from "@/shared/localization/createTranslationKeysAdapter.ts";
 
 import type {
     IInventoryApiErrorMessages,
@@ -6,7 +6,7 @@ import type {
     IInventoryServiceErrorMessages,
     IItemErrorMessages,
     ISectionErrorMessages
-} from "../../domain/types";
+} from "@/domain/types";
 
 export const ITEM_ERROR_KEYS: IItemErrorMessages = createTranslationKeysAdapter<IItemErrorMessages>('item.errors');
 
