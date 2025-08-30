@@ -1,17 +1,10 @@
-import type {IInventoryRepository} from "../../domain/repositories/IInventoryRepository.ts";
-import type {IInventoryService} from "../../domain/services/IInventoryService.ts";
+import type {IInventoryRepository} from "../../domain/repositories";
+import type {IInventoryService} from "../../domain/services";
 import type {InventoryApiClient} from "../../infrastructure/api/clients/InventoryApiClient.ts";
-import {Section} from "../../domain/entities/Section.ts";
-import {Item} from "../../domain/entities/Item.ts";
-import type {ISectionErrorMessages} from "../../domain/types/ISectionErrorMessages.ts";
-import type {IItemErrorMessages} from "../../domain/types/IItemErrorMessages.ts";
-import type {IInventoryServiceErrorMessages} from "../../domain/types/IInventoryServiceErrorMessages.ts";
-import type {
-    InventoryApiResponse,
-    ItemApiData,
-    SectionApiData
-} from "../../infrastructure/api/types/InventoryApiTypes.ts";
-import type {ITranslationService} from "../../shared/localization/types/ITranslationService.ts";
+import type {IInventoryServiceErrorMessages, IItemErrorMessages, ISectionErrorMessages} from "../../domain/types";
+import type {InventoryApiResponse, ItemApiData, SectionApiData} from "../../infrastructure/api/types";
+import type {ITranslationService} from "../../shared/localization/types";
+import {Item, Section} from "../../domain/entities";
 
 export class InventoryService implements IInventoryService {
     private readonly repository: IInventoryRepository;
