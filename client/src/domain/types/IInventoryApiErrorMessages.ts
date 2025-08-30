@@ -6,4 +6,8 @@ export interface IInventoryApiErrorMessages {
     unknownError: string;
     invalidResponse: string;
     missingData: string;
+    invalidSectionAtIndex: string;
+    invalidSectionStructureAtIndex: string;
+    invalidItemAtIndex: string;
+    invalidItemStructureAtIndex: string;
 }
