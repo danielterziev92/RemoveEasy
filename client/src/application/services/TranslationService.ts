@@ -1,25 +1,27 @@
 import {bg, en} from "@/shared/localization/locales";
 import type {ITranslationService} from "@/shared/localization/types";
+import type {ILocalizationService} from "@/domain/services";
 
 interface TranslationObject {
     [key: string]: string | TranslationObject;
 }
 
 export class TranslationService implements ITranslationService {
-    private defaultLocation: string = "bg";
-    private currentLocale: string;
+    private defaultLocale: string = "bg";
     private translations: Record<string, TranslationObject>;
+    private localizationService: ILocalizationService;
 
-    constructor(location: string = "bg") {
-        this.currentLocale = location;
+    constructor(localizationService: ILocalizationService) {
         this.translations = {bg, en};
+        this.localizationService = localizationService;
     }
 
     t(key: string, params?: Record<string, string | number>): string {
-        const translation = this.getNestedTranslation(key, this.translations[this.currentLocale]);
+        const currentLocale = this.getCurrentLocale();
+        const translation = this.getNestedTranslation(key, this.translations[currentLocale]);
 
         if (!translation) {
-            const fallbackTranslation = this.getNestedTranslation(key, this.translations[this.defaultLocation]);
+            const fallbackTranslation = this.getNestedTranslation(key, this.translations[this.defaultLocale]);
             if (fallbackTranslation) {
                 return this.interpolateParams(fallbackTranslation, params);
             }
@@ -31,19 +33,15 @@ export class TranslationService implements ITranslationService {
     }
 
     getCurrentLocale(): string {
-        return this.currentLocale;
+        return this.localizationService.getCurrentLocale();
     }
 
     setLocale(locale: string): void {
-        if (this.getAvailableLocales().includes(locale)) {
-            this.currentLocale = locale;
-        } else {
-            console.warn(`Locale '${locale}' is not available. Available locales: ${this.getAvailableLocales().join(', ')}`);
-        }
+        this.localizationService.setCurrentLocale(locale);
     }
 
     getAvailableLocales(): string[] {
-        return Object.keys(this.translations);
+        return this.localizationService.getAvailableLocales().map(locale => locale.code);
     }
 
     private getNestedTranslation(key: string, translations: TranslationObject): string | null {

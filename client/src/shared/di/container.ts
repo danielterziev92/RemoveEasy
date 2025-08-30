@@ -1,4 +1,4 @@
-import {InventoryService, TranslationService} from "@/application/services";
+import {InventoryService, LocalizationService, TranslationService} from "@/application/services";
 import {InventoryApiClient} from "@/infrastructure/clients";
 import {RTKInventoryRepository} from "@/infrastructure/repositories";
 import {store} from "@/application/store/store.ts";
@@ -12,7 +12,8 @@ import {
 import {API_CONFIG} from "../constants/api.ts";
 
 // Localization layer
-export const translationService = new TranslationService();
+export const localizationService = new LocalizationService(store);
+export const translationService = new TranslationService(localizationService);
 
 // Infrastructure layer
 export const inventoryApiClient = new InventoryApiClient(
