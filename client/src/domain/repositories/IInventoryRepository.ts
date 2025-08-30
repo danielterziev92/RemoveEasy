@@ -1,5 +1,4 @@
-import type {Section} from "../entities/Section.ts";
-import type {Item} from "../entities/Item.ts";
+import {Item, type Section} from "../entities";
 
 export interface IInventoryRepository {
 
