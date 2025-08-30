@@ -1,6 +1,6 @@
 import type {Section} from "./Section";
-import type {IItemErrorMessages} from "../types/IItemErrorMessages.ts";
-import type {ITranslationService} from "../../shared/localization/types/ITranslationService.ts";
+import type {IItemErrorMessages} from "../types";
+import type {ITranslationService} from "../../shared/localization/types";
 
 export class Item {
     public static readonly MIN_ID = 1;

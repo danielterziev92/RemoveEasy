@@ -1,6 +1,6 @@
-import type {Section} from "../../../domain/entities/Section";
-import type {Item} from "../../../domain/entities/Item.ts";
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
+
+import type {Item, Section} from "../../../domain/entities";
 
 interface InventoryState {
     sections: Section[];

@@ -1,5 +1,5 @@
-import type {ISectionErrorMessages} from "../types/ISectionErrorMessages.ts";
-import type {ITranslationService} from "../../shared/localization/types/ITranslationService.ts";
+import type {ISectionErrorMessages} from "../types";
+import type {ITranslationService} from "../../shared/localization/types";
 
 export class Section {
     public static readonly MIN_STRING_LENGTH = 1;
