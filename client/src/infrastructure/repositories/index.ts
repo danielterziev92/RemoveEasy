@@ -1,0 +1,1 @@
+export {RTKInventoryRepository} from "./RTKInventoryRepository";

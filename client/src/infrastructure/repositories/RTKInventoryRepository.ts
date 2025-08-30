@@ -1,16 +1,15 @@
-import type {Section} from "../domain/entities/Section.ts";
-import type {IInventoryRepository} from "../domain/repositories/IInventoryRepository.ts";
-import {type RootState, store} from "../application/store/store.ts";
-import type {Item} from "../domain/entities/Item.ts";
+import type {Item, Section} from "../../domain/entities";
+import type {IInventoryRepository} from "../../domain/repositories";
+import {type RootState, store} from "../../application/store/store.ts";
 import {
     clearInventoryData,
     setError,
     setInventoryData,
     setLoading
-} from "../application/store/slices/inventorySlice.ts";
+} from "../../application/store/slices/inventorySlice.ts";
 import type {Store} from "@reduxjs/toolkit";
-import type {IInventoryErrorMessages} from "../domain/types/IInventoryErrorMessages.ts";
-import type {ITranslationService} from "../shared/localization/types/ITranslationService.ts";
+import type {IInventoryErrorMessages} from "../../domain/types";
+import type {ITranslationService} from "../../shared/localization/types";
 
 export class RTKInventoryRepository implements IInventoryRepository {
     private store: Store<RootState>

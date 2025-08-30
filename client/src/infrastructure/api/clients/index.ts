@@ -1,1 +1,0 @@
-export {InventoryApiClient} from "./InventoryApiClient";
