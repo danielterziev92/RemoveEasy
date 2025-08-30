@@ -1,6 +1,6 @@
 import type {IInventoryRepository} from "../../domain/repositories";
 import type {IInventoryService} from "../../domain/services";
-import type {InventoryApiClient} from "../../infrastructure/api/clients/InventoryApiClient.ts";
+import type {InventoryApiClient} from "../../infrastructure/api/clients";
 import type {IInventoryServiceErrorMessages, IItemErrorMessages, ISectionErrorMessages} from "../../domain/types";
 import type {InventoryApiResponse, ItemApiData, SectionApiData} from "../../infrastructure/api/types";
 import type {ITranslationService} from "../../shared/localization/types";

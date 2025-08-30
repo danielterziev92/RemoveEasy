@@ -1,8 +1,7 @@
-import {InventoryApiClient} from "../../infrastructure/api/clients/InventoryApiClient";
+import {InventoryService, TranslationService} from "../../application/services";
+import {InventoryApiClient} from "../../infrastructure/api/clients";
 import {RTKInventoryRepository} from "../../infrastructure/RTKInventoryRepository.ts";
-import {InventoryService} from "../../application/services/InventoryService.ts";
 import {store} from "../../application/store/store.ts";
-import {TranslationService} from "../../application/services/TranslationService.ts";
 import {
     INVENTORY_API_ERROR_KEYS,
     INVENTORY_ERROR_KEYS,
