@@ -1,6 +1,5 @@
-import type {ITranslationService} from "../../shared/localization/types/ITranslationService.ts";
-import {bg} from "../../shared/localization/locales/bg.ts";
-import {en} from "../../shared/localization/locales/en.ts";
+import {bg, en} from "../../shared/localization/locales";
+import type {ITranslationService} from "../../shared/localization/types";
 
 interface TranslationObject {
     [key: string]: string | TranslationObject;
