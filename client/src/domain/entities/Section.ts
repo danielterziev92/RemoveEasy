@@ -36,11 +36,11 @@ export class Section {
             throw new Error(this.translationService.t(this.errorMessages.sectionIconRequired));
         }
         if (icon_class.length > Section.MAX_STRING_LENGTH) {
-            throw new Error(this.translationService.t(this.errorMessages.sectionIconRequired));
+            throw new Error(this.translationService.t(this.errorMessages.sectionIconTooLong));
         }
 
         if (!title || title.trim().length < Section.MIN_STRING_LENGTH) {
-            throw new Error(this.translationService.t(this.errorMessages.sectionIconTooLong));
+            throw new Error(this.translationService.t(this.errorMessages.sectionTitleRequired));
         }
         if (title.length > Section.MAX_STRING_LENGTH) {
             throw new Error(this.translationService.t(this.errorMessages.sectionTitleTooLong));
