@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu.tsx";
 import {Button} from "@/components/ui/button";
 import {SheetContent, SheetHeader, SheetTitle, SheetTrigger, Sheet} from "@/components/ui/sheet.tsx";
-import {useTranslation} from "@/hooks/useTranslation";
+import useTranslation from "@/hooks/useTranslation";
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
