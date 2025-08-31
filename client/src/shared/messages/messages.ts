@@ -3,6 +3,7 @@ import {createTranslationKeysAdapter} from "@/shared/localization/createTranslat
 import type {
     IAboutSectionMessages,
     IHeroSectionMessages,
+    IHowItWorksSectionMessages,
     IServicesSectionMessages,
     IWhyChooseUsSectionMessages
 } from "@/presentation/types/messages";
@@ -11,3 +12,4 @@ export const HERO_SECTION_KEYS: IHeroSectionMessages = createTranslationKeysAdap
 export const ABOUT_SECTION_KEYS: IAboutSectionMessages = createTranslationKeysAdapter<IAboutSectionMessages>('aboutSection');
 export const SERVICES_SECTION_KEYS: IServicesSectionMessages = createTranslationKeysAdapter<IServicesSectionMessages>('servicesSection');
 export const WHY_CHOOSE_US_SECTION_KEYS: IWhyChooseUsSectionMessages = createTranslationKeysAdapter<IWhyChooseUsSectionMessages>('whyChooseUsSection');
+export const HOW_IT_WORKS_SECTION_KEYS: IHowItWorksSectionMessages = createTranslationKeysAdapter<IHowItWorksSectionMessages>('howItWorksSection');

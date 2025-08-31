@@ -140,5 +140,21 @@ export const bg = {
         // Experienced Team
         experiencedTeamTitle: "Опитен екип",
         experiencedTeamDescription: "Нашият екип е помогнал на стотици семейства да се преместят безопасно"
+    },
+    howItWorksSection: {
+        sectionTitle: "Как работи",
+        sectionDescription: "Опростихме процеса на преместване, за да направим вашето преместване възможно най-безпроблемно.",
+
+        // Contact Us Step
+        contactUsTitle: "Свържете се с нас",
+        contactUsDescription: "Свържете се с нас по телефона, WhatsApp или попълнете нашата онлайн форма за преместване, и получете безплатна персонализирана оферта.",
+
+        // Confirm Details Step
+        confirmDetailsTitle: "Потвърдете детайлите",
+        confirmDetailsDescription: "Ще потвърдим датата, времето, необходимите услуги и ще финализираме офертата въз основа на вашите конкретни нужди.",
+
+        // Moving Day Step
+        movingDayTitle: "Ден на преместване",
+        movingDayDescription: "Нашият екип пристига по график, за да извърши вашето преместване ефективно, обработвайки вещите ви с изключително внимание."
     }
 };

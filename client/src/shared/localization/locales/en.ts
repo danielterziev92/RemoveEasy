@@ -140,5 +140,21 @@ export const en = {
         // Experienced Team
         experiencedTeamTitle: "Experienced Team",
         experiencedTeamDescription: "Our team has helped hundreds of families relocate safely"
+    },
+    howItWorksSection: {
+        sectionTitle: "How It Works",
+        sectionDescription: "We've simplified the moving process to make your relocation experience as seamless as possible.",
+
+        // Contact Us Step
+        contactUsTitle: "Contact Us",
+        contactUsDescription: "Contact us by phone, WhatsApp, or fill out our online moving form to receive a free personalized quote.",
+
+        // Confirm Details Step
+        confirmDetailsTitle: "Confirm Details",
+        confirmDetailsDescription: "We'll confirm the date, time, services required, and finalize the quote based on your specific needs.",
+
+        // Moving Day Step
+        movingDayTitle: "Moving Day",
+        movingDayDescription: "Our team arrives on schedule to execute your move efficiently, handling your belongings with utmost care."
     }
 };
