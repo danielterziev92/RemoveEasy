@@ -137,7 +137,7 @@ export default function ReviewSection() {
     };
 
     return (
-        <section id="testimonials" className="section-padding bg-white py-16 md:py-24">
+        <section id="reviews" className="section-padding bg-white py-16 md:py-24">
             <div className="container-custom">
                 <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
                     <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">

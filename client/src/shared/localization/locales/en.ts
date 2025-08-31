@@ -46,7 +46,7 @@ export const en = {
             about: "About",
             services: "Services",
             howItWorks: "How It Works",
-            testimonials: "Testimonials",
+            reviews: "Reviews",
             contact: "Contact"
         },
         actions: {
@@ -156,5 +156,18 @@ export const en = {
         // Moving Day Step
         movingDayTitle: "Moving Day",
         movingDayDescription: "Our team arrives on schedule to execute your move efficiently, handling your belongings with utmost care."
-    }
+    },
+    contactSection: {
+        sectionTitle: "Contact Us",
+        sectionDescription: "Need a quote or have questions? Get in touch with our team and we'll get back to you as soon as possible.",
+        contactInformation: "Contact Information",
+        phoneNumber: "Phone Number",
+        emailAddress: "Email Address",
+        workingHours: "Working Hours",
+        mondayToSaturday: "Monday - Saturday: 8am - 8pm",
+        sunday: "Sunday: 10am - 4pm",
+        serviceArea: "Service Area",
+        ukWideCoverage: "UK-wide coverage",
+        basedInLondon: "Based in London"
+    },
 };

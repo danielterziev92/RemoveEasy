@@ -46,7 +46,7 @@ export const bg = {
             about: "За нас",
             services: "Услуги",
             howItWorks: "Как работи",
-            testimonials: "Отзиви",
+            reviews: "Отзиви",
             contact: "Контакти"
         },
         actions: {
@@ -162,5 +162,18 @@ export const bg = {
         sectionDescription: "Не приемайте само нашата дума. Ето какво казват някои от нашите доволни клиенти за опита си с Re Move Easy.",
         bulgarianCustomer: "Български клиент",
         britishCustomer: "Британски клиент"
-    }
+    },
+    contactSection: {
+        sectionTitle: "Свържете се с нас",
+        sectionDescription: "Нуждаете се от оферта или имате въпроси? Свържете се с нашия екип и ще ви отговорим възможно най-скоро.",
+        contactInformation: "Информация за контакт",
+        phoneNumber: "Телефон",
+        emailAddress: "Имейл",
+        workingHours: "Работно време",
+        mondayToSaturday: "Понеделник - Събота: 8:00 - 20:00",
+        sunday: "Неделя: 10:00 - 16:00",
+        serviceArea: "Райони на обслужване",
+        ukWideCoverage: "Покритие в цяла Великобритания",
+        basedInLondon: "Базирани в Лондон"
+    },
 };
