@@ -2,6 +2,7 @@ import Header from "@/components/Header.tsx";
 import HeroSection from "@/components/HeroSection.tsx";
 import AboutSection from "@/components/AboutSection.tsx";
 import ServicesSection from "@/components/ServicesSection.tsx";
+import WhyChooseUsSection from "@/components/WhyChooseUsSection.tsx";
 
 export default function Index() {
     return (
@@ -10,6 +11,7 @@ export default function Index() {
             <HeroSection/>
             <AboutSection/>
             <ServicesSection/>
+            <WhyChooseUsSection/>
         </div>
     );
 }

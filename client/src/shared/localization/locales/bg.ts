@@ -112,6 +112,33 @@ export const bg = {
         fullServiceStressFree: "най-без стресовата и удобна услуга за цялостно преместване на дом или офис",
         fullServiceSuitable: "Подходяща за заети хора, семейства, възрастни и всеки, който иска комфорт без усилие",
         fullServiceComplete: "Без стрес, без риск и 100% комфорт. Просто ни повикайте — ние поемаме всичко останалото!"
-    }
+    },
+    whyChooseUsSection: {
+        sectionTitle: "Защо да изберете нас",
+        sectionDescription: "Когато става дума за преместване на личните ви вещи, имате нужда от компания, на която можете да се доверите. Ето защо нашите клиенти избират Re Move Easy.",
 
+        // Fast Response
+        fastResponseTitle: "Бърз отговор",
+        fastResponseDescription: "Отговаряме на запитвания в рамките на 1 час в работно време",
+
+        // Affordable Pricing
+        affordablePricingTitle: "Достъпни цени",
+        affordablePricingDescription: "Конкурентни цени, съобразени с вашите конкретни нужди",
+
+        // UK-Wide Coverage
+        ukWideCoverageTitle: "Покритие в цяла Великобритания",
+        ukWideCoverageDescription: "Предоставяме услуги в цяла Великобритания",
+
+        // Bilingual Staff
+        bilingualStaffTitle: "Двуезичен персонал",
+        bilingualStaffDescription: "Нашият екип говори свободно български и английски",
+
+        // Safe Handling
+        safeHandlingTitle: "Безопасна обработка",
+        safeHandlingDescription: "Вашите вещи се третират с изключително внимание и уважение",
+
+        // Experienced Team
+        experiencedTeamTitle: "Опитен екип",
+        experiencedTeamDescription: "Нашият екип е помогнал на стотици семейства да се преместят безопасно"
+    }
 };

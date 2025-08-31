@@ -112,6 +112,33 @@ export const en = {
         fullServiceStressFree: "Most stress-free and convenient service for complete home or office relocation",
         fullServiceSuitable: "Suitable for busy people, families, seniors, and anyone who wants comfort without effort",
         fullServiceComplete: "No stress, no risk, and 100% comfort. Just call us — we take care of the rest!"
-    }
+    },
+    whyChooseUsSection: {
+        sectionTitle: "Why Choose Us",
+        sectionDescription: "When it comes to relocating your personal belongings, you need a company you can trust. Here's why our clients choose Re Move Easy.",
 
+        // Fast Response
+        fastResponseTitle: "Fast Response",
+        fastResponseDescription: "We respond to inquiries within 1 hour during business hours",
+
+        // Affordable Pricing
+        affordablePricingTitle: "Affordable Pricing",
+        affordablePricingDescription: "Competitive rates tailored to your specific needs",
+
+        // UK-Wide Coverage
+        ukWideCoverageTitle: "UK-Wide Coverage",
+        ukWideCoverageDescription: "We provide services throughout the entire United Kingdom",
+
+        // Bilingual Staff
+        bilingualStaffTitle: "Bilingual Staff",
+        bilingualStaffDescription: "Our team speaks both Bulgarian and English fluently",
+
+        // Safe Handling
+        safeHandlingTitle: "Safe Handling",
+        safeHandlingDescription: "Your belongings are treated with utmost care and respect",
+
+        // Experienced Team
+        experiencedTeamTitle: "Experienced Team",
+        experiencedTeamDescription: "Our team has helped hundreds of families relocate safely"
+    }
 };
