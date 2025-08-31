@@ -59,5 +59,16 @@ export const en = {
             name: "Re Move Easy",
             tagline: "MEN & VAN SERVICES"
         }
+    },
+    heroSection: {
+        professionalMovingServices: "Professional Moving Services",
+        safeReliableRelocationServices: "Safe & Reliable Relocation Services",
+        affordableReliableTransport: "Affordable and reliable transport and moving services across the UK for Bulgarian and British clients.",
+        getFreeQuote: "Get a Free Quote",
+        callUsNow: "Call Us Now",
+        ukWideService: "UK-wide service",
+        yearsExperience: "8+ years experience",
+        bulgarianEnglishSpeaking: "Bulgarian/English speaking",
+        serviceOnChosenDay: "Service on your chosen day"
     }
 };
