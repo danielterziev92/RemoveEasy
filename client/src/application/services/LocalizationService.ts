@@ -1,53 +1,57 @@
-import type {ILocalizationService} from "@/domain/services";
 import {Locale} from "@/domain/entities";
-import type {Store} from "@reduxjs/toolkit";
-import {initializeLocalization, setLocale} from "@/infrastructure/store/slices/localizationSlice.ts";
+import {type ILocalizationService, LocalizationDomainService} from "@/domain/services";
+import type {ILocalizationRepository} from "@/domain/repositories";
+
+import {InitializeLocaleUseCase, SetLocaleUseCase} from "@/application/use-cases/localization";
 
 export class LocalizationService implements ILocalizationService {
-    private store: Store;
+    private localizationRepository: ILocalizationRepository;
+    private localizationDomainService: LocalizationDomainService;
+    private setLocaleUseCase: SetLocaleUseCase;
+    private initializeLocaleUseCase: InitializeLocaleUseCase;
 
-    constructor(store: Store) {
-        this.store = store;
+    constructor(
+        localizationRepository: ILocalizationRepository,
+        localizationDomainService: LocalizationDomainService,
+        setLocaleUseCase: SetLocaleUseCase,
+        initializeLocaleUseCase: InitializeLocaleUseCase
+    ) {
+        this.localizationRepository = localizationRepository;
+        this.localizationDomainService = localizationDomainService;
+        this.setLocaleUseCase = setLocaleUseCase;
+        this.initializeLocaleUseCase = initializeLocaleUseCase;
     }
 
-    private availableLocales: Locale[] = [
-        Locale.create("bg", "Bulgarian", "Български"),
-        Locale.create("en", "English", "English")
-    ];
-
     getCurrentLocale(): string {
-        const state = this.store.getState();
-        return state.localization.currentLocale;
+        return this.localizationRepository.getCurrentLocale();
     }
 
     setCurrentLocale(locale: string): void {
-        if (this.isLocaleSupported(locale)) {
-            this.store.dispatch(setLocale(locale));
-            localStorage.setItem("app-locale", locale);
-        } else {
-            console.warn(`Locale '${locale}' is not supported`);
+        const result = this.setLocaleUseCase.execute(locale);
+
+        if (!result.success) {
+            console.warn(result.message);
         }
     }
 
+    getSavedLocale(): string | null {
+        return this.localizationRepository.getSavedLocale();
+    }
+
+    saveLocale(locale: string): void {
+        this.localizationRepository.saveLocale(locale);
+    }
+
     getAvailableLocales(): Locale[] {
-        return this.availableLocales;
+        return this.localizationDomainService.getAvailableLocales();
     }
 
     detectBrowserLocale(): string {
         const browserLocale = navigator.language.split("-")[0];
-        const supportedCodes = this.availableLocales.map(locale => locale.code);
-        return supportedCodes.includes(browserLocale) ? browserLocale : "bg";
+        return this.localizationDomainService.detectBestLocale(browserLocale);
     }
 
     initializeLocale(): void {
-        const savedLocale = localStorage.getItem("app-locale");
-        const initialLocale = savedLocale || this.detectBrowserLocale();
-
-        this.store.dispatch(setLocale(initialLocale));
-        this.store.dispatch(initializeLocalization());
-    }
-
-    private isLocaleSupported(locale: string): boolean {
-        return this.availableLocales.some(l => l.code === locale);
+        this.initializeLocaleUseCase.execute();
     }
 }

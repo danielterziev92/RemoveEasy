@@ -1,35 +1,32 @@
-import {InventoryService, LocalizationService, TranslationService} from "@/application/services";
-import {InventoryApiClient} from "@/infrastructure/clients";
-import {RTKInventoryRepository} from "@/infrastructure/repositories";
+import {dependencyContainer} from "@/shared/di/DependencyContainer.ts";
 import {store} from "@/infrastructure/store/store.ts";
+import {API_CONFIG} from "@/shared/constants/api.ts";
 import {
     INVENTORY_API_ERROR_KEYS,
-    INVENTORY_ERROR_KEYS,
     INVENTORY_SERVICE_ERROR_KEYS,
     ITEM_ERROR_KEYS,
     SECTION_ERROR_KEYS
 } from "@/shared/messages/error_messages.ts";
-import {API_CONFIG} from "../constants/api.ts";
 
-// Localization layer
-export const localizationService = new LocalizationService(store);
-export const translationService = new TranslationService(localizationService);
-
-// Infrastructure layer
-export const inventoryApiClient = new InventoryApiClient(
+// Initialize the container with all dependencies
+dependencyContainer.initialize(
+    store,
     API_CONFIG.BASE_URL,
-    INVENTORY_API_ERROR_KEYS,
-    translationService
+    {
+        inventoryApi: INVENTORY_API_ERROR_KEYS,
+        inventoryService: INVENTORY_SERVICE_ERROR_KEYS,
+        section: SECTION_ERROR_KEYS,
+        item: ITEM_ERROR_KEYS,
+    }
 );
 
-export const inventoryRepository = new RTKInventoryRepository(store, INVENTORY_ERROR_KEYS, translationService);
+// Export convenient aliases for most commonly used services
+export const localizationService = dependencyContainer.localizationService;
+export const translationService = dependencyContainer.translationService;
 
-// Application layer
-export const inventoryService = new InventoryService(
-    inventoryRepository,
-    inventoryApiClient,
-    INVENTORY_SERVICE_ERROR_KEYS,
-    SECTION_ERROR_KEYS,
-    ITEM_ERROR_KEYS,
-    translationService
-);
+// Export the container for advanced usage
+export {dependencyContainer};
+
+// Export specific use cases for direct access if needed
+export const setLocaleUseCase = dependencyContainer.setLocaleUseCase;
+export const initializeLocaleUseCase = dependencyContainer.initializeLocaleUseCase;

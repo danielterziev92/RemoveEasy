@@ -1,6 +1,4 @@
-import {Locale} from "@/domain/entities";
-
-export interface ILocalizationService {
+export interface ILocalizationRepository {
     getCurrentLocale(): string;
 
     setCurrentLocale(locale: string): void;
@@ -8,6 +6,4 @@ export interface ILocalizationService {
     getSavedLocale(): string | null;
 
     saveLocale(locale: string): void;
-
-    getAvailableLocales(): Locale[];
 }

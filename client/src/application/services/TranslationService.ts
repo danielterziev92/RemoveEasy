@@ -1,6 +1,8 @@
+import {Locale} from "@/domain/entities";
+import type {ILocalizationService} from "@/domain/services";
+
 import {bg, en} from "@/shared/localization/locales";
 import type {ITranslationService} from "@/shared/localization/types";
-import type {ILocalizationService} from "@/domain/services";
 
 interface TranslationObject {
     [key: string]: string | TranslationObject;
@@ -41,7 +43,7 @@ export class TranslationService implements ITranslationService {
     }
 
     getAvailableLocales(): string[] {
-        return this.localizationService.getAvailableLocales().map(locale => locale.code);
+        return this.localizationService.getAvailableLocales().map((locale: Locale) => locale.code);
     }
 
     private getNestedTranslation(key: string, translations: TranslationObject): string | null {
