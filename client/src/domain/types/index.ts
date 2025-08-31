@@ -8,3 +8,4 @@ export type {HeaderProps} from "./HeaderProps";
 export type {LanguageConfig} from "./LanguageConfig";
 export type {ContactInfo} from "./ContactInfo";
 export type {IHeroSectionMessages} from "./IHeroSectionMessages";
+export type {IAboutSectionMessages} from "./IAboutSectionMessages";

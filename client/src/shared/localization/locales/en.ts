@@ -70,5 +70,15 @@ export const en = {
         yearsExperience: "8+ years experience",
         bulgarianEnglishSpeaking: "Bulgarian/English speaking",
         serviceOnChosenDay: "Service on your chosen day"
+    },
+    aboutSection: {
+        aboutTitle: "About Re Move Easy",
+        foundedDescription: "Founded in 2017, Re Move Easy has grown to become one of the most trusted relocation services for Bulgarian and British families across the UK.",
+        missionDescription: "Our mission is to make your moving experience as stress-free as possible by providing reliable, affordable, and personalized services that meet your specific needs.",
+        teamDescription: "With a team of experienced professionals who speak both Bulgarian and English fluently, we bridge cultural gaps and ensure clear communication throughout your moving journey.",
+        successfulMoves: "Successful Moves",
+        yearsExperience: "Years of Experience",
+        teamAltText: "Re Move Easy Team",
+        slogan: "\"You choose the help,\nwe take care of the rest\""
     }
 };
