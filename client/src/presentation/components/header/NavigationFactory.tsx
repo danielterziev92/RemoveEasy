@@ -1,24 +1,18 @@
-import type {ContactInfo, LanguageConfig, NavigationType} from "@/domain/types";
+import type {NavigationFactoryProps} from "@/presentation/types";
+
 import MobileNavigation from "@/components/header/MobileNavigation.tsx";
 import DesktopNavigation from "@/components/header/DesktopNavigation.tsx";
 
-interface NavigationFactoryProps {
-    isMobile: boolean;
-    navigationTypes: NavigationType[];
-    languageConfig: LanguageConfig;
-    contactInfo: ContactInfo;
-}
-
 export default function NavigationFactory({
                                               isMobile,
-                                              navigationTypes,
+                                              navigationItems,
                                               languageConfig,
                                               contactInfo
                                           }: NavigationFactoryProps) {
     if (isMobile) {
         return (
             <MobileNavigation
-                navigationTypes={navigationTypes}
+                navigationItems={navigationItems}
                 languageConfig={languageConfig}
                 contactInfo={contactInfo}
             />
@@ -27,7 +21,7 @@ export default function NavigationFactory({
 
     return (
         <DesktopNavigation
-            navigationTypes={navigationTypes}
+            navigationItems={navigationItems}
             languageConfig={languageConfig}
             contactInfo={contactInfo}
         />

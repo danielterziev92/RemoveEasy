@@ -1,5 +1,5 @@
 import {NavigationItem} from "@/domain/entities";
-import type {NavigationType} from "@/domain/types/NavigationType.ts";
+import type {NavigationItemDto} from "@/application/dto";
 
 export class NavigationService {
     private readonly navigationItems: NavigationItem[] = [
@@ -10,7 +10,7 @@ export class NavigationService {
         new NavigationItem("#contact", "header.navigation.contact", "contact"),
     ];
 
-    getNavigationItems(t: (key: string) => string): NavigationType[] {
+    getNavigationItems(t: (key: string) => string): NavigationItemDto[] {
         return this.navigationItems.map(item => ({
             href: item.href,
             label: item.getLabel(t),

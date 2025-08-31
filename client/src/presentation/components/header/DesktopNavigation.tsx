@@ -1,6 +1,6 @@
 import {MessageCircle, Phone} from "lucide-react";
 
-import type {ContactInfo, LanguageConfig, NavigationType} from "@/domain/types";
+import type {NavigationProps} from "@/presentation/types";
 
 import {cn} from "@/lib/utils";
 import {
@@ -13,22 +13,17 @@ import {Button} from "@/components/ui/button.tsx";
 
 import LanguageSelector from "@/components/LanguageSelector.tsx";
 
-interface DesktopNavigationProps {
-    navigationTypes: NavigationType[];
-    languageConfig: LanguageConfig;
-    contactInfo: ContactInfo;
-}
 
 export default function DesktopNavigation({
-                                              navigationTypes,
+                                              navigationItems,
                                               languageConfig,
                                               contactInfo
-                                          }: DesktopNavigationProps) {
+                                          }: NavigationProps) {
     return (
         <div className="hidden md:flex items-center gap-8">
             <NavigationMenu>
                 <NavigationMenuList>
-                    {navigationTypes.map((item) => (
+                    {navigationItems.map((item) => (
                         <NavigationMenuItem key={item.key}>
                             <NavigationMenuLink
                                 href={item.href}

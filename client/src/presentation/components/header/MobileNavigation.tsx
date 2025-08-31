@@ -1,23 +1,18 @@
 import {useState} from "react";
 import {Menu, MessageCircle, Phone} from "lucide-react";
 
+import type {NavigationProps} from "@/presentation/types";
+
 import {Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import LanguageSelector from "../LanguageSelector";
 
-import type {ContactInfo, LanguageConfig, NavigationType} from "@/domain/types";
-
-interface MobileNavigationProps {
-    navigationTypes: NavigationType[];
-    languageConfig: LanguageConfig;
-    contactInfo: ContactInfo;
-}
 
 export default function MobileNavigation({
-                                             navigationTypes,
+                                             navigationItems,
                                              languageConfig,
                                              contactInfo
-                                         }: MobileNavigationProps) {
+                                         }: NavigationProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const handleMenuItemClick = () => {
@@ -49,7 +44,7 @@ export default function MobileNavigation({
                         </div>
 
                         <nav className="space-y-2">
-                            {navigationTypes.map((item) => (
+                            {navigationItems.map((item) => (
                                 <Button
                                     key={item.key}
                                     variant="ghost"

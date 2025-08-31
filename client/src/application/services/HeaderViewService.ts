@@ -1,5 +1,5 @@
 import type {NavigationService} from "@/application/services/NavigationService.ts";
-import type {ContactInfo, LanguageConfig} from "@/domain/types";
+import {ContactInfo, LanguageConfig} from "@/domain/value-objects";
 
 export class HeaderViewService {
     private navigationService: NavigationService;
@@ -13,10 +13,7 @@ export class HeaderViewService {
     }
 
     getContactInfo(): ContactInfo {
-        return {
-            phone: '07405211912',
-            whatsapp: 'https://wa.me/07405211912'
-        };
+        return new ContactInfo('07405211912', 'https://wa.me/07405211912');
     }
 
     createLanguageConfig(
@@ -32,11 +29,11 @@ export class HeaderViewService {
             return labels[locale as keyof typeof labels] || locale;
         };
 
-        return {
+        return new LanguageConfig(
             currentLocale,
             availableLocales,
-            changeLanguage,
-            getLanguageLabel
-        };
+            getLanguageLabel,
+            changeLanguage
+        );
     }
 }

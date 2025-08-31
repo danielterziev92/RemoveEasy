@@ -28,7 +28,7 @@ export default function Header() {
         };
     }, []);
 
-    const navigationTypes = headerViewService.getNavigationItems(t);
+    const NavigationItems = headerViewService.getNavigationItems(t);
     const contactInfo = headerViewService.getContactInfo();
     const languageConfig = headerViewService.createLanguageConfig(
         currentLocale,
@@ -48,7 +48,7 @@ export default function Header() {
 
                 <NavigationFactory
                     isMobile={isMobile}
-                    navigationTypes={navigationTypes}
+                    navigationItems={NavigationItems}
                     languageConfig={languageConfig}
                     contactInfo={contactInfo}
                 />
