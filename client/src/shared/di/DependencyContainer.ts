@@ -2,9 +2,20 @@ import type {Store} from "@reduxjs/toolkit";
 
 import {LocalizationDomainService} from "@/domain/services";
 
-import {LocalizationService, TranslationService} from "@/application/services";
+import {InventoryService, LocalizationService, TranslationService} from "@/application/services";
 import {InitializeLocaleUseCase, SetLocaleUseCase} from "@/application/use-cases/localization";
-import type {IInventoryServiceErrorMessages, IItemErrorMessages, ISectionErrorMessages} from "@/application/types";
+import {
+    FetchAndStoreInventoryUseCase,
+    FetchInventoryUseCase,
+    GetCachedInventoryUseCase,
+    StoreInventoryUseCase
+} from "@/application/use-cases/inventory";
+import type {
+    IInventoryErrorMessages,
+    IInventoryServiceErrorMessages,
+    IItemErrorMessages,
+    ISectionErrorMessages
+} from "@/application/types";
 
 import {InventoryApiClient} from "@/infrastructure/clients";
 import {LocalStorageLocalizationRepository, RTKInventoryRepository} from "@/infrastructure/repositories";
@@ -22,13 +33,20 @@ export class DependencyContainer {
     private _inventoryRepository!: RTKInventoryRepository;
     private _inventoryApiClient!: InventoryApiClient;
 
-    // Use Cases
+    // Use Cases - Localization
     private _setLocaleUseCase!: SetLocaleUseCase;
     private _initializeLocaleUseCase!: InitializeLocaleUseCase;
+
+    // Use Cases - Inventory
+    private _fetchInventoryUseCase!: FetchInventoryUseCase;
+    private _storeInventoryUseCase!: StoreInventoryUseCase;
+    private _fetchAndStoreInventoryUseCase!: FetchAndStoreInventoryUseCase;
+    private _getCachedInventoryUseCase!: GetCachedInventoryUseCase;
 
     // Application Services
     private _localizationService!: LocalizationService;
     private _translationService!: TranslationService;
+    private _inventoryService!: InventoryService;
 
     private constructor() {
     }
@@ -46,6 +64,7 @@ export class DependencyContainer {
         errorMessages: {
             inventoryApi: IInventoryApiErrorMessages;
             inventoryService: IInventoryServiceErrorMessages;
+            inventoryRepository: IInventoryErrorMessages;
             section: ISectionErrorMessages;
             item: IItemErrorMessages;
         }
@@ -85,7 +104,7 @@ export class DependencyContainer {
         // 5. Initialize Infrastructure - Inventory (needs translation service)
         this._inventoryRepository = new RTKInventoryRepository(
             store,
-            errorMessages.inventory,
+            errorMessages.inventoryRepository,
             this._translationService
         );
 
@@ -95,8 +114,38 @@ export class DependencyContainer {
             this._translationService
         );
 
+        // 6. Initialize Inventory Use Cases
+        this._fetchInventoryUseCase = new FetchInventoryUseCase(
+            this._inventoryApiClient,
+            errorMessages.inventoryService,
+            errorMessages.section,
+            errorMessages.item,
+            this._translationService
+        );
+
+        this._storeInventoryUseCase = new StoreInventoryUseCase(
+            this._inventoryRepository
+        );
+
+        this._getCachedInventoryUseCase = new GetCachedInventoryUseCase(
+            this._inventoryRepository
+        );
+
+        this._fetchAndStoreInventoryUseCase = new FetchAndStoreInventoryUseCase(
+            this._inventoryRepository,
+            errorMessages.inventoryService,
+            this._translationService,
+            this._fetchInventoryUseCase,
+            this._storeInventoryUseCase
+        );
+
+        // 7. Initialize Application Services - Inventory
+        this._inventoryService = new InventoryService(
+            this._fetchAndStoreInventoryUseCase,
+            this._getCachedInventoryUseCase
+        );
+
         this.initialized = true;
-        console.info('✅ DependencyContainer initialized successfully');
     }
 
     // Public Getters - Domain Services
@@ -116,6 +165,11 @@ export class DependencyContainer {
         return this._translationService;
     }
 
+    public get inventoryService(): InventoryService {
+        this.ensureInitialized();
+        return this._inventoryService;
+    }
+
     // Public Getters - Use Cases (if needed for direct access)
     public get setLocaleUseCase(): SetLocaleUseCase {
         this.ensureInitialized();
@@ -125,6 +179,26 @@ export class DependencyContainer {
     public get initializeLocaleUseCase(): InitializeLocaleUseCase {
         this.ensureInitialized();
         return this._initializeLocaleUseCase;
+    }
+
+    public get fetchInventoryUseCase(): FetchInventoryUseCase {
+        this.ensureInitialized();
+        return this._fetchInventoryUseCase;
+    }
+
+    public get storeInventoryUseCase(): StoreInventoryUseCase {
+        this.ensureInitialized();
+        return this._storeInventoryUseCase;
+    }
+
+    public get fetchAndStoreInventoryUseCase(): FetchAndStoreInventoryUseCase {
+        this.ensureInitialized();
+        return this._fetchAndStoreInventoryUseCase;
+    }
+
+    public get getCachedInventoryUseCase(): GetCachedInventoryUseCase {
+        this.ensureInitialized();
+        return this._getCachedInventoryUseCase;
     }
 
     // Public Getters - Infrastructure (if needed for advanced cases)
