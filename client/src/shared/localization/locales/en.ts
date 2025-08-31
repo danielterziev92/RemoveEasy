@@ -80,5 +80,38 @@ export const en = {
         yearsExperience: "Years of Experience",
         teamAltText: "Re Move Easy Team",
         slogan: "\"You choose the help,\nwe take care of the rest\""
+    },
+    servicesSection: {
+        sectionTitle: "Our Services",
+        sectionDescription: "Choose the service that best meets your needs",
+        describeInventoryButton: "Describe inventory",
+
+        // Transport Only Service
+        transportOnlyTitle: "Transport Only",
+        transportOnlySubtitle: "Budget-friendly and quick solution!",
+        transportOnlyDescription: "Perfect for when you just need your items transported from one location to another. You handle the loading and unloading, we handle the safe transport.",
+        transportOnlyPrice: "From £80",
+        transportOnlyEconomical: "an economical and flexible solution for your move",
+        transportOnlyFlexible: "you decide when to pack and move your belongings",
+        transportOnlyCareful: "we arrange carefully and fix thoroughly",
+
+        // Transport with Helpers Service
+        transportWithHelpersTitle: "Transport with Helpers",
+        transportWithHelpersSubtitle: "You choose the help - we'll take the weight!",
+        transportWithHelpersDescription: "We provide transport, people and equipment to help you load and unload all your heavy belongings, making the entire process quicker and easier.",
+        transportWithHelpersPrice: "From £115",
+        transportWithHelpersExperience: "Years of experience - thousands of solutions",
+        transportWithHelpersEquipment: "Professional equipment with perfect results",
+        transportWithHelpersPrecision: "We move with respect and precision",
+
+        // Full Service Relocation
+        fullServiceTitle: "Full-Service Relocation",
+        fullServiceSubtitle: "No stress or chaos – we do everything for you!",
+        fullServiceDescription: "With this service, we offer peace of mind, security, and complete organization from start to finish. Leave everything to us - from providing the necessary packing materials and carefully packing your belongings, to safely transporting them and arranging them in the new place. You don't need to lift anything heavy, organize logistics or worry about damage - we'll take care of every step of the process.",
+        fullServicePrice: "From £290",
+        fullServiceStressFree: "Most stress-free and convenient service for complete home or office relocation",
+        fullServiceSuitable: "Suitable for busy people, families, seniors, and anyone who wants comfort without effort",
+        fullServiceComplete: "No stress, no risk, and 100% comfort. Just call us — we take care of the rest!"
     }
+
 };

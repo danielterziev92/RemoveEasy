@@ -80,5 +80,38 @@ export const bg = {
         yearsExperience: "Години опит",
         teamAltText: "Екипът на Re Move Easy",
         slogan: "„Вие избирате помощта,\nние се грижим за останалото\""
+    },
+    servicesSection: {
+        sectionTitle: "Нашите Услуги",
+        sectionDescription: "Изберете услугата, която най-добре отговаря на вашите нужди",
+        describeInventoryButton: "Опиши инвентар",
+
+        // Transport Only Service
+        transportOnlyTitle: "Само транспорт",
+        transportOnlySubtitle: "Бюджетно и бързо решение!",
+        transportOnlyDescription: "Перфектно решение, когато имате нужда само от транспорт на вещите си от едно място до друго. Вие се грижите за товаренето и разтоварването, ние за безопасния транспорт.",
+        transportOnlyPrice: "От £80",
+        transportOnlyEconomical: "икономично и гъвкаво решение за вашето преместване",
+        transportOnlyFlexible: "вие решавате кога да опаковате и преместите вещите",
+        transportOnlyCareful: "ние подреждаме внимателно и фиксираме старателно",
+
+        // Transport with Helpers Service
+        transportWithHelpersTitle: "Транспорт с помощници",
+        transportWithHelpersSubtitle: "Вие избирате помощта – ние ще поемем тежестта!",
+        transportWithHelpersDescription: "Осигуряваме транспорт, хора и оборудване с които да ви помогнат при товаренето и разтоварването на всички тежки вещита, правейки целия процес по-бърз и лесен.",
+        transportWithHelpersPrice: "От £115",
+        transportWithHelpersExperience: "Дългогодишен опит - хиляди решения",
+        transportWithHelpersEquipment: "Професионално оборудване с перфектен резултат",
+        transportWithHelpersPrecision: "Преместваме с уважение и прецизност",
+
+        // Full Service Relocation
+        fullServiceTitle: "Пълно обслужване при преместване",
+        fullServiceSubtitle: "Без стрес и хаос – ние вършим всичко вместо вас!",
+        fullServiceDescription: "С тази услуга ви предлагаме – спокойствие, сигурност и пълна организация от началото до края.\nОставете на нас всичко – от осигуряването на нужните опаковъчни материали и внимателното опаковане на вещите ви, до безопасното им транспортиране и подреждане на новото място.\nНе се налага да вдигате нищо тежко, да организирате логистика или да се тревожите за щети – ние ще се погрижим за всяка стъпка от процеса.",
+        fullServicePrice: "От £290",
+        fullServiceStressFree: "най-без стресовата и удобна услуга за цялостно преместване на дом или офис",
+        fullServiceSuitable: "Подходяща за заети хора, семейства, възрастни и всеки, който иска комфорт без усилие",
+        fullServiceComplete: "Без стрес, без риск и 100% комфорт. Просто ни повикайте — ние поемаме всичко останалото!"
     }
+
 };
