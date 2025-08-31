@@ -1,7 +1,7 @@
 import {configureStore} from "@reduxjs/toolkit";
 
-import inventoryReducer from "./slices/inventorySlice";
-import localizationReducer from "./slices/localizationSlice";
+import inventoryReducer from "./slices/inventorySlice.ts";
+import localizationReducer from "./slices/localizationSlice.ts";
 
 export const store = configureStore({
     reducer: {

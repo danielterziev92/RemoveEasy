@@ -1,7 +1,7 @@
 import {useCallback} from "react";
 import {localizationService, translationService} from "@/shared/di/container.ts";
 import {useSelector} from "react-redux";
-import type {RootState} from "@/application/store/store.ts";
+import type {RootState} from "@/infrastructure/store/store.ts";
 
 export default function useTranslation() {
     const {currentLocale, isInitialized} = useSelector((state: RootState) => state.localization);

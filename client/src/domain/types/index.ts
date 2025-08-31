@@ -1,1 +1,2 @@
-export type {HeaderProps} from "./HeaderProps";
+export {DomainError} from "./DomainError.ts";
+export {InventoryError} from "./InventoryError.ts";

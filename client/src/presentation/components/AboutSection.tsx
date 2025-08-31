@@ -1,4 +1,4 @@
-import {ABOUT_SECTION_KEYS} from "@/application/messages/messages.ts";
+import {ABOUT_SECTION_KEYS} from "@/shared/messages/messages.ts";
 
 import AnimatedCounter from "@/components/AnimatedCounter.tsx";
 

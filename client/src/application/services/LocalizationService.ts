@@ -1,7 +1,7 @@
 import type {ILocalizationService} from "@/domain/services";
 import {Locale} from "@/domain/entities";
 import type {Store} from "@reduxjs/toolkit";
-import {initializeLocalization, setLocale} from "@/application/store/slices/localizationSlice.ts";
+import {initializeLocalization, setLocale} from "@/infrastructure/store/slices/localizationSlice.ts";
 
 export class LocalizationService implements ILocalizationService {
     private store: Store;

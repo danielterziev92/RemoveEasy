@@ -1,6 +1,6 @@
 import {CheckCircle, Phone, Truck} from "lucide-react";
 
-import {HERO_SECTION_KEYS} from "@/application/messages/messages";
+import {HERO_SECTION_KEYS} from "@/shared/messages/messages";
 import {Button} from "@/components/ui/button.tsx";
 import {Card, CardContent} from "@/components/ui/card.tsx";
 
