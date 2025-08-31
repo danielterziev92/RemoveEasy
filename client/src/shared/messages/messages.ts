@@ -3,6 +3,7 @@ import {createTranslationKeysAdapter} from "@/shared/localization/createTranslat
 import type {
     IAboutSectionMessages,
     IContactSectionMessages,
+    IFooterMessages,
     IHeroSectionMessages,
     IHowItWorksSectionMessages,
     IReviewSectionMessages,
@@ -17,3 +18,4 @@ export const WHY_CHOOSE_US_SECTION_KEYS: IWhyChooseUsSectionMessages = createTra
 export const HOW_IT_WORKS_SECTION_KEYS: IHowItWorksSectionMessages = createTranslationKeysAdapter<IHowItWorksSectionMessages>("howItWorksSection");
 export const REVIEW_SECTION_KEYS: IReviewSectionMessages = createTranslationKeysAdapter<IReviewSectionMessages>("reviewSection");
 export const CONTACT_SECTION_KEYS: IContactSectionMessages = createTranslationKeysAdapter<IContactSectionMessages>("contactSection");
+export const FOOTER_KEYS: IFooterMessages = createTranslationKeysAdapter<IFooterMessages>("footer");

@@ -176,4 +176,21 @@ export const bg = {
         ukWideCoverage: "Покритие в цяла Великобритания",
         basedInLondon: "Базирани в Лондон"
     },
+    footer: {
+        companyDescription: "Професионални и достъпни услуги за преместване в цяла Великобритания за български и британски клиенти.",
+        quickLinks: "Бързи връзки",
+        aboutUs: "За нас",
+        services: "Услуги",
+        howItWorks: "Как работи",
+        testimonials: "Отзиви",
+        contact: "Контакти",
+        transportOnly: "Само транспорт",
+        transportWithHelpers: "Транспорт с помощници",
+        fullServiceRelocation: "Пълно обслужване",
+        allRightsReserved: "Всички права запазени.",
+        privacyPolicy: "Политика за поверителност",
+        termsOfService: "Общи условия",
+        registeredInEnglandWales: "Регистрирани в Англия и Уелс",
+        cookiesNotice: "Този уебсайт използва бисквитки, за да осигури най-добро потребителско изживяване. Използвайки нашия уебсайт, вие се съгласявате с нашата политика за поверителност."
+    },
 };

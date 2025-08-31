@@ -170,4 +170,21 @@ export const en = {
         ukWideCoverage: "UK-wide coverage",
         basedInLondon: "Based in London"
     },
+    footer: {
+        companyDescription: "Professional and affordable relocation services across the UK for Bulgarian and British clients.",
+        quickLinks: "Quick Links",
+        aboutUs: "About Us",
+        services: "Services",
+        howItWorks: "How It Works",
+        testimonials: "Testimonials",
+        contact: "Contact",
+        transportOnly: "Transport Only",
+        transportWithHelpers: "Transport with Helpers",
+        fullServiceRelocation: "Full-Service Relocation",
+        allRightsReserved: "All rights reserved.",
+        privacyPolicy: "Privacy Policy",
+        termsOfService: "Terms of Service",
+        registeredInEnglandWales: "Registered in England & Wales",
+        cookiesNotice: "This website uses cookies to ensure you get the best experience. By using our website, you agree to our privacy policy."
+    },
 };

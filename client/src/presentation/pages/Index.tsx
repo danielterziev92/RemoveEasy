@@ -6,6 +6,7 @@ import WhyChooseUsSection from "@/components/WhyChooseUsSection.tsx";
 import ProcessSection from "@/components/ProcessSection.tsx";
 import ReviewSection from "@/components/ui/ReviewSection.tsx";
 import ContactSection from "@/components/ContactSection.tsx";
+import Footer from "@/components/Footer.tsx";
 
 export default function Index() {
     return (
@@ -18,6 +19,7 @@ export default function Index() {
             <ProcessSection/>
             <ReviewSection/>
             <ContactSection/>
+            <Footer/>
         </div>
     );
 }
