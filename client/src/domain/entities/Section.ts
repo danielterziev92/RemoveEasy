@@ -1,4 +1,4 @@
-import type {ISectionErrorMessages} from "../types";
+import type {ISectionErrorMessages} from "@/application/types";
 import type {ITranslationService} from "@/shared/localization/types";
 
 export class Section {

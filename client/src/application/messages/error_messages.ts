@@ -6,7 +6,7 @@ import type {
     IInventoryServiceErrorMessages,
     IItemErrorMessages,
     ISectionErrorMessages
-} from "@/domain/types";
+} from "@/application/types";
 
 export const ITEM_ERROR_KEYS: IItemErrorMessages = createTranslationKeysAdapter<IItemErrorMessages>('item.errors');
 

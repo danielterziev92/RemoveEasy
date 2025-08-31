@@ -1,5 +1,7 @@
 import type {Section} from "./Section";
-import type {IItemErrorMessages} from "../types";
+
+import type {IItemErrorMessages} from "@/application/types";
+
 import type {ITranslationService} from "@/shared/localization/types";
 
 export class Item {

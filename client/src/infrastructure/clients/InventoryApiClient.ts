@@ -1,8 +1,10 @@
-import {API_CONFIG} from "@/shared/constants/api.ts";
+import type {IInventoryApiErrorMessages} from "@/application/types";
+
 import type {InventoryApiResponse} from "../types";
-import type {IInventoryApiErrorMessages} from "@/domain/types";
-import type {ITranslationService} from "@/shared/localization/types";
 import {ApiException, ClientErrorException, ServerErrorException} from "../exceptions";
+
+import type {ITranslationService} from "@/shared/localization/types";
+import {API_CONFIG} from "@/shared/constants/api.ts";
 
 export class InventoryApiClient {
     private readonly baseUrl: string;
