@@ -1,4 +1,5 @@
-import {HeaderViewService, NavigationService} from "@/application/services";
+import {NavigationService} from "@/application/services";
+import {HeaderViewService} from "@/presentation/services";
 
 class HeaderContainer {
     private _navigationService: NavigationService | null = null;
