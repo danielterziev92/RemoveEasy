@@ -156,5 +156,11 @@ export const bg = {
         // Moving Day Step
         movingDayTitle: "Ден на преместване",
         movingDayDescription: "Нашият екип пристига по график, за да извърши вашето преместване ефективно, обработвайки вещите ви с изключително внимание."
+    },
+    reviewSection: {
+        sectionTitle: "Какво казват нашите клиенти",
+        sectionDescription: "Не приемайте само нашата дума. Ето какво казват някои от нашите доволни клиенти за опита си с Re Move Easy.",
+        bulgarianCustomer: "Български клиент",
+        britishCustomer: "Британски клиент"
     }
 };

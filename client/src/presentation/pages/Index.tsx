@@ -4,6 +4,7 @@ import AboutSection from "@/components/AboutSection.tsx";
 import ServicesSection from "@/components/ServicesSection.tsx";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection.tsx";
 import ProcessSection from "@/components/ProcessSection.tsx";
+import ReviewSection from "@/components/ui/ReviewSection.tsx";
 
 export default function Index() {
     return (
@@ -14,6 +15,7 @@ export default function Index() {
             <ServicesSection/>
             <WhyChooseUsSection/>
             <ProcessSection/>
+            <ReviewSection/>
         </div>
     );
 }
