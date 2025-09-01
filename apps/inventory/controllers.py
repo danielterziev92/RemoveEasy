@@ -21,16 +21,17 @@ class InventoryController(ControllerBase):
             section_items = []
             for item in section.items.all():
                 section_items.append({
-                    'id': item.id,
-                    'icon_class': item.icon_class,
-                    'title_bg': item.title_bg,  # type: ignore
-                    'title_en': item.title_en,  # type: ignore
+                    "id": item.id,
+                    "icon_class": item.icon_class,
+                    "title_bg": item.title_bg,  # type: ignore
+                    "title_en": item.title_en,  # type: ignore
                 })
 
             sections_data.append({
-                'icon_class': section.icon_class,
-                'title_bg': section.title_bg,  # type: ignore
-                'title_en': section.title_en,  # type: ignore
-                'items': section_items
+                "id": section.id,
+                "icon_class": section.icon_class,
+                "title_bg": section.title_bg,  # type: ignore
+                "title_en": section.title_en,  # type: ignore
+                "items": section_items
             })
         return InventorySectionsResponseSchema(sections=sections_data)

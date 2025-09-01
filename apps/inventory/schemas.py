@@ -1,18 +1,20 @@
 from ninja import Schema
 
 
-class InventorySectionResponseSchema(Schema):
+class InventoryItemInSectionSchema(Schema):
     id: int
     icon_class: str
-    title: str
+    title_bg: str
+    title_en: str
 
 
-class InventoryItemResponseSchema(Schema):
+class InventorySectionWithItemsSchema(Schema):
     id: int
     icon_class: str
-    title: str
-    section: InventorySectionResponseSchema
+    title_bg: str
+    title_en: str
+    items: list[InventoryItemInSectionSchema]
 
 
-class InventoryItemsResponseSchema(Schema):
-    items: list[InventoryItemResponseSchema]
+class InventorySectionsResponseSchema(Schema):
+    sections: list[InventorySectionWithItemsSchema]
