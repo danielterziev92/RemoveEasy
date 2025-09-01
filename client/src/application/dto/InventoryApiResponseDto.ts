@@ -40,7 +40,8 @@ export class InventoryApiResponseDto {
                                 itemData,
                                 section,
                                 itemErrorMessages,
-                                translationService
+                                translationService,
+                                localizationService
                             );
                             items.push(item);
                         } catch (error) {

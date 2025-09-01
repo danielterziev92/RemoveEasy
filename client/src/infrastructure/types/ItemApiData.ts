@@ -1,5 +1,6 @@
 export interface ItemApiData {
     id: number;
     icon_class: string;
-    title: string;
+    title_bg: string;
+    title_en: string;
 }
