@@ -1,7 +1,5 @@
-import type {IInventoryApiErrorMessages} from "@/application/types";
-
-import type {InventoryApiResponse} from "../types";
-import {ApiException, ClientErrorException, ServerErrorException} from "../exceptions";
+import type {IInventoryApiErrorMessages, InventoryApiResponse} from "@/infrastructure/types";
+import {ApiException, ClientErrorException, ServerErrorException} from "@/infrastructure/exceptions";
 
 import type {ITranslationService} from "@/shared/localization/types";
 import {API_CONFIG} from "@/shared/constants/api.ts";
@@ -99,7 +97,8 @@ export class InventoryApiClient {
             const sectionObj = section as Record<string, unknown>;
 
             if (typeof sectionObj.icon_class !== 'string' ||
-                typeof sectionObj.title !== 'string' ||
+                typeof sectionObj.title_bg !== 'string' ||
+                typeof sectionObj.title_en !== 'string' ||
                 !Array.isArray(sectionObj.items)) {
                 throw new Error(`${this.translationService.t(this.errorMessages.invalidSectionStructureAtIndex)} ${index}`);
             }
@@ -113,7 +112,8 @@ export class InventoryApiClient {
 
                 if (typeof itemObj.id !== 'number' ||
                     typeof itemObj.icon_class !== 'string' ||
-                    typeof itemObj.title !== 'string') {
+                    typeof itemObj.title_bg !== 'string' ||
+                    typeof itemObj.title_en !== 'string') {
                     throw new Error(`${this.translationService.t(this.errorMessages.invalidItemStructureAtIndex)} ${index}, item ${itemIndex}`);
                 }
             });

@@ -1,4 +1,5 @@
 import {Item, Section} from "@/domain/entities";
+import type {ILocalizationService} from "@/domain/services";
 
 import type {IInventoryServiceErrorMessages, IItemErrorMessages, ISectionErrorMessages} from "@/application/types";
 
@@ -12,7 +13,8 @@ export class InventoryApiResponseDto {
         errorMessages: IInventoryServiceErrorMessages,
         sectionErrorMessages: ISectionErrorMessages,
         itemErrorMessages: IItemErrorMessages,
-        translationService: ITranslationService
+        translationService: ITranslationService,
+        localizationService: ILocalizationService
     ): { sections: Section[]; items: Item[] } {
         const sections: Section[] = [];
         const items: Item[] = [];
@@ -26,7 +28,8 @@ export class InventoryApiResponseDto {
                 const section = Section.fromApiData(
                     sectionData,
                     sectionErrorMessages,
-                    translationService
+                    translationService,
+                    localizationService
                 );
                 sections.push(section);
 
