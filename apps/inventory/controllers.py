@@ -1,30 +1,36 @@
+from django.db.models import Prefetch
 from ninja_extra import ControllerBase, api_controller, http_get
 
-from apps.inventory.models import InventoryItem
-from apps.inventory.schemas import InventoryItemsResponseSchema
+from apps.inventory.models import InventoryItem, InventorySection
+from apps.inventory.schemas import InventorySectionsResponseSchema
 
 
 @api_controller("/inventory")
 class InventoryController(ControllerBase):
 
-    @http_get("/items", response=InventoryItemsResponseSchema)
+    @http_get("/items", response=InventorySectionsResponseSchema)
     def get_all_items(self):
         """Get all inventory items sorted by section title in ascending order."""
-        # Query all items with their sections, ordered by section title
-        items = InventoryItem.objects.select_related('section').order_by('section__title')
+        sections = InventorySection.objects.prefetch_related(
+            Prefetch("items", queryset=InventoryItem.objects.all())
+        ).order_by("title")
 
         # Convert to response format
-        items_data = []
-        for item in items:
-            items_data.append({
-                'id': item.id,
-                'icon_class': item.icon_class,
-                'title': item.title,
-                'section': {
-                    'id': item.section.id,
-                    'icon_class': item.section.icon_class,
-                    'title': item.section.title,
-                }
-            })
+        sections_data = []
+        for section in sections:
+            section_items = []
+            for item in section.items.all():
+                section_items.append({
+                    'id': item.id,
+                    'icon_class': item.icon_class,
+                    'title_bg': item.title_bg,  # type: ignore
+                    'title_en': item.title_en,  # type: ignore
+                })
 
-        return InventoryItemsResponseSchema(items=items_data)
+            sections_data.append({
+                'icon_class': section.icon_class,
+                'title_bg': section.title_bg,  # type: ignore
+                'title_en': section.title_en,  # type: ignore
+                'items': section_items
+            })
+        return InventorySectionsResponseSchema(sections=sections_data)
