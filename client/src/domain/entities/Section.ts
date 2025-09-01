@@ -3,9 +3,11 @@ import type {ITranslationService} from "@/shared/localization/types";
 import type {ILocalizationService} from "@/domain/services";
 
 export class Section {
+    public static readonly MIN_ID = 1;
     public static readonly MIN_STRING_LENGTH = 1;
     public static readonly MAX_STRING_LENGTH = 100;
 
+    readonly id: number;
     readonly icon_class: string;
     readonly title_bg: string;
     readonly title_en: string;
@@ -14,6 +16,7 @@ export class Section {
     private localizationService: ILocalizationService;
 
     constructor(
+        id: number,
         icon_class: string,
         title_bg: string,
         title_en: string,
@@ -25,8 +28,9 @@ export class Section {
         this.translationService = translationService;
         this.localizationService = localizationService;
 
-        this.validate(icon_class, title_bg, title_en);
+        this.validate(id, icon_class, title_bg, title_en);
 
+        this.id = id;
         this.icon_class = icon_class;
         this.title_bg = title_bg;
         this.title_en = title_en;
@@ -34,12 +38,17 @@ export class Section {
 
     /**
      * Validates and assigns the icon class and title values
+     * @param id - The unique identifier of the section
      * @param icon_class - The CSS class name for the section's icon
      * @param title_bg - The Bulgarian title of the section
      * @param title_en - The English title of the section
      * @throws Error if icon_class, title_bg or title_en is invalid
      */
-    private validate(icon_class: string, title_bg: string, title_en: string): void {
+    private validate(id: number, icon_class: string, title_bg: string, title_en: string): void {
+        if (id < Section.MIN_ID) {
+            throw new Error(this.translationService.t(this.errorMessages.sectionIdRequired));
+        }
+
         if (!icon_class || icon_class.trim().length < Section.MIN_STRING_LENGTH) {
             throw new Error(this.translationService.t(this.errorMessages.sectionIconRequired));
         }
@@ -72,7 +81,7 @@ export class Section {
      * @throws Error if data is invalid
      */
     static fromApiData(
-        data: { icon_class: string; title_bg: string; title_en: string },
+        data: { id: number, icon_class: string; title_bg: string; title_en: string },
         errorMessages: ISectionErrorMessages,
         translationService: ITranslationService,
         localizationService: ILocalizationService
@@ -80,7 +89,15 @@ export class Section {
         if (!data || typeof data !== 'object') {
             throw new Error(translationService.t(errorMessages.invalidSectionData));
         }
-        return new Section(data.icon_class, data.title_bg, data.title_en, errorMessages, translationService, localizationService);
+        return new Section(
+            data.id,
+            data.icon_class,
+            data.title_bg,
+            data.title_en,
+            errorMessages,
+            translationService,
+            localizationService
+        );
     }
 
     /**
@@ -104,8 +121,9 @@ export class Section {
      * Converts the section to a plain object
      * @returns An object containing the section's icon_class, title_bg and title_en
      */
-    toObject(): { icon_class: string; title_bg: string; title_en: string } {
+    toObject(): { id: number, icon_class: string; title_bg: string; title_en: string } {
         return {
+            id: this.id,
             icon_class: this.icon_class,
             title_bg: this.title_bg,
             title_en: this.title_en
@@ -118,7 +136,7 @@ export class Section {
      */
     isValid(): boolean {
         try {
-            this.validate(this.icon_class, this.title_bg, this.title_en);
+            this.validate(this.id, this.icon_class, this.title_bg, this.title_en);
             return true;
         } catch {
             return false;
