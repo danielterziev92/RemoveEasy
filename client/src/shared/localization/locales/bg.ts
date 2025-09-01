@@ -1,5 +1,7 @@
 export const bg = {
     inventory: {
+        title: "Инвентар за преместване",
+        description: "Бързо задайте количества за вашите предмети.",
         errors: {
             fetchError: "Грешка при извличане на данни",
             invalidApiResponse: "Невалиден отговор от API",
@@ -193,4 +195,9 @@ export const bg = {
         registeredInEnglandWales: "Регистрирани в Англия и Уелс",
         cookiesNotice: "Този уебсайт използва бисквитки, за да осигури най-добро потребителско изживяване. Използвайки нашия уебсайт, вие се съгласявате с нашата политика за поверителност."
     },
+    inventoryItem: {
+        decrease: "Намали",
+        increase: "Увеличи",
+    },
+    inventorySection: {},
 };

@@ -1,5 +1,7 @@
 export const en = {
     inventory: {
+        title: "Moving Inventory",
+        description: "Quickly set the quantities for your items.",
         errors: {
             fetchError: "Error fetching data",
             invalidApiResponse: "Invalid API response",
@@ -186,5 +188,9 @@ export const en = {
         termsOfService: "Terms of Service",
         registeredInEnglandWales: "Registered in England & Wales",
         cookiesNotice: "This website uses cookies to ensure you get the best experience. By using our website, you agree to our privacy policy."
+    },
+    inventoryItem: {
+        decrease: "Decrease",
+        increase: "Increase",
     },
 };
