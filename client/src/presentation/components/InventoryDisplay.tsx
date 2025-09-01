@@ -1,25 +1,26 @@
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
+import {Toast} from "radix-ui";
 
 import type {RootState} from "@/infrastructure/store/store.ts";
-import {
-    selectError,
-    selectIsLoading,
-    selectItems,
-    selectSections
-} from "@/infrastructure/store/slices/inventorySlice.ts";
+import {selectIsLoading, selectItems, selectSections} from "@/infrastructure/store/slices/inventorySlice.ts";
+
+import InventorySection from "@/components/InventorySection.tsx";
+import useTranslation from "@/hooks/useTranslation.ts";
 
 import {dependencyContainer} from "@/shared/di/DependencyContainer.ts";
-import InventorySection from "@/components/InventorySection.tsx";
+import {INVENTORY_ERROR_KEYS} from "@/shared/messages/error_messages.ts";
 
 export default function InventoryDisplay() {
+    const {t} = useTranslation();
+
     const sections = useSelector((state: RootState) => selectSections(state));
     const items = useSelector((state: RootState) => selectItems(state));
     const isLoading = useSelector((state: RootState) => selectIsLoading(state));
-    const error = useSelector((state: RootState) => selectError(state));
 
     const [openSections, setOpenSections] = useState<Record<number, boolean>>({});
     const [quantities, setQuantities] = useState<Record<number, number>>({});
+    const [showNoItemsToast, setShowNoItemsToast] = useState(false);
 
     useEffect(() => {
         const loadInventory = async () => {
@@ -34,6 +35,12 @@ export default function InventoryDisplay() {
             loadInventory();
         }
     }, [sections.length, isLoading]);
+
+    useEffect(() => {
+        if (!isLoading && sections.length > 0 && items.length === 0) {
+            setShowNoItemsToast(true);
+        }
+    }, [isLoading, sections.length, items.length]);
 
     const toggleSection = (sectionId: number) => {
         setOpenSections(prev => ({
@@ -75,6 +82,26 @@ export default function InventoryDisplay() {
                     />
                 );
             })}
+
+            <Toast.Root
+                className="bg-destructive text-destructive-foreground rounded-md p-4 shadow-lg border"
+                open={showNoItemsToast}
+                onOpenChange={setShowNoItemsToast}
+                duration={5000}
+            >
+                <Toast.Title className="font-semibold text-sm">
+                    Грешка
+                </Toast.Title>
+                <Toast.Description className="text-sm mt-1">
+                    {t(INVENTORY_ERROR_KEYS.noItemsFound)}
+                </Toast.Description>
+                <Toast.Close
+                    className="absolute top-2 right-2 text-destructive-foreground/50 hover:text-destructive-foreground"
+                    aria-label="Затвори"
+                >
+                    ×
+                </Toast.Close>
+            </Toast.Root>
         </>
     );
 }

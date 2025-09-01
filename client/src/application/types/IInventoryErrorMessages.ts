@@ -3,4 +3,5 @@ export interface IInventoryErrorMessages {
     invalidInventoryData: string;
     storeNotAvailable: string;
     dataFetchFailed: string;
+    noItemsFound: string;
 }

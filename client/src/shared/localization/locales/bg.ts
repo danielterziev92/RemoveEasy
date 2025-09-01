@@ -8,6 +8,7 @@ export const bg = {
             skippedInvalidItem: "Пропуснат невалиден елемент:",
             skippedInvalidSection: "Пропусната невалидна секция:",
             noValidSections: "Няма валидни секции в отговора",
+            noItemsFound: "Няма добавени предмети в инвентара",
             invalidSectionTitle: "Невалиден заглавие на секция",
             storeNotAvailable: "Store не е достъпен",
             invalidInventoryData: "Невалидни данни за инвентар"

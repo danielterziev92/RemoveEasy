@@ -8,6 +8,7 @@ export const en = {
             skippedInvalidItem: "Skipped invalid item:",
             skippedInvalidSection: "Skipped invalid section:",
             noValidSections: "No valid sections in response",
+            noItemsFound: "No items added to inventory",
             invalidSectionTitle: "Invalid section title",
             storeNotAvailable: "Store is not available",
             invalidInventoryData: "Invalid inventory data"
