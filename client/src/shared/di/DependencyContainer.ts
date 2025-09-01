@@ -120,7 +120,8 @@ export class DependencyContainer {
             errorMessages.inventoryService,
             errorMessages.section,
             errorMessages.item,
-            this._translationService
+            this._translationService,
+            this._localizationService
         );
 
         this._storeInventoryUseCase = new StoreInventoryUseCase(

@@ -1,4 +1,5 @@
 import {Item, Section} from "@/domain/entities";
+import type {ILocalizationService} from "@/domain/services";
 
 import type {InventoryApiClient} from "@/infrastructure/clients";
 import {InventoryApiResponseDto} from "@/application/dto";
@@ -11,20 +12,22 @@ export class FetchInventoryUseCase {
     private readonly sectionErrorMessages: ISectionErrorMessages;
     private readonly itemErrorMessages: IItemErrorMessages;
     private readonly translationService: ITranslationService;
-
+    private readonly localizationService: ILocalizationService;
 
     constructor(
         apiClient: InventoryApiClient,
         errorMessages: IInventoryServiceErrorMessages,
         sectionErrorMessages: ISectionErrorMessages,
         itemErrorMessages: IItemErrorMessages,
-        translationService: ITranslationService
+        translationService: ITranslationService,
+        localizationService: ILocalizationService
     ) {
         this.apiClient = apiClient;
         this.errorMessages = errorMessages;
         this.sectionErrorMessages = sectionErrorMessages;
         this.itemErrorMessages = itemErrorMessages;
         this.translationService = translationService;
+        this.localizationService = localizationService;
     }
 
     async execute(): Promise<{ sections: Section[]; items: Item[] }> {
@@ -35,7 +38,8 @@ export class FetchInventoryUseCase {
             this.errorMessages,
             this.sectionErrorMessages,
             this.itemErrorMessages,
-            this.translationService
+            this.translationService,
+            this.localizationService
         );
     }
 }
