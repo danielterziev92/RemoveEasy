@@ -2,6 +2,15 @@ export const bg = {
     inventory: {
         title: "Инвентар за преместване",
         description: "Бързо задайте количества за вашите предмети.",
+        additionalText: "Допълнителен контекст",
+        additionalTextLabel: "Добавете допълнителен контекст",
+        additionalTextOptional: "(по желание)",
+        additionalTextTextareaPlaceholder: "Напр., размери на вещи, наличие на асансьор, стълби, паркиране, чупливи предмети и др.",
+        formTitleLoading: "Адрес за товарене",
+        formTitleUnloading: "Адрес за разтоварване",
+        finalizeOrder: "Финализиране на поръчката",
+        sendRequest: "Изпрати заявка",
+        sendingRequest: "Изпращане...",
         errors: {
             fetchError: "Грешка при извличане на данни",
             invalidApiResponse: "Невалиден отговор от API",
@@ -200,5 +209,11 @@ export const bg = {
         decrease: "Намали",
         increase: "Увеличи",
     },
-    inventorySection: {},
+    inventoryAddressForm: {
+        town: "Град",
+        postalCode: "Пощенски код",
+        street: "Име на улицата",
+        buildingNumber: "Номер на сграда/къща",
+        address: "Апартамент, вход, етаж",
+    },
 };

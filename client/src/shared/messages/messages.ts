@@ -6,6 +6,7 @@ import type {
     IFooterMessages,
     IHeroSectionMessages,
     IHowItWorksSectionMessages,
+    IInventoryAddressForm,
     IInventoryItemMessages,
     IInventoryMessages,
     IReviewSectionMessages,
@@ -23,3 +24,4 @@ export const CONTACT_SECTION_KEYS: IContactSectionMessages = createTranslationKe
 export const FOOTER_KEYS: IFooterMessages = createTranslationKeysAdapter<IFooterMessages>("footer");
 export const INVENTORY_ITEM_KEYS: IInventoryItemMessages = createTranslationKeysAdapter<IInventoryItemMessages>("inventoryItem");
 export const INVENTORY_KEYS: IInventoryMessages = createTranslationKeysAdapter<IInventoryMessages>("inventory");
+export const INVENTORY_ADDRESS_FORM = createTranslationKeysAdapter<IInventoryAddressForm>("inventoryAddressForm");

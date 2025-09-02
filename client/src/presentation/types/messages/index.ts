@@ -8,3 +8,4 @@ export type {IContactSectionMessages} from "./IContactSectionMessages";
 export type {IFooterMessages} from "./IFooterMessages";
 export type {IInventoryItemMessages} from "./IInventoryItemMessages";
 export type {IInventoryMessages} from "./IInventoryMessages";
+export type {IInventoryAddressForm} from "./IInventoryAddressForm";

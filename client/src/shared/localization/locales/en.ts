@@ -2,6 +2,15 @@ export const en = {
     inventory: {
         title: "Moving Inventory",
         description: "Quickly set the quantities for your items.",
+        additionalText: "Additional context",
+        additionalTextLabel: "Feel free to add additional context",
+        additionalTextOptional: "(optional)",
+        additionalTextTextareaPlaceholder: "E.g., item dimensions, elevator availability, stairs, parking, fragile items, etc.",
+        formTitleLoading: "Loading Address",
+        formTitleUnloading: "Unloading Address",
+        finalizeOrder: "Finalize Order",
+        sendRequest: "Submit Request",
+        sendingRequest: "Sending...",
         errors: {
             fetchError: "Error fetching data",
             invalidApiResponse: "Invalid API response",
@@ -193,5 +202,12 @@ export const en = {
     inventoryItem: {
         decrease: "Decrease",
         increase: "Increase",
+    },
+    inventoryAddressForm: {
+        town: "City",
+        postalCode: "Postal code",
+        street: "Street name",
+        buildingNumber: "Building/House number",
+        address: "Address",
     },
 };
