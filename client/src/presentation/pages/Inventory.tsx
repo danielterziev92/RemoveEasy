@@ -1,12 +1,13 @@
 import {type ChangeEvent, type FormEvent, useCallback, useState} from "react";
 import {Toast} from "radix-ui";
 
-import {Boxes} from "lucide-react";
+import {Boxes, X} from "lucide-react";
 
 import Header from "@/components/Header.tsx";
 import InventoryDisplay from "@/components/InventoryDisplay.tsx";
 import {Card, CardContent} from "@/components/ui/card.tsx";
 import {Label} from "@/components/ui/label.tsx";
+import {Input} from "@/components/ui/input.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import AddressForm from "@/components/AddressForm.tsx";
 import useTranslation from "@/hooks/useTranslation.ts";
@@ -14,7 +15,6 @@ import useTranslation from "@/hooks/useTranslation.ts";
 import type {AddressFormData, SubmitState} from "@/presentation/types";
 
 import {INVENTORY_CUSTOMER_FORM, INVENTORY_KEYS} from "@/shared/messages/messages.ts";
-import {Input} from "@/components/ui/input.tsx";
 
 export default function Inventory() {
     const {t} = useTranslation();
@@ -45,6 +45,8 @@ export default function Inventory() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [_, setSubmitState] = useState<SubmitState | null>(null);
     const [selectedItems, setSelectedItems] = useState<Array<{ itemId: number, quantity: number }>>([]);
+    const [showValidationError, setShowValidationError] = useState(false);
+    const [validationErrorMessage, setValidationErrorMessage] = useState("");
 
     const handleSelectedItemsChange = useCallback((items: Array<{ itemId: number, quantity: number }>) => {
         setSelectedItems(items);
@@ -72,8 +74,42 @@ export default function Inventory() {
         }));
     };
 
+    const validateForm = () => {
+        if (selectedItems.length === 0) {
+            setValidationErrorMessage("Трябва да изберете поне 1 продукт за да продължите.");
+            setShowValidationError(true);
+            return false;
+        }
+
+        if (loadingAddressData.town === unloadingAddressData.town &&
+            loadingAddressData.postal_code === unloadingAddressData.postal_code &&
+            loadingAddressData.street === unloadingAddressData.street &&
+            loadingAddressData.house_number === unloadingAddressData.house_number &&
+            loadingAddressData.address === unloadingAddressData.address &&
+            loadingAddressData.town !== "" && loadingAddressData.street !== "") {
+
+            setValidationErrorMessage("Адресът за товарене не може да бъде същият като адреса за разтоварване.");
+            setShowValidationError(true);
+            return false;
+        }
+
+        // Специална проверка за улиците
+        if (loadingAddressData.street && unloadingAddressData.street &&
+            loadingAddressData.street === unloadingAddressData.street &&
+            loadingAddressData.town === unloadingAddressData.town) {
+
+            setValidationErrorMessage("Улицата за товарене не може да бъде същата като улицата за разтоварване в същия град.");
+            setShowValidationError(true);
+            return false;
+        }
+
+        return true;
+    };
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault(); // Предотвратяваме refresh-а
+        e.preventDefault();
+
+        if (!validateForm()) return;
 
         setIsSubmitting(true);
         setSubmitState(null);
@@ -100,15 +136,13 @@ export default function Inventory() {
             // Симулираме API заявка
             await new Promise(resolve => setTimeout(resolve, 1000));
 
-            // Тук ще направите реалната API заявка
             console.log('Submitting form data:', apiData);
 
             setSubmitState({
                 success: true,
-                message: 'Формата е подадена успешно!'
+                message: t(INVENTORY_KEYS.successMessage)
             });
 
-            // Опционално: изчистете формата след успешно изпращане
             // setLoadingAddressData({...});
             // setUnloadingAddressData({...});
             // setAdditionalContext('');
@@ -116,7 +150,7 @@ export default function Inventory() {
         } catch {
             setSubmitState({
                 success: false,
-                message: 'Възникна грешка при подаването на формата'
+                message: t(INVENTORY_KEYS.errorMessage)
             });
         } finally {
             setIsSubmitting(false);
@@ -237,6 +271,27 @@ export default function Inventory() {
                     </div>
                 </main>
             </div>
+
+            <Toast.Root
+                className="bg-destructive text-destructive-foreground rounded-md p-4 shadow-lg border relative"
+                open={showValidationError}
+                onOpenChange={setShowValidationError}
+                duration={5000}
+            >
+                <Toast.Title className="font-semibold text-sm">
+                    {t(INVENTORY_KEYS.validationErrorTitle)}
+                </Toast.Title>
+                <Toast.Description className="text-sm mt-1">
+                    {validationErrorMessage}
+                </Toast.Description>
+                <Toast.Close
+                    className="absolute top-2 right-2 text-destructive-foreground hover:text-destructive-foreground/50 w-4 h-4 flex items-center justify-center"
+                    aria-label="Затвори"
+                >
+                    <X className="w-4 h-4"/>
+                </Toast.Close>
+            </Toast.Root>
+
             <Toast.Viewport
                 className="[--viewport-padding:_25px] fixed bottom-0 right-0 flex flex-col p-[var(--viewport-padding)] gap-[10px] w-[390px] max-w-[100vw] m-0 list-none z-[2147483647] outline-none"/>
         </Toast.Provider>

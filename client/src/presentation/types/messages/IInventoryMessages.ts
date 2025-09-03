@@ -10,4 +10,9 @@ export interface IInventoryMessages {
     finalizeOrder: string;
     sendRequest: string;
     sendingRequest: string;
+    successTitle: string;
+    successMessage: string;
+    errorTitle: string;
+    errorMessage: string;
+    validationErrorTitle: string;
 }

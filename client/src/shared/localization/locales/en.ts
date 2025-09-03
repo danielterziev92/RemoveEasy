@@ -11,6 +11,11 @@ export const en = {
         finalizeOrder: "Finalize Order",
         sendRequest: "Submit Request",
         sendingRequest: "Sending...",
+        successTitle: "Success",
+        successMessage: "Form submitted successfully!",
+        errorTitle: "Error",
+        errorMessage: "An error occurred while submitting the form",
+        validationErrorTitle: "Validation Error",
         errors: {
             fetchError: "Error fetching data",
             invalidApiResponse: "Invalid API response",

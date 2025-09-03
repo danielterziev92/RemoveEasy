@@ -11,6 +11,11 @@ export const bg = {
         finalizeOrder: "Финализиране на поръчката",
         sendRequest: "Изпрати заявка",
         sendingRequest: "Изпращане...",
+        successTitle: "Успех",
+        successMessage: "Формата е подадена успешно!",
+        errorTitle: "Грешка",
+        errorMessage: "Възникна грешка при подаването на формата",
+        validationErrorTitle: "Грешка при валидация",
         errors: {
             fetchError: "Грешка при извличане на данни",
             invalidApiResponse: "Невалиден отговор от API",
