@@ -13,6 +13,7 @@ export const en = {
         sendingRequest: "Sending...",
         successTitle: "Success",
         successMessage: "Form submitted successfully!",
+        successMessageWithOrderId: "Thank you for your trust! We will contact you for confirmation. Your order number is: {orderId}",
         errorTitle: "Error",
         errorMessage: "An error occurred while submitting the form",
         validationErrorTitle: "Validation Error",

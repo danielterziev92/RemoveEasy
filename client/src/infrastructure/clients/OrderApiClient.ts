@@ -1,30 +1,39 @@
-import type {IOrderApiErrorMessages} from "@/presentation/types/messages";
-import type {ITranslationService} from "@/shared/localization/types";
-import type {OrderApiData, OrderApiResponse} from "@/infrastructure/types";
-import {API_CONFIG} from "@/shared/constants/api.ts";
+import type {ILocalizationService} from "@/domain/services";
+
+import type {IOrderApiErrorMessages, OrderApiData, OrderApiResponse, ServerOrderResponse} from "@/infrastructure/types";
 import {ApiException, ClientErrorException, ServerErrorException} from "@/infrastructure/exceptions";
+
+import type {ITranslationService} from "@/shared/localization/types";
+import {API_CONFIG} from "@/shared/constants/api.ts";
 
 export class OrderApiClient {
     private readonly baseUrl: string;
     private readonly errorMessages: IOrderApiErrorMessages;
     private readonly translationService: ITranslationService;
+    private readonly localizationService: ILocalizationService;
 
     constructor(
         baseUrl: string,
         errorMessages: IOrderApiErrorMessages,
-        translationService: ITranslationService
+        translationService: ITranslationService,
+        localizationService: ILocalizationService,
     ) {
         this.baseUrl = baseUrl;
         this.errorMessages = errorMessages;
         this.translationService = translationService;
+        this.localizationService = localizationService;
     }
 
     async createOrder(orderData: OrderApiData): Promise<OrderApiResponse> {
         try {
             this.validateOrderData(orderData);
 
+            const currentLang = this.localizationService.getCurrentLocale();
+            const url = new URL(`${this.baseUrl}${API_CONFIG.ENDPOINTS.CREATE_ORDER}`);
+            url.searchParams.append('lang', currentLang);
+
             const response = await this.fetchWithTimeout(
-                `${this.baseUrl}${API_CONFIG.ENDPOINTS.CREATE_ORDER}`,
+                url.toString(),
                 {
                     method: 'POST',
                     headers: {
@@ -48,10 +57,15 @@ export class OrderApiClient {
                 }
             }
 
-            const data: unknown = await response.json();
-            this.validateOrderResponse(data);
-            return data as OrderApiResponse;
+            const serverResponse: ServerOrderResponse = await response.json();
 
+            this.validateServerResponse(serverResponse);
+
+            return {
+                id: serverResponse.id,
+                success: true,
+                message: 'Order created successfully'
+            };
         } catch (error) {
             if (error instanceof ApiException) {
                 throw error;
@@ -109,22 +123,12 @@ export class OrderApiClient {
         });
     }
 
-    private validateOrderResponse(data: unknown): asserts data is OrderApiResponse {
+    private validateServerResponse(data: ServerOrderResponse): void {
         if (!data || typeof data !== 'object') {
             throw new Error(this.translationService.t(this.errorMessages.invalidResponse));
         }
 
-        const response = data as Record<string, unknown>;
-
-        if (typeof response.success !== 'boolean') {
-            throw new Error(this.translationService.t(this.errorMessages.invalidResponse));
-        }
-
-        if (typeof response.message !== 'string') {
-            throw new Error(this.translationService.t(this.errorMessages.invalidResponse));
-        }
-
-        if (response.orderId !== undefined && typeof response.orderId !== 'string') {
+        if (data.id.trim().length === 0) {
             throw new Error(this.translationService.t(this.errorMessages.invalidResponse));
         }
     }

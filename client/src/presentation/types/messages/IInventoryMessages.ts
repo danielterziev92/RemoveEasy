@@ -12,6 +12,7 @@ export interface IInventoryMessages {
     sendingRequest: string;
     successTitle: string;
     successMessage: string;
+    successMessageWithOrderId: string;
     errorTitle: string;
     errorMessage: string;
     validationErrorTitle: string;

@@ -12,7 +12,7 @@ export default function useCreateOrder(): UseCreateOrderResult {
 
     const createOrder = async (orderData: OrderApiData): Promise<OrderApiResponse> => {
         setIsLoading(true);
-        setError(null);
+        setError("");
 
         try {
             return await createOrderUseCase.execute(orderData);

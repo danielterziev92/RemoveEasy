@@ -1,7 +1,7 @@
 import {type ChangeEvent, type FormEvent, useCallback, useState} from "react";
 import {Toast} from "radix-ui";
 
-import {Boxes, X} from "lucide-react";
+import {Boxes, X, Copy} from "lucide-react";
 
 import Header from "@/components/Header.tsx";
 import InventoryDisplay from "@/components/InventoryDisplay.tsx";
@@ -50,6 +50,7 @@ export default function Inventory() {
     const [selectedItems, setSelectedItems] = useState<Array<{ itemId: number, quantity: number }>>([]);
     const [showValidationError, setShowValidationError] = useState(false);
     const [validationErrorMessage, setValidationErrorMessage] = useState("");
+    const [orderId, setOrderId] = useState<string | null>(null);
 
     const handleSelectedItemsChange = useCallback((items: Array<{ itemId: number, quantity: number }>) => {
         setSelectedItems(items);
@@ -75,6 +76,15 @@ export default function Inventory() {
             ...prev,
             [field]: value
         }));
+    };
+
+    const copyToClipboard = async (text: string) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            // Можете да добавите допълнителна Toast нотификация за успешно копиране
+        } catch (err) {
+            console.error('Неуспешно копиране в clipboard:', err);
+        }
     };
 
     const validateForm = () => {
@@ -137,23 +147,25 @@ export default function Inventory() {
 
             const response = await createOrder(apiData);
 
-            console.log('Order created successfully:', response);
+            console.log(response)
+            if (response && response.id) {
+                setOrderId(response.id);
+                setSubmitState({
+                    success: true,
+                    message: t(INVENTORY_KEYS.successMessageWithOrderId).replace('{orderId}', response.id)
+                });
+            } else {
+                setSubmitState({
+                    success: true,
+                    message: response.message || t(INVENTORY_KEYS.successMessage)
+                });
+            }
 
-            setSubmitState({
-                success: true,
-                message: response.message || t(INVENTORY_KEYS.successMessage)
-            });
-
-            setCustomerData({fullName: "", phone: "", email: ""});
-            setLoadingAddressData({town: "", postal_code: "", street: "", house_number: "", address: ""});
-            setUnloadingAddressData({town: "", postal_code: "", street: "", house_number: "", address: ""});
-            setAdditionalContext('');
-            setSelectedItems([]);
-
-            setSubmitState({
-                success: true,
-                message: t(INVENTORY_KEYS.successMessage)
-            });
+            // setCustomerData({fullName: "", phone: "", email: ""});
+            // setLoadingAddressData({town: "", postal_code: "", street: "", house_number: "", address: ""});
+            // setUnloadingAddressData({town: "", postal_code: "", street: "", house_number: "", address: ""});
+            // setAdditionalContext('');
+            // setSelectedItems([]);
         } catch {
             setSubmitState({
                 success: false,
@@ -295,6 +307,36 @@ export default function Inventory() {
                 </Toast.Description>
                 <Toast.Close
                     className="absolute top-2 right-2 text-destructive-foreground hover:text-destructive-foreground/50 w-4 h-4 flex items-center justify-center"
+                    aria-label="Затвори"
+                >
+                    <X className="w-4 h-4"/>
+                </Toast.Close>
+            </Toast.Root>
+
+            <Toast.Root
+                className={`${submitState?.success ? 'bg-green-600 text-white' : 'bg-destructive text-destructive-foreground'} rounded-md p-4 shadow-lg border relative`}
+                open={submitState !== null}
+                onOpenChange={(open) => !open && setSubmitState(null)}
+                duration={7000}
+            >
+                <Toast.Title className="font-semibold text-sm">
+                    {submitState?.success ? t(INVENTORY_KEYS.successTitle) : t(INVENTORY_KEYS.errorTitle)}
+                </Toast.Title>
+                <Toast.Description className="text-sm mt-1 pr-8">
+                    {submitState?.message}
+                </Toast.Description>
+                {submitState?.success && orderId && (
+                    <button
+                        onClick={() => copyToClipboard(orderId)}
+                        className="absolute top-2 right-8 hover:opacity-70 w-4 h-4 flex items-center justify-center"
+                        aria-label="Копирай ID на поръчката"
+                        title="Копирай ID на поръчката"
+                    >
+                        <Copy className="w-4 h-4"/>
+                    </button>
+                )}
+                <Toast.Close
+                    className="absolute top-2 right-2 hover:opacity-50 w-4 h-4 flex items-center justify-center"
                     aria-label="Затвори"
                 >
                     <X className="w-4 h-4"/>

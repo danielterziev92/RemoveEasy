@@ -13,6 +13,7 @@ export const bg = {
         sendingRequest: "Изпращане...",
         successTitle: "Успех",
         successMessage: "Формата е подадена успешно!",
+        successMessageWithOrderId: "Благодарим ви за доверието! Ще се свържем с вас за потвърждение. Номерът на вашата поръчка е: {orderId}",
         errorTitle: "Грешка",
         errorMessage: "Възникна грешка при подаването на формата",
         validationErrorTitle: "Грешка при валидация",

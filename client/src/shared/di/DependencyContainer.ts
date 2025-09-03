@@ -123,7 +123,8 @@ export class DependencyContainer {
         this._orderApiClient = new OrderApiClient(
             apiBaseUrl,
             errorMessages.orderApi,
-            this._translationService
+            this._translationService,
+            this._localizationService
         );
 
 
