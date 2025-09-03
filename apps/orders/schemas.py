@@ -1,3 +1,5 @@
+import uuid
+
 from ninja import Schema
 from pydantic import BaseModel, Field
 
@@ -73,24 +75,14 @@ class OrderCreateSchema(BaseModel):
         description="Description of the order"
     )
 
-    items: list[int] = Field(
+    items: list[dict[str, int]] = Field(
         description="List of item IDs to be ordered"
     )
 
 
 class OrderResponseSchema(Schema):
-    id: int
-    customer_full_name: str
-    phone_number: str
-    email: str
-    loading_town: str
-    loading_postal_code: str
-    loading_street: str
-    loading_house_number: str
-    loading_address: str
-    unloading_town: str
-    unloading_postal_code: str
-    unloading_street: str
-    unloading_house_number: str
-    unloading_address: str
-    description: str
+    id: uuid.UUID
+
+
+class OrderErrorResponseSchema(Schema):
+    detail: str
