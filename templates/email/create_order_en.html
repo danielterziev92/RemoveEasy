@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Re Move Easy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4F7CFF, #6B8FFF);
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .content {
+            padding: 30px 25px;
+        }
+
+        .order-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .order-header h2 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .order-id {
+            background: #f8f9fa;
+            border: 2px solid #4F7CFF;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #4F7CFF;
+            font-size: 16px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .status-confirmed {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #b8daff;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .order-details {
+            margin: 25px 0;
+        }
+
+        .detail-section {
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #4F7CFF;
+        }
+
+        .detail-section h3 {
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-section h3::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #4F7CFF;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 8px;
+            padding: 4px 0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+            min-width: 140px;
+            flex-shrink: 0;
+        }
+
+        .detail-value {
+            color: #333;
+            flex: 1;
+        }
+
+        .address-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .address-box {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+        }
+
+        .address-title {
+            font-weight: bold;
+            color: #4F7CFF;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .description-box {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .contact-info {
+            margin-bottom: 15px;
+        }
+
+        .contact-item {
+            display: inline-block;
+            margin: 0 15px;
+            font-size: 14px;
+        }
+
+        .footer-note {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 15px;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 600px) {
+            .email-container {
+                margin: 10px;
+                border-radius: 0;
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+
+            .address-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .detail-row {
+                flex-direction: column;
+            }
+
+            .detail-label {
+                min-width: auto;
+                margin-bottom: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">🚛</div>
+                <div class="logo-text">
+                    <h1>Re Move Easy</h1>
+                    <p>MEN & VAN SERVICES</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="order-header">
+                <h2>Thank you for your order!</h2>
+                <p>Your order has been successfully received and is being processed.</p>
+
+                <div class="order-id">
+                    Order # {{ order.id }}
+                </div>
+
+                <span class="status-badge status-{{ order.status|lower }}">
+                    {% if order.status == 'PENDING' %}
+                        Pending
+                    {% elif order.status == 'CONFIRMED' %}
+                        Confirmed
+                    {% elif order.status == 'COMPLETED' %}
+                        Completed
+                    {% else %}
+                        {{ order.status }}
+                    {% endif %}
+                </span>
+            </div>
+
+            <div class="detail-section">
+                <h3>Contact Information</h3>
+                <div class="detail-row">
+                    <div class="detail-label">Name:</div>
+                    <div class="detail-value">{{ order.customer_full_name }}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Phone:</div>
+                    <div class="detail-value">{{ order.phone_number }}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email:</div>
+                    <div class="detail-value">{{ order.email }}</div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h3>Loading and Unloading Addresses</h3>
+                <div class="address-grid">
+                    <div class="address-box">
+                        <div class="address-title">📤 Loading from:</div>
+                        <div><strong>{{ order.loading_town }}</strong></div>
+                        <div>{{ order.loading_street }} {{ order.loading_house_number }}</div>
+                        <div>{{ order.loading_postal_code }}</div>
+                        {% if order.loading_address %}
+                            <div style="margin-top: 8px; font-size: 12px; color: #666;">
+                                {{ order.loading_address }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="address-box">
+                        <div class="address-title">📥 Unloading to:</div>
+                        <div><strong>{{ order.unloading_town }}</strong></div>
+                        <div>{{ order.unloading_street }} {{ order.unloading_house_number }}</div>
+                        <div>{{ order.unloading_postal_code }}</div>
+                        {% if order.unloading_address %}
+                            <div style="margin-top: 8px; font-size: 12px; color: #666;">
+                                {{ order.unloading_address }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% if order.description %}
+            <div class="detail-section">
+                <h3>Additional Information</h3>
+                <div class="description-box">
+                    {{ order.description }}
+                </div>
+            </div>
+            {% endif %}
+
+            <div style="text-align: center; margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                <p><strong>What happens next?</strong></p>
+                <p style="margin-top: 10px; color: #666;">
+                    Our team will contact you shortly to finalize the details
+                    and arrange the timing for your moving service.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="contact-info">
+                <div class="contact-item">📞 0740521912</div>
+                <div class="contact-item">💬 WhatsApp</div>
+            </div>
+
+            <div class="footer-note">
+                <p><strong>Re Move Easy</strong> - Reliable and secure moving services</p>
+                <p>Affordable and reliable transportation and moving services across the UK
+                for Bulgarian and British clients.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
