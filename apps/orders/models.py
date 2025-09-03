@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 from apps.inventory.models import InventoryItem
@@ -5,6 +7,12 @@ from apps.orders.manager import OrderManager
 
 
 class Order(models.Model):
+    class OrderStatusEnum(models.TextChoices):
+        PENDING = "pending", "В очакване"
+        IN_PROGRESS = "in_progress", "В процес"
+        COMPLETED = "completed", "Завършена"
+        CANCELLED = "cancelled", "Отказана"
+
     CUSTOMER_FULL_NAME_MAX_LENGTH = 200
     PHONE_NUMBER_MAX_LENGTH = 15
     LOADING_TOWN_MAX_LENGTH = 100
@@ -17,6 +25,19 @@ class Order(models.Model):
     UNLOADING_STREET_MAX_LENGTH = 200
     UNLOADING_HOUSE_NUMBER_MAX_LENGTH = 100
     UNLOADING_ADDRESS_MAX_LENGTH = 200
+
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
+    )
+
+    status = models.CharField(
+        max_length=max(len(x) for x, _ in OrderStatusEnum.choices),
+        choices=OrderStatusEnum.choices,
+        default=OrderStatusEnum.PENDING,
+        null=False,
+    )
 
     customer_full_name = models.CharField(
         max_length=CUSTOMER_FULL_NAME_MAX_LENGTH,
@@ -86,12 +107,6 @@ class Order(models.Model):
         null=True,
     )
 
-    items = models.ManyToManyField(
-        InventoryItem,
-        related_name="orders",
-        blank=True,
-    )
-
     objects = OrderManager()
 
     def __str__(self):
@@ -101,3 +116,26 @@ class Order(models.Model):
         db_table = "orders"
         verbose_name = "Поръчка"
         verbose_name_plural = "Поръчки"
+
+
+class OrderItem(models.Model):
+    item = models.ForeignKey(
+        InventoryItem,
+        on_delete=models.CASCADE,
+        related_name="order_items",
+    )
+
+    quantity = models.PositiveIntegerField(
+        null=False,
+    )
+
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name="order_items",
+    )
+
+    class Meta:
+        db_table = "order_items"
+        verbose_name = "Предмет в поръчка"
+        verbose_name_plural = "Предмети в поръчки"
