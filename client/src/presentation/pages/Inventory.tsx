@@ -76,7 +76,7 @@ export default function Inventory() {
 
     const validateForm = () => {
         if (selectedItems.length === 0) {
-            setValidationErrorMessage("Трябва да изберете поне 1 продукт за да продължите.");
+            setValidationErrorMessage(INVENTORY_KEYS.validationSelectProducts);
             setShowValidationError(true);
             return false;
         }
@@ -88,17 +88,16 @@ export default function Inventory() {
             loadingAddressData.address === unloadingAddressData.address &&
             loadingAddressData.town !== "" && loadingAddressData.street !== "") {
 
-            setValidationErrorMessage("Адресът за товарене не може да бъде същият като адреса за разтоварване.");
+            setValidationErrorMessage(INVENTORY_KEYS.validationSameAddress);
             setShowValidationError(true);
             return false;
         }
 
-        // Специална проверка за улиците
         if (loadingAddressData.street && unloadingAddressData.street &&
             loadingAddressData.street === unloadingAddressData.street &&
             loadingAddressData.town === unloadingAddressData.town) {
 
-            setValidationErrorMessage("Улицата за товарене не може да бъде същата като улицата за разтоварване в същия град.");
+            setValidationErrorMessage(INVENTORY_KEYS.validationSameStreet);
             setShowValidationError(true);
             return false;
         }
@@ -282,7 +281,7 @@ export default function Inventory() {
                     {t(INVENTORY_KEYS.validationErrorTitle)}
                 </Toast.Title>
                 <Toast.Description className="text-sm mt-1">
-                    {validationErrorMessage}
+                    {t(validationErrorMessage)}
                 </Toast.Description>
                 <Toast.Close
                     className="absolute top-2 right-2 text-destructive-foreground hover:text-destructive-foreground/50 w-4 h-4 flex items-center justify-center"

@@ -16,6 +16,9 @@ export const bg = {
         errorTitle: "Грешка",
         errorMessage: "Възникна грешка при подаването на формата",
         validationErrorTitle: "Грешка при валидация",
+        validationSelectProducts: "Трябва да изберете поне 1 продукт за да продължите.",
+        validationSameAddress: "Адресът за товарене не може да бъде същият като адреса за разтоварване.",
+        validationSameStreet: "Улицата за товарене не може да бъде същата като улицата за разтоварване в същия град.",
         errors: {
             fetchError: "Грешка при извличане на данни",
             invalidApiResponse: "Невалиден отговор от API",

@@ -15,4 +15,7 @@ export interface IInventoryMessages {
     errorTitle: string;
     errorMessage: string;
     validationErrorTitle: string;
+    validationSelectProducts: string;
+    validationSameAddress: string;
+    validationSameStreet: string;
 }

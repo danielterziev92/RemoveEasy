@@ -16,6 +16,9 @@ export const en = {
         errorTitle: "Error",
         errorMessage: "An error occurred while submitting the form",
         validationErrorTitle: "Validation Error",
+        validationSelectProducts: "You must select at least 1 product to continue.",
+        validationSameAddress: "The loading address cannot be the same as the unloading address.",
+        validationSameStreet: "The loading street cannot be the same as the unloading street in the same city.",
         errors: {
             fetchError: "Error fetching data",
             invalidApiResponse: "Invalid API response",
