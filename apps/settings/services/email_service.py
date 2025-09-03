@@ -1,7 +1,9 @@
 import logging
 from typing import Any
 
+from django.core.mail import EmailMessage
 from django.core.mail.backends.smtp import EmailBackend
+from django.template.loader import render_to_string
 
 logger = logging.getLogger(__name__)
 
@@ -88,3 +90,85 @@ class EmailService:
             username=email_settings.username,
             password=email_settings.password
         )
+
+    @staticmethod
+    def send_plain_text_email(
+            subject: str,
+            message: str,
+            from_email: str,
+            recipient_list: list[str],
+            cc: list[str],
+            email_backend: EmailBackend,
+    ) -> dict[str, Any]:
+        try:
+            email_message = EmailMessage(
+                subject=subject,
+                body=message,
+                from_email=from_email,
+                to=recipient_list,
+                cc=cc,
+                connection=email_backend
+            )
+
+            send_count = email_message.send()
+
+            if send_count == 0:
+                return {
+                    "success": False,
+                    "message": "Email message was not sent",
+                    "error": "No recipients were found"
+                }
+
+            return {
+                "success": True,
+                "message": f"Email message sent successfully to {send_count} recipient(s)"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "message": "Failed to send email message",
+                "error": str(e)
+            }
+
+    @staticmethod
+    def send_template_email(
+            subject: str,
+            template_path: str,
+            template_context: dict[str, Any],
+            from_email: str,
+            recipient_list: list[str],
+            cc: list[str],
+            email_backend: EmailBackend,
+    ) -> dict[str, Any]:
+        try:
+            html_content = render_to_string(template_path, template_context)
+
+            email_message = EmailMessage(
+                subject=subject,
+                body=html_content,
+                from_email=from_email,
+                to=recipient_list,
+                cc=cc,
+                connection=email_backend
+            )
+            email_message.content_subtype = "html"
+
+            send_count = email_message.send()
+
+            if send_count == 0:
+                return {
+                    "success": False,
+                    "message": "Email message was not sent",
+                    "error": "No recipients were found"
+                }
+
+            return {
+                "success": True,
+                "message": f"Email message sent successfully to {send_count} recipient(s)"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "message": "Failed to send email message",
+                "error": str(e)
+            }
