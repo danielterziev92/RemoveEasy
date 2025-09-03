@@ -105,6 +105,7 @@ class Order(models.Model):
 
     description = models.TextField(
         null=True,
+        blank=True,
     )
 
     objects = OrderManager()
