@@ -3,9 +3,10 @@ import {store} from "@/infrastructure/store/store.ts";
 import {API_CONFIG} from "@/shared/constants/api.ts";
 import {
     INVENTORY_API_ERROR_KEYS,
-    INVENTORY_SERVICE_ERROR_KEYS,
     INVENTORY_ERROR_KEYS,
+    INVENTORY_SERVICE_ERROR_KEYS,
     ITEM_ERROR_KEYS,
+    ORDER_API_ERROR_KEYS,
     SECTION_ERROR_KEYS
 } from "@/shared/messages/error_messages.ts";
 
@@ -19,6 +20,7 @@ dependencyContainer.initialize(
         inventoryRepository: INVENTORY_ERROR_KEYS,
         section: SECTION_ERROR_KEYS,
         item: ITEM_ERROR_KEYS,
+        orderApi: ORDER_API_ERROR_KEYS,
     }
 );
 
@@ -32,3 +34,4 @@ export {dependencyContainer};
 // Export specific use cases for direct access if needed
 export const setLocaleUseCase = dependencyContainer.setLocaleUseCase;
 export const initializeLocaleUseCase = dependencyContainer.initializeLocaleUseCase;
+export const createOrderUseCase = dependencyContainer.createOrderUseCase;

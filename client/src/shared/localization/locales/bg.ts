@@ -230,4 +230,12 @@ export const bg = {
         email: "Имейл",
         phoneNumber: "Телефон",
     },
+    order: {
+        api: {
+            errors: {
+                validationError: "Грешка при валидация на данните",
+                orderCreationFailed: "Неуспешно създаване на поръчката"
+            }
+        }
+    },
 };

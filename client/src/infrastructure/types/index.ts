@@ -1,4 +1,7 @@
-export type {ItemApiData} from "./ItemApiData.ts";
-export type {SectionApiData} from "./SectionApiData.ts";
-export type {InventoryApiResponse} from "./InventoryApiResponse.ts";
-export type {IInventoryApiErrorMessages} from "./IInventoryApiErrorMessages.ts";
+export type {ItemApiData} from "./ItemApiData";
+export type {SectionApiData} from "./SectionApiData";
+export type {InventoryApiResponse} from "./InventoryApiResponse";
+export type {IInventoryApiErrorMessages} from "./IInventoryApiErrorMessages";
+export type {OrderApiData} from "./OrderApiData";
+export type {IOrderApiErrorMessages} from "./IOrderApiErrorMessages";
+export type {OrderApiResponse} from "./OrderApiResponse";

@@ -1,1 +1,2 @@
-export {InventoryApiClient} from "./InventoryApiClient.ts";
+export {InventoryApiClient} from "./InventoryApiClient";
+export {OrderApiClient} from "./OrderApiClient";

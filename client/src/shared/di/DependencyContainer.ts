@@ -10,6 +10,7 @@ import {
     GetCachedInventoryUseCase,
     StoreInventoryUseCase
 } from "@/application/use-cases/inventory";
+import {CreateOrderUseCase} from "@/application/use-cases/orders/CreateOrderUseCase.ts";
 import type {
     IInventoryErrorMessages,
     IInventoryServiceErrorMessages,
@@ -17,9 +18,9 @@ import type {
     ISectionErrorMessages
 } from "@/application/types";
 
-import {InventoryApiClient} from "@/infrastructure/clients";
+import {InventoryApiClient, OrderApiClient} from "@/infrastructure/clients";
 import {LocalStorageLocalizationRepository, RTKInventoryRepository} from "@/infrastructure/repositories";
-import type {IInventoryApiErrorMessages} from "@/infrastructure/types";
+import type {IInventoryApiErrorMessages, IOrderApiErrorMessages} from "@/infrastructure/types";
 
 export class DependencyContainer {
     private static instance: DependencyContainer;
@@ -32,6 +33,7 @@ export class DependencyContainer {
     private _localizationRepository!: LocalStorageLocalizationRepository;
     private _inventoryRepository!: RTKInventoryRepository;
     private _inventoryApiClient!: InventoryApiClient;
+    private _orderApiClient!: OrderApiClient;
 
     // Use Cases - Localization
     private _setLocaleUseCase!: SetLocaleUseCase;
@@ -42,6 +44,9 @@ export class DependencyContainer {
     private _storeInventoryUseCase!: StoreInventoryUseCase;
     private _fetchAndStoreInventoryUseCase!: FetchAndStoreInventoryUseCase;
     private _getCachedInventoryUseCase!: GetCachedInventoryUseCase;
+
+    // Use Cases - Orders
+    private _createOrderUseCase!: CreateOrderUseCase;
 
     // Application Services
     private _localizationService!: LocalizationService;
@@ -67,6 +72,7 @@ export class DependencyContainer {
             inventoryRepository: IInventoryErrorMessages;
             section: ISectionErrorMessages;
             item: IItemErrorMessages;
+            orderApi: IOrderApiErrorMessages;
         }
     ): void {
         if (this.initialized) {
@@ -101,7 +107,7 @@ export class DependencyContainer {
 
         this._translationService = new TranslationService(this._localizationService);
 
-        // 5. Initialize Infrastructure - Inventory (needs translation service)
+        // 5. Initialize Infrastructure - Inventory & Orders (needs translation service)
         this._inventoryRepository = new RTKInventoryRepository(
             store,
             errorMessages.inventoryRepository,
@@ -113,6 +119,13 @@ export class DependencyContainer {
             errorMessages.inventoryApi,
             this._translationService
         );
+
+        this._orderApiClient = new OrderApiClient(
+            apiBaseUrl,
+            errorMessages.orderApi,
+            this._translationService
+        );
+
 
         // 6. Initialize Inventory Use Cases
         this._fetchInventoryUseCase = new FetchInventoryUseCase(
@@ -140,7 +153,14 @@ export class DependencyContainer {
             this._storeInventoryUseCase
         );
 
-        // 7. Initialize Application Services - Inventory
+        // 7. Initialize Order Use Cases
+        this._createOrderUseCase = new CreateOrderUseCase(
+            this._orderApiClient,
+            errorMessages.orderApi,
+            this._translationService
+        );
+
+        // 8. Initialize Application Services - Inventory
         this._inventoryService = new InventoryService(
             this._fetchAndStoreInventoryUseCase,
             this._getCachedInventoryUseCase
@@ -202,6 +222,11 @@ export class DependencyContainer {
         return this._getCachedInventoryUseCase;
     }
 
+    public get createOrderUseCase(): CreateOrderUseCase {
+        this.ensureInitialized();
+        return this._createOrderUseCase;
+    }
+
     // Public Getters - Infrastructure (if needed for advanced cases)
     public get inventoryRepository(): RTKInventoryRepository {
         this.ensureInitialized();
@@ -216,6 +241,11 @@ export class DependencyContainer {
     public get inventoryApiClient(): InventoryApiClient {
         this.ensureInitialized();
         return this._inventoryApiClient;
+    }
+
+    public get orderApiClient(): OrderApiClient {
+        this.ensureInitialized();
+        return this._orderApiClient;
     }
 
     // Utility methods

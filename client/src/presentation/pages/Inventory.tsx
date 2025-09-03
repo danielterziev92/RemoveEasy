@@ -8,9 +8,11 @@ import InventoryDisplay from "@/components/InventoryDisplay.tsx";
 import {Card, CardContent} from "@/components/ui/card.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
+import {Button} from "@/components/ui/button.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import AddressForm from "@/components/AddressForm.tsx";
 import useTranslation from "@/hooks/useTranslation.ts";
+import useCreateOrder from "@/hooks/useCreateOrder";
 
 import type {AddressFormData, SubmitState} from "@/presentation/types";
 
@@ -18,6 +20,7 @@ import {INVENTORY_CUSTOMER_FORM, INVENTORY_KEYS} from "@/shared/messages/message
 
 export default function Inventory() {
     const {t} = useTranslation();
+    const {createOrder, isLoading: isCreatingOrder} = useCreateOrder();
 
     const [customerData, setCustomerData] = useState({
         fullName: "",
@@ -43,8 +46,7 @@ export default function Inventory() {
 
     const [additionalContext, setAdditionalContext] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, setSubmitState] = useState<SubmitState | null>(null);
+    const [submitState, setSubmitState] = useState<SubmitState | null>(null);
     const [selectedItems, setSelectedItems] = useState<Array<{ itemId: number, quantity: number }>>([]);
     const [showValidationError, setShowValidationError] = useState(false);
     const [validationErrorMessage, setValidationErrorMessage] = useState("");
@@ -133,20 +135,25 @@ export default function Inventory() {
                 items: selectedItems
             }
 
-            // Симулираме API заявка
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            const response = await createOrder(apiData);
 
-            console.log('Submitting form data:', apiData);
+            console.log('Order created successfully:', response);
+
+            setSubmitState({
+                success: true,
+                message: response.message || t(INVENTORY_KEYS.successMessage)
+            });
+
+            setCustomerData({fullName: "", phone: "", email: ""});
+            setLoadingAddressData({town: "", postal_code: "", street: "", house_number: "", address: ""});
+            setUnloadingAddressData({town: "", postal_code: "", street: "", house_number: "", address: ""});
+            setAdditionalContext('');
+            setSelectedItems([]);
 
             setSubmitState({
                 success: true,
                 message: t(INVENTORY_KEYS.successMessage)
             });
-
-            // setLoadingAddressData({...});
-            // setUnloadingAddressData({...});
-            // setAdditionalContext('');
-
         } catch {
             setSubmitState({
                 success: false,
@@ -259,13 +266,15 @@ export default function Inventory() {
                             </Card>
 
                             <div className="mt-6 text-center">
-                                <button
+                                <Button
                                     type="submit"
-                                    disabled={isSubmitting}
+                                    disabled={isSubmitting || isCreatingOrder}
                                     className="px-6 py-2 bg-primary text-white rounded-md disabled:opacity-50"
                                 >
-                                    {isSubmitting ? t(INVENTORY_KEYS.sendRequest) : t(INVENTORY_KEYS.sendRequest)}
-                                </button>
+                                    {(isSubmitting || isCreatingOrder)
+                                        ? t(INVENTORY_KEYS.sendRequest)
+                                        : t(INVENTORY_KEYS.sendRequest)}
+                                </Button>
                             </div>
                         </form>
                     </div>

@@ -224,4 +224,12 @@ export const en = {
         email: "Email",
         phoneNumber: "Phone",
     },
+    order: {
+        api: {
+            errors: {
+                validationError: "Data validation error",
+                orderCreationFailed: "Failed to create order"
+            }
+        }
+    },
 };
