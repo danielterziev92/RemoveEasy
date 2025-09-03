@@ -8,10 +8,12 @@ import {selectIsLoading, selectItems, selectSections} from "@/infrastructure/sto
 import InventorySection from "@/components/InventorySection.tsx";
 import useTranslation from "@/hooks/useTranslation.ts";
 
+import type {InventoryDisplayProps} from "@/presentation/types";
+
 import {dependencyContainer} from "@/shared/di/DependencyContainer.ts";
 import {INVENTORY_ERROR_KEYS} from "@/shared/messages/error_messages.ts";
 
-export default function InventoryDisplay() {
+export default function InventoryDisplay({onSelectedItemsChange}: InventoryDisplayProps) {
     const {t} = useTranslation();
 
     const sections = useSelector((state: RootState) => selectSections(state));
@@ -41,6 +43,17 @@ export default function InventoryDisplay() {
             setShowNoItemsToast(true);
         }
     }, [isLoading, sections.length, items.length]);
+
+    useEffect(() => {
+        const selectedItems = Object.entries(quantities)
+            .filter(([_, quantity]) => quantity > 0)
+            .map(([itemId, quantity]) => ({
+                itemId: parseInt(itemId),
+                quantity
+            }));
+
+        onSelectedItemsChange?.(selectedItems);
+    }, [quantities, onSelectedItemsChange]);
 
     const toggleSection = (sectionId: number) => {
         setOpenSections(prev => ({

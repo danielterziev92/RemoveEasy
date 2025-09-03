@@ -7,3 +7,4 @@ export type {AddressFormData} from "./AddressFormData";
 export type {AddressFormProps} from "./AddressFormProps";
 export type {InventoryFormData} from "./InventoryFormData";
 export type {SubmitState} from "./SubmitState";
+export type {InventoryDisplayProps} from "./InventoryDisplayProps";

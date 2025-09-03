@@ -1,4 +1,4 @@
-import {type ChangeEvent, type FormEvent, useState} from "react";
+import {type ChangeEvent, type FormEvent, useCallback, useState} from "react";
 import {Toast} from "radix-ui";
 
 import {Boxes} from "lucide-react";
@@ -44,6 +44,11 @@ export default function Inventory() {
     const [additionalContext, setAdditionalContext] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [_, setSubmitState] = useState<SubmitState | null>(null);
+    const [selectedItems, setSelectedItems] = useState<Array<{ itemId: number, quantity: number }>>([]);
+
+    const handleSelectedItemsChange = useCallback((items: Array<{ itemId: number, quantity: number }>) => {
+        setSelectedItems(items);
+    }, []);
 
     const handleCustomerChange = (e: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
@@ -89,7 +94,7 @@ export default function Inventory() {
                 unloading_house_number: unloadingAddressData.house_number,
                 unloading_address: unloadingAddressData.address,
                 description: additionalContext,
-                "items": []
+                items: selectedItems
             }
 
             // Симулираме API заявка
@@ -137,7 +142,7 @@ export default function Inventory() {
                         </div>
 
                         <div className="space-y-10">
-                            <InventoryDisplay/>
+                            <InventoryDisplay onSelectedItemsChange={handleSelectedItemsChange}/>
                         </div>
                     </div>
                     <div className="container-custom">
