@@ -216,4 +216,9 @@ export const bg = {
         buildingNumber: "Номер на сграда/къща",
         address: "Апартамент, вход, етаж",
     },
+    inventoryCustomerDataMessage: {
+        fullName: "Име и фамилия",
+        email: "Имейл",
+        phoneNumber: "Телефон",
+    },
 };

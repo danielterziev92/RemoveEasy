@@ -210,4 +210,9 @@ export const en = {
         buildingNumber: "Building/House number",
         address: "Address",
     },
+    inventoryCustomerDataMessage: {
+        fullName: "Full name",
+        email: "Email",
+        phoneNumber: "Phone",
+    },
 };

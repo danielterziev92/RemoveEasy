@@ -1,4 +1,4 @@
-import {type FormEvent, useState} from "react";
+import {type ChangeEvent, type FormEvent, useState} from "react";
 import {Toast} from "radix-ui";
 
 import {Boxes} from "lucide-react";
@@ -11,12 +11,19 @@ import {Textarea} from "@/components/ui/textarea.tsx";
 import AddressForm from "@/components/AddressForm.tsx";
 import useTranslation from "@/hooks/useTranslation.ts";
 
-import type {AddressFormData, InventoryFormData, SubmitState} from "@/presentation/types";
+import type {AddressFormData, SubmitState} from "@/presentation/types";
 
-import {INVENTORY_KEYS} from "@/shared/messages/messages.ts";
+import {INVENTORY_CUSTOMER_FORM, INVENTORY_KEYS} from "@/shared/messages/messages.ts";
+import {Input} from "@/components/ui/input.tsx";
 
 export default function Inventory() {
     const {t} = useTranslation();
+
+    const [customerData, setCustomerData] = useState({
+        fullName: "",
+        phone: "",
+        email: ""
+    });
 
     const [loadingAddressData, setLoadingAddressData] = useState<AddressFormData>({
         town: "",
@@ -37,6 +44,14 @@ export default function Inventory() {
     const [additionalContext, setAdditionalContext] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [_, setSubmitState] = useState<SubmitState | null>(null);
+
+    const handleCustomerChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setCustomerData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
 
     const handleLoadingAddressChange = (field: keyof AddressFormData, value: string) => {
         setLoadingAddressData(prev => ({
@@ -59,17 +74,29 @@ export default function Inventory() {
         setSubmitState(null);
 
         try {
-            const formData: InventoryFormData = {
-                loadingAddress: loadingAddressData,
-                unloadingAddress: unloadingAddressData,
-                additionalContext
-            };
+            const apiData = {
+                customer_full_name: customerData.fullName,
+                phone_number: customerData.phone,
+                email: customerData.email,
+                loading_town: loadingAddressData.town,
+                loading_postal_code: loadingAddressData.postal_code,
+                loading_street: loadingAddressData.street,
+                loading_house_number: loadingAddressData.house_number,
+                loading_address: loadingAddressData.address,
+                unloading_town: unloadingAddressData.town,
+                unloading_postal_code: unloadingAddressData.postal_code,
+                unloading_street: unloadingAddressData.street,
+                unloading_house_number: unloadingAddressData.house_number,
+                unloading_address: unloadingAddressData.address,
+                description: additionalContext,
+                "items": []
+            }
 
             // Симулираме API заявка
             await new Promise(resolve => setTimeout(resolve, 1000));
 
             // Тук ще направите реалната API заявка
-            console.log('Submitting form data:', formData);
+            console.log('Submitting form data:', apiData);
 
             setSubmitState({
                 success: true,
@@ -118,6 +145,41 @@ export default function Inventory() {
                             <h2 id="finalize-order" className="text-xl font-semibold mb-4 text-center">
                                 {t(INVENTORY_KEYS.finalizeOrder)}
                             </h2>
+
+                            <div className="grid gap-5 md:grid-cols-1">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="fullName">{t(INVENTORY_CUSTOMER_FORM.fullName)}</Label>
+                                    <Input
+                                        id="fullName"
+                                        name="fullName"
+                                        required
+                                        value={customerData.fullName}
+                                        onChange={handleCustomerChange}
+                                    />
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="phone">{t(INVENTORY_CUSTOMER_FORM.phoneNumber)}</Label>
+                                    <Input
+                                        id="phone"
+                                        name="phone"
+                                        required
+                                        value={customerData.phone}
+                                        onChange={handleCustomerChange}
+                                    />
+                                </div>
+                                <div className="grid gap-2">
+                                    <Label htmlFor="email">{t(INVENTORY_CUSTOMER_FORM.email)}</Label>
+                                    <Input
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        required
+                                        value={customerData.email}
+                                        onChange={handleCustomerChange}
+                                    />
+                                </div>
+                            </div>
+
                             <AddressForm
                                 title={t(INVENTORY_KEYS.formTitleLoading)}
                                 prefix="loading"
