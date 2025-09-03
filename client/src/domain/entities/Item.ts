@@ -24,10 +24,25 @@ export class Item {
         this.titleEn = titleEn;
     }
 
-    static create(id: ItemId, iconClass: string, titleBg: string, titleEn: string): Item {
-        Item.validate(iconClass, titleBg, titleEn);
+    /**
+     * Creates a new Item instance with validation and sanitization
+     * @param params - The parameters for creating an item
+     * @param params.id - The unique identifier for the item
+     * @param params.iconClass - The CSS class name for the item's icon (will be trimmed)
+     * @param params.titleBg - The Bulgarian title of the item (will be trimmed)
+     * @param params.titleEn - The English title of the item (will be trimmed)
+     * @returns A new validated Item instance with trimmed string values
+     * @throws {DomainValidationError} if any parameter is invalid (empty, too short, or too long)
+     */
+    static create(params: {
+        id: ItemId,
+        iconClass: string,
+        titleBg: string,
+        titleEn: string
+    }): Item {
+        Item.validate(params.iconClass, params.titleBg, params.titleEn);
 
-        return new Item(id, iconClass.trim(), titleBg.trim(), titleEn.trim())
+        return new Item(params.id, params.iconClass.trim(), params.titleBg.trim(), params.titleEn.trim())
     }
 
     /**
@@ -58,10 +73,10 @@ export class Item {
     }
 
     /**
-     * Gets the display name for the item based on current locale
+     * Gets the title for the item based on current locale
      * @returns The item's title in the appropriate language
      */
-    getDisplayName(locale: string): string {
+    getTitleByLocale(locale: string): string {
         return locale === 'bg' ? this.titleBg : this.titleEn;
     }
 
