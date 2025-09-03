@@ -4,4 +4,5 @@ export interface IInventoryAddressForm {
     street: string;
     buildingNumber: string;
     address: string;
+    addressPlaceholder: string;
 }

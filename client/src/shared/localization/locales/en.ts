@@ -217,6 +217,7 @@ export const en = {
         street: "Street name",
         buildingNumber: "Building/House number",
         address: "Address",
+        addressPlaceholder: "Apartment, entrance, floor",
     },
     inventoryCustomerDataMessage: {
         fullName: "Full name",

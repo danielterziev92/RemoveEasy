@@ -43,6 +43,7 @@ export default function Inventory() {
 
     const [additionalContext, setAdditionalContext] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_, setSubmitState] = useState<SubmitState | null>(null);
     const [selectedItems, setSelectedItems] = useState<Array<{ itemId: number, quantity: number }>>([]);
     const [showValidationError, setShowValidationError] = useState(false);

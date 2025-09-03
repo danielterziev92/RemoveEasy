@@ -55,7 +55,7 @@ export default function AddressForm(
                     <Input
                         id={`${prefix}_address`}
                         name={`${prefix}_address`}
-                        placeholder={t("Apartment, entrance, floor", "Апартамент, вход, етаж")}
+                        placeholder={t(INVENTORY_ADDRESS_FORM.addressPlaceholder)}
                         value={form.address}
                         onChange={(e) => onChange('address', e.target.value)}
                     />

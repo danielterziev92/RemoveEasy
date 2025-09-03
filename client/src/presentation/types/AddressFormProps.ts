@@ -5,5 +5,5 @@ export interface AddressFormProps {
     prefix: string;
     form: AddressFormData;
     onChange: (field: keyof AddressFormData, value: string) => void;
-    t: (key: string, fallback?: string) => string;
+    t: (key: string, params?: Record<string, string | number>) => string;
 }

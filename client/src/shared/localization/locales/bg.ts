@@ -222,7 +222,8 @@ export const bg = {
         postalCode: "Пощенски код",
         street: "Име на улицата",
         buildingNumber: "Номер на сграда/къща",
-        address: "Апартамент, вход, етаж",
+        address: "Адрес",
+        addressPlaceholder: "Апартамент, вход, етаж",
     },
     inventoryCustomerDataMessage: {
         fullName: "Име и фамилия",
