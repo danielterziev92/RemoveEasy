@@ -1,32 +1,29 @@
+import {ContactInfoErrorCode, DomainValidationError} from "@/domain/errors";
+
 export class ContactInfo {
-    private readonly _phone: string;
-    private readonly _whatsapp: string;
+    private readonly value: string;
 
-    constructor(phone: string, whatsapp: string) {
+    constructor(phone: string) {
         if (!phone || phone.trim() === '') {
-            throw new Error('Phone number cannot be empty');
-        }
-        if (!whatsapp || whatsapp.trim() === '') {
-            throw new Error('WhatsApp contact cannot be empty');
+            throw new DomainValidationError(ContactInfoErrorCode.PHONE_NUMBER_REQUIRED);
         }
 
-        this._phone = phone.trim();
-        this._whatsapp = whatsapp.trim();
+        this.value = phone.trim();
     }
 
     get phone(): string {
-        return this._phone;
+        return this.value;
     }
 
     get whatsapp(): string {
-        return this._whatsapp;
+        return `https://wa.me/${this.value}`;
     }
 
     equals(other: ContactInfo): boolean {
-        return this._phone === other._phone && this._whatsapp === other._whatsapp;
+        return this.value === other.value;
     }
 
     toString(): string {
-        return `ContactInfo(phone: ${this._phone}, whatsapp: ${this._whatsapp})`;
+        return `ContactInfo(phone: ${this.value})`;
     }
 }

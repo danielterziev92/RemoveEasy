@@ -1,4 +1,5 @@
-import {ItemId} from "@/domain/value-objects";
+import {IconClass, ItemId} from "@/domain/value-objects";
+import {Locale} from "@/domain/entities/Locale.ts";
 import {DomainValidationError, ItemErrorCode} from "@/domain/errors";
 
 export class Item {
@@ -6,18 +7,18 @@ export class Item {
     public static readonly MAX_STRING_LENGTH = 100;
 
     public readonly id: ItemId;
-    public readonly iconClass: string;
+    public readonly iconClass: IconClass;
     public readonly titleBg: string;
     public readonly titleEn: string;
 
     /**
      * Private constructor to enforce factory method usage
      * @param id - Unique identifier
-     * @param iconClass - CSS class for icon
+     * @param iconClass - IconClass value object
      * @param titleBg - Bulgarian title
      * @param titleEn - English title
      */
-    private constructor(id: ItemId, iconClass: string, titleBg: string, titleEn: string) {
+    private constructor(id: ItemId, iconClass: IconClass, titleBg: string, titleEn: string) {
         this.id = id;
         this.iconClass = iconClass;
         this.titleBg = titleBg;
@@ -36,25 +37,23 @@ export class Item {
      */
     static create(params: {
         id: ItemId,
-        iconClass: string,
+        iconClass: IconClass,
         titleBg: string,
         titleEn: string
     }): Item {
-        Item.validate(params.iconClass, params.titleBg, params.titleEn);
+        Item.validate(params.titleBg, params.titleEn);
 
-        return new Item(params.id, params.iconClass.trim(), params.titleBg.trim(), params.titleEn.trim())
+        return new Item(params.id, params.iconClass, params.titleBg.trim(), params.titleEn.trim())
     }
 
     /**
      * Validates the item's icon class and titles
-     * @param iconClass - The CSS class name for the item's icon
      * @param titleBg - The Bulgarian title of the item
      * @param titleEn - The English title of the item
      * @throws {DomainValidationError} if any parameter is invalid
      */
-    private static validate(iconClass: string, titleBg: string, titleEn: string): void {
+    private static validate(titleBg: string, titleEn: string): void {
         const fields = [
-            {value: iconClass, required: ItemErrorCode.ICON_REQUIRED, tooLong: ItemErrorCode.ICON_TOO_LONG},
             {value: titleBg, required: ItemErrorCode.TITLE_BG_REQUIRED, tooLong: ItemErrorCode.TITLE_BG_TOO_LONG},
             {value: titleEn, required: ItemErrorCode.TITLE_EN_REQUIRED, tooLong: ItemErrorCode.TITLE_EN_TOO_LONG}
         ];
@@ -74,10 +73,12 @@ export class Item {
 
     /**
      * Gets the title for the item based on current locale
+     * @param locale - The locale to get the title for (defaults to Bulgarian)
      * @returns The item's title in the appropriate language
      */
-    getTitleByLocale(locale: string): string {
-        return locale === 'bg' ? this.titleBg : this.titleEn;
+    getTitleByLocale(locale?: Locale): string {
+        const targetLocale = locale ?? Locale.getDefault();
+        return targetLocale.hasCode(Locale.BULGARIAN_CODE) ? this.titleBg : this.titleEn;
     }
 
     /**

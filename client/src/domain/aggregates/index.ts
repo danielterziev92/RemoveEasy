@@ -1,1 +1,1 @@
-export {Section} from "./Section";
+export {Inventory} from "./Inventory";
