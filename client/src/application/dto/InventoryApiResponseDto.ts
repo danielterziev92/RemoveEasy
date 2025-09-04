@@ -1,11 +1,13 @@
-import {Item, Section} from "@/domain/entities";
+import {Item} from "@/domain/entities";
 import type {ILocalizationService} from "@/domain/services";
 
 import type {IInventoryServiceErrorMessages, IItemErrorMessages, ISectionErrorMessages} from "@/application/types";
 
-import type {InventoryApiResponse, ItemApiData, SectionApiData} from "@/infrastructure/types";
+import type {InventoryApiResponse, } from "@/infrastructure/types";
 
 import type {ITranslationService} from "@/shared/localization/types";
+import {Section} from "@/domain/aggregates";
+import type {ItemApiData, SectionApiData} from "@/domain/types";
 
 export class InventoryApiResponseDto {
     static toDomainEntities(

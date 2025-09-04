@@ -1,4 +1,4 @@
-import {DomainError} from "./DomainError.ts";
+import {DomainError} from "../../domain/types/DomainError.ts";
 
 export class InventoryError extends DomainError {
     constructor(message: string, code: string) {
