@@ -1,5 +1,6 @@
 import {ItemId, SectionId} from "@/domain/value-objects";
 import {Item} from "@/domain/entities/Item.ts";
+import type {SectionApiData} from "@/domain/types";
 import {DomainValidationError, SectionErrorCode} from "@/domain/errors";
 
 export class Section {
@@ -101,18 +102,7 @@ export class Section {
      * @returns A new Section instance with valid items (invalid items are skipped with warnings)
      * @throws DomainValidationError if the main data object is invalid
      */
-    static fromApiData(data: {
-        id: number;
-        icon_class: string;
-        title_bg: string;
-        title_en: string;
-        items?: Array<{
-            id: number;
-            icon_class: string;
-            title_bg: string;
-            title_en: string;
-        }>;
-    }): Section {
+    static fromApiData(data: SectionApiData): Section {
         if (!data || typeof data !== 'object') {
             throw new DomainValidationError(SectionErrorCode.DATA_INVALID);
         }
