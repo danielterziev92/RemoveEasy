@@ -1,4 +1,4 @@
-import {Item, type Section} from "../entities";
+import {Item, Section} from "@/domain/entities";
 
 export interface IInventoryRepository {
 
