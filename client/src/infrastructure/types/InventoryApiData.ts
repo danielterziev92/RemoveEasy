@@ -1,4 +1,4 @@
-import type {SectionApiData} from "@/domain/types/SectionApiData.ts";
+import type {SectionApiData} from "@/infrastructure/types";
 
 export interface InventoryApiData {
     sections: SectionApiData[];

@@ -1,3 +1,6 @@
+import type {SectionData} from "@/domain/types";
+
+import {ApiToDomainMapper} from "@/infrastructure/mappers";
 import type {IInventoryApiErrorMessages, InventoryApiResponse} from "@/infrastructure/types";
 import {ApiException, ClientErrorException, ServerErrorException} from "@/infrastructure/exceptions";
 
@@ -19,7 +22,7 @@ export class InventoryApiClient {
         this.translationService = translationService;
     }
 
-    async fetchInventoryItems(): Promise<InventoryApiResponse> {
+    async fetchInventoryItems(): Promise<{ sections: SectionData[] }> {
         try {
             const response = await this.fetchWithTimeout(
                 `${this.baseUrl}${API_CONFIG.ENDPOINTS.INVENTORY_ITEMS}`,
@@ -45,10 +48,10 @@ export class InventoryApiClient {
                 }
             }
 
-            const data: unknown = await response.json();
-            this.validateApiResponse(data);
-            return data as InventoryApiResponse;
+            const apiData: InventoryApiResponse = await response.json();
+            this.validateApiResponse(apiData);
 
+            return ApiToDomainMapper.mapInventoryResponse(apiData);
         } catch (error) {
             if (error instanceof ApiException) {
                 throw error;
@@ -60,17 +63,6 @@ export class InventoryApiClient {
                 throw new Error(this.translationService.t(this.errorMessages.requestTimeout));
             }
             throw error instanceof Error ? error : new Error(this.translationService.t(this.errorMessages.unknownError));
-        }
-    }
-
-    private async fetchWithTimeout(url: string, options: RequestInit): Promise<Response> {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.TIMEOUT);
-
-        try {
-            return await fetch(url, {...options, signal: controller.signal});
-        } finally {
-            clearTimeout(timeoutId);
         }
     }
 
@@ -96,7 +88,8 @@ export class InventoryApiClient {
 
             const sectionObj = section as Record<string, unknown>;
 
-            if (typeof sectionObj.icon_class !== 'string' ||
+            if (typeof sectionObj.id !== 'number' ||
+                typeof sectionObj.icon_class !== 'string' ||
                 typeof sectionObj.title_bg !== 'string' ||
                 typeof sectionObj.title_en !== 'string' ||
                 !Array.isArray(sectionObj.items)) {
@@ -120,4 +113,14 @@ export class InventoryApiClient {
         });
     }
 
+    private async fetchWithTimeout(url: string, options: RequestInit): Promise<Response> {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.TIMEOUT);
+
+        try {
+            return await fetch(url, {...options, signal: controller.signal});
+        } finally {
+            clearTimeout(timeoutId);
+        }
+    }
 }

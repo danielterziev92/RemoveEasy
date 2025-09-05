@@ -1,67 +1,33 @@
 import type {Store} from "@reduxjs/toolkit";
 
-import type {Item, Section} from "@/domain/entities";
+import {Inventory} from "@/domain/aggregates";
 import type {IInventoryRepository} from "@/domain/repositories";
 
-import {type RootState, store} from "@/infrastructure/store/store.ts";
-import {
-    clearInventoryData,
-    setError,
-    setInventoryData,
-    setLoading
-} from "@/infrastructure/store/slices/inventorySlice.ts";
-import type {IInventoryErrorMessages} from "@/application/types";
-
-import type {ITranslationService} from "@/shared/localization/types";
+import {type RootState} from "@/infrastructure/store/store.ts";
+import {clearInventory, setError, setInventory, setLoading} from "@/infrastructure/store/slices/inventorySlice.ts";
 
 export class RTKInventoryRepository implements IInventoryRepository {
     private store: Store<RootState>
-    private errorMessages: IInventoryErrorMessages;
-    private translationService: ITranslationService;
 
-    constructor(
-        store: Store<RootState>,
-        errorMessages: IInventoryErrorMessages,
-        translationService: ITranslationService
-    ) {
+    constructor(store: Store<RootState>) {
         this.store = store;
-        this.errorMessages = errorMessages;
-        this.translationService = translationService;
     }
 
-    getAllSections(): Section[] {
+    getInventory(): Inventory | null {
         const state = this.store.getState();
-        return state.inventory.sections;
+        return state.inventory.inventory;
     }
 
-    getAllItems(): Item[] {
-        const state = this.store.getState();
-        return state.inventory.items;
+    saveInventory(inventory: Inventory): void {
+        this.store.dispatch(setInventory(inventory));
     }
 
-    getItemsBySection(sectionTitle: string): Item[] {
-        if (!sectionTitle) {
-            throw new Error(this.translationService.t(this.errorMessages.invalidSectionTitle));
-        }
-
-        const state = this.store.getState();
-        if (!state) {
-            throw new Error(this.translationService.t(this.errorMessages.storeNotAvailable));
-        }
-
-        return state.inventory.items.filter(item => item.belongsToSection(sectionTitle));
+    clearInventory(): void {
+        this.store.dispatch(clearInventory());
     }
 
-    storeInventoryData(sections: Section[], items: Item[]): void {
-        if (!Array.isArray(sections) || !Array.isArray(items)) {
-            throw new Error(this.translationService.t(this.errorMessages.invalidInventoryData));
-        }
-
-        store.dispatch(setInventoryData({sections, items}));
-    }
-
-    clearInventoryData(): void {
-        store.dispatch(clearInventoryData());
+    setLoading(loading: boolean): void {
+        this.store.dispatch(setLoading(loading));
     }
 
     isLoading(): boolean {
@@ -69,17 +35,13 @@ export class RTKInventoryRepository implements IInventoryRepository {
         return state?.inventory?.isLoading ?? false;
     }
 
+    setError(error: string | null): void {
+        this.store.dispatch(setError(error));
+    }
+
     getError(): string | null {
         const state = this.store.getState();
         return state?.inventory?.error ?? null;
-    }
-
-    setLoading(isLoading: boolean): void {
-        this.store.dispatch(setLoading(isLoading));
-    }
-
-    setError(error: string | null): void {
-        this.store.dispatch(setError(error));
     }
 
     clearError(): void {

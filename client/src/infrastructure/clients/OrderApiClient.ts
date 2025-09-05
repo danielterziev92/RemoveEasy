@@ -1,12 +1,18 @@
-import type {ILocalizationService} from "@/domain/services";
+import type {OrderData} from "@/domain/types";
+import {OrderId} from "@/domain/value-objects";
+import type {IOrderApiClient} from "@/domain/services";
 
-import type {IOrderApiErrorMessages, OrderApiData, OrderApiResponse, ServerOrderResponse} from "@/infrastructure/types";
+import type {ILocalizationService} from "@/application/services";
+
+import type {IOrderApiErrorMessages, ServerOrderResponse} from "@/infrastructure/types";
 import {ApiException, ClientErrorException, ServerErrorException} from "@/infrastructure/exceptions";
+import {OrderMapper} from "@/infrastructure/mappers";
 
 import type {ITranslationService} from "@/shared/localization/types";
 import {API_CONFIG} from "@/shared/constants/api.ts";
+import type {UUID} from "node:crypto";
 
-export class OrderApiClient {
+export class OrderApiClient implements IOrderApiClient {
     private readonly baseUrl: string;
     private readonly errorMessages: IOrderApiErrorMessages;
     private readonly translationService: ITranslationService;
@@ -24,11 +30,14 @@ export class OrderApiClient {
         this.localizationService = localizationService;
     }
 
-    async createOrder(orderData: OrderApiData): Promise<OrderApiResponse> {
+    async createOrder(orderData: OrderData): Promise<OrderId> {
         try {
-            this.validateOrderData(orderData);
+            const apiData = OrderMapper.domainToApi(orderData);
+            this.validateOrderData(apiData);
 
-            const currentLang = this.localizationService.getCurrentLocale();
+            const currentLocale = this.localizationService.getCurrentLocale();
+            const currentLang = currentLocale.code;
+
             const url = new URL(`${this.baseUrl}${API_CONFIG.ENDPOINTS.CREATE_ORDER}`);
             url.searchParams.append('lang', currentLang);
 
@@ -39,7 +48,7 @@ export class OrderApiClient {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(orderData)
+                    body: JSON.stringify(apiData)
                 }
             );
 
@@ -58,14 +67,9 @@ export class OrderApiClient {
             }
 
             const serverResponse: ServerOrderResponse = await response.json();
-
             this.validateServerResponse(serverResponse);
 
-            return {
-                id: serverResponse.id,
-                success: true,
-                message: 'Order created successfully'
-            };
+            return OrderId.create(serverResponse.id as UUID);
         } catch (error) {
             if (error instanceof ApiException) {
                 throw error;
@@ -91,12 +95,12 @@ export class OrderApiClient {
         }
     }
 
-    private validateOrderData(data: OrderApiData): void {
+    private validateOrderData(data: any): void {
         if (!data || typeof data !== 'object') {
             throw new Error(this.translationService.t(this.errorMessages.validationError));
         }
 
-        const requiredFields: (keyof OrderApiData)[] = [
+        const requiredFields = [
             'customer_full_name',
             'phone_number',
             'email',
@@ -107,7 +111,7 @@ export class OrderApiClient {
         ];
 
         for (const field of requiredFields) {
-            if (!data[field] || (typeof data[field] === 'string' && (data[field] as string).trim().length === 0)) {
+            if (!data[field] || (typeof data[field] === 'string' && data[field].trim().length === 0)) {
                 throw new Error(this.translationService.t(this.errorMessages.validationError));
             }
         }
@@ -116,9 +120,17 @@ export class OrderApiClient {
             throw new Error(this.translationService.t(this.errorMessages.validationError));
         }
 
-        data.items.forEach((item, index) => {
-            if (!item || typeof item !== 'object' || item.itemId < 1 || item.quantity < 1) {
-                throw new Error(`${this.translationService.t(this.errorMessages.validationError)} - item ${index}`);
+        data.items.forEach((item: { itemId: number; quantity: number; }, index: number) => {
+            if (!item || typeof item !== 'object') {
+                throw new Error(`${this.translationService.t(this.errorMessages.validationError)} - item ${index}: invalid object`);
+            }
+
+            if (item.itemId < 1) {
+                throw new Error(`${this.translationService.t(this.errorMessages.validationError)} - item ${index}: invalid itemId`);
+            }
+
+            if (item.quantity < 1) {
+                throw new Error(`${this.translationService.t(this.errorMessages.validationError)} - item ${index}: invalid quantity`);
             }
         });
     }
@@ -128,7 +140,7 @@ export class OrderApiClient {
             throw new Error(this.translationService.t(this.errorMessages.invalidResponse));
         }
 
-        if (data.id.trim().length === 0) {
+        if (!data.id || data.id.trim().length === 0) {
             throw new Error(this.translationService.t(this.errorMessages.invalidResponse));
         }
     }

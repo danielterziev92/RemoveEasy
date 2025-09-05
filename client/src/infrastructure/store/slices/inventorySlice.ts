@@ -1,17 +1,15 @@
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 
-import type {Item, Section} from "@/domain/entities";
+import {Inventory} from "@/domain/aggregates";
 
 interface InventoryState {
-    sections: Section[];
-    items: Item[];
+    inventory: Inventory | null;
     isLoading: boolean;
     error: string | null;
 }
 
 const initialState: InventoryState = {
-    sections: [],
-    items: [],
+    inventory: null,
     isLoading: false,
     error: null,
 };
@@ -27,26 +25,29 @@ const inventorySlice = createSlice({
             state.error = action.payload;
             state.isLoading = false;
         },
-        setInventoryData: (state, action: PayloadAction<{ sections: Section[]; items: Item[] }>) => {
-            state.sections = action.payload.sections;
-            state.items = action.payload.items;
+        setInventory: (state, action: PayloadAction<Inventory>) => {
+            state.inventory = action.payload;
             state.isLoading = false;
             state.error = null;
         },
-        clearInventoryData: (state) => {
-            state.sections = [];
-            state.items = [];
+        clearInventory: (state) => {
+            state.inventory = null;
             state.error = null;
             state.isLoading = false;
         },
     },
 });
 
-export const {setLoading, setError, setInventoryData, clearInventoryData} = inventorySlice.actions;
+export const {setLoading, setError, setInventory, clearInventory} = inventorySlice.actions;
 
-export const selectSections = (state: { inventory: InventoryState }) => state.inventory.sections;
-export const selectItems = (state: { inventory: InventoryState }) => state.inventory.items;
+export const selectInventory = (state: { inventory: InventoryState }) => state.inventory.inventory;
 export const selectIsLoading = (state: { inventory: InventoryState }) => state.inventory.isLoading;
 export const selectError = (state: { inventory: InventoryState }) => state.inventory.error;
+
+export const selectSections = (state: { inventory: InventoryState }) =>
+    state.inventory.inventory?.getAllSections() ?? [];
+
+export const selectAllItems = (state: { inventory: InventoryState }) =>
+    state.inventory.inventory?.getAllItems() ?? [];
 
 export default inventorySlice.reducer;
