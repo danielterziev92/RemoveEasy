@@ -6,14 +6,14 @@ import {DomainValidationError, SectionErrorCode} from "@/domain/errors";
  * type-safe operations for working with section identifiers.
  */
 export class SectionId {
-    private readonly _value: number;
+    private readonly _value: bigint;
 
     /**
      * Private constructor to enforce creation through static factory methods.
      * @param value - The numeric value for the section ID
      * @throws {DomainValidationError} When the value is less than 1
      */
-    private constructor(value: number) {
+    private constructor(value: bigint) {
         if (value < 1) {
             throw new DomainValidationError(SectionErrorCode.ID_INVALID);
         }
@@ -27,7 +27,7 @@ export class SectionId {
      * @returns A new SectionId instance
      * @throws {DomainValidationError} When the value is less than 1
      */
-    static create(value: number): SectionId {
+    static create(value: bigint): SectionId {
         return new SectionId(value);
     }
 
@@ -35,21 +35,22 @@ export class SectionId {
      * Creates a new SectionId instance from a string representation.
      * @param value - The string representation of the section ID
      * @returns A new SectionId instance
-     * @throws {DomainValidationError} When the string cannot be parsed to a valid number or is less than 1
+     * @throws {DomainValidationError} When the string cannot be parsed to a valid bigint or is less than 1
      */
     static fromString(value: string): SectionId {
-        const numericValue = parseInt(value, 10);
-        if (isNaN(numericValue)) {
+        try {
+            const numericValue = BigInt(value);
+            return new SectionId(numericValue);
+        } catch {
             throw new DomainValidationError(SectionErrorCode.ID_INVALID);
         }
-        return new SectionId(numericValue);
     }
 
     /**
      * Gets the numeric value of the section ID.
      * @returns The numeric value of the section ID
      */
-    get value(): number {
+    get value(): bigint {
         return this._value;
     }
 

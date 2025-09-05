@@ -1,31 +1,12 @@
-import {Item, Section} from "@/domain/entities";
+import {Inventory} from "@/domain/aggregates";
 
 export interface IInventoryRepository {
 
-    /**
-     * Gets all sections from the store
-     */
-    getAllSections(): Section[];
+    getInventory(): Inventory | null;
 
-    /**
-     * Gets all items from the store
-     */
-    getAllItems(): Item[];
+    saveInventory(inventory: Inventory): void;
 
-    /**
-     * Gets items by section title
-     */
-    getItemsBySection(sectionTitle: string): Item[];
-
-    /**
-     * Stores sections and items in the state
-     */
-    storeInventoryData(sections: Section[], items: Item[]): void;
-
-    /**
-     * Clears all inventory data
-     */
-    clearInventoryData(): void;
+    clearInventory(): void;
 
     /**
      * Sets the loading state
@@ -36,7 +17,6 @@ export interface IInventoryRepository {
      * Checks if data is currently loading
      */
     isLoading(): boolean;
-
 
     /**
      * Sets error state

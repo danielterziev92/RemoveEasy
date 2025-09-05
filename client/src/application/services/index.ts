@@ -1,4 +1,5 @@
+export type {ILocalizationService} from "./ILocalizationService";
+
 export {TranslationService} from "./TranslationService";
-export {InventoryService} from "./InventoryService";
 export {LocalizationService} from "./LocalizationService";
 export {NavigationService} from "./NavigationService";

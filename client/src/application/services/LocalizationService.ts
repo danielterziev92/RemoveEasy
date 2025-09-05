@@ -1,7 +1,8 @@
 import {Locale} from "@/domain/entities";
-import {type ILocalizationService, LocalizationDomainService} from "@/domain/services";
+import {LocalizationDomainService} from "@/domain/services";
 import type {ILocalizationRepository} from "@/domain/repositories";
 
+import type {ILocalizationService} from "@/application/services";
 import {InitializeLocaleUseCase, SetLocaleUseCase} from "@/application/use-cases/localization";
 
 export class LocalizationService implements ILocalizationService {
@@ -22,33 +23,29 @@ export class LocalizationService implements ILocalizationService {
         this.initializeLocaleUseCase = initializeLocaleUseCase;
     }
 
-    getCurrentLocale(): string {
-        return this.localizationRepository.getCurrentLocale();
+    getCurrentLocale(): Locale {
+        const localeCode = this.localizationRepository.getCurrentLocale();
+        return this.localizationDomainService.getLocaleByCode(localeCode) ?? Locale.getDefault();
     }
 
-    setCurrentLocale(locale: string): void {
-        const result = this.setLocaleUseCase.execute(locale);
-
+    setCurrentLocale(locale: Locale): void {
+        const result = this.setLocaleUseCase.execute(locale.code);
         if (!result.success) {
             console.warn(result.message);
         }
     }
 
-    getSavedLocale(): string | null {
-        return this.localizationRepository.getSavedLocale();
+    getSavedLocale(): Locale | null {
+        const savedCode = this.localizationRepository.getSavedLocale();
+        return savedCode ? this.localizationDomainService.getLocaleByCode(savedCode) : null;
     }
 
-    saveLocale(locale: string): void {
-        this.localizationRepository.saveLocale(locale);
+    saveLocale(locale: Locale): void {
+        this.localizationRepository.saveLocale(locale.code);
     }
 
     getAvailableLocales(): Locale[] {
         return this.localizationDomainService.getAvailableLocales();
-    }
-
-    detectBrowserLocale(): string {
-        const browserLocale = navigator.language.split("-")[0];
-        return this.localizationDomainService.detectBestLocale(browserLocale);
     }
 
     initializeLocale(): void {

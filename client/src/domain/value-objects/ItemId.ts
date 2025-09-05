@@ -6,14 +6,14 @@ import {DomainValidationError, ItemErrorCode} from "@/domain/errors";
  * type-safe operations for working with item identifiers.
  */
 export class ItemId {
-    private readonly _value: number
+    private readonly _value: bigint
 
     /**
      * Private constructor to enforce creation through static factory methods.
      * @param value - The numeric value for the item ID
      * @throws {DomainValidationError} When the value is less than 1
      */
-    private constructor(value: number) {
+    private constructor(value: bigint) {
         if (value < 1) {
             throw new DomainValidationError(ItemErrorCode.ID_INVALID);
         }
@@ -27,7 +27,7 @@ export class ItemId {
      * @returns A new ItemId instance
      * @throws {DomainValidationError} When the value is less than 1
      */
-    static create(value: number): ItemId {
+    static create(value: bigint): ItemId {
         return new ItemId(value);
     }
 
@@ -35,7 +35,7 @@ export class ItemId {
      * Gets the numeric value of the item ID.
      * @returns The numeric value of the item ID
      */
-    get value(): number {
+    get value(): bigint {
         return this._value;
     }
 
