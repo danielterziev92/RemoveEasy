@@ -1,6 +1,7 @@
 import {Locale} from "@/domain/entities";
+import type {ILocalizationDomainService} from "@/domain/services";
 
-export class LocalizationDomainService {
+export class LocalizationDomainService implements ILocalizationDomainService {
     private readonly availableLocales: Locale[] = [
         Locale.create("bg", "Bulgarian", "Български"),
         Locale.create("en", "English", "English")

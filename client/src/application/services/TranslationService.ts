@@ -1,5 +1,5 @@
-import {Locale} from "@/domain/entities";
-import type {ILocalizationService} from "@/domain/services";
+import type {ILocalizationDomainService} from "@/domain/services";
+import type {ILocalizationRepository} from "@/domain/repositories";
 
 import {bg, en} from "@/shared/localization/locales";
 import type {ITranslationService} from "@/shared/localization/types";
@@ -11,11 +11,16 @@ interface TranslationObject {
 export class TranslationService implements ITranslationService {
     private defaultLocale: string = "bg";
     private translations: Record<string, TranslationObject>;
-    private localizationService: ILocalizationService;
+    private localizationDomainService: ILocalizationDomainService;
+    private localizationRepository: ILocalizationRepository;
 
-    constructor(localizationService: ILocalizationService) {
+    constructor(
+        localizationDomainService: ILocalizationDomainService,
+        localizationRepository: ILocalizationRepository
+    ) {
         this.translations = {bg, en};
-        this.localizationService = localizationService;
+        this.localizationDomainService = localizationDomainService;
+        this.localizationRepository = localizationRepository;
     }
 
     t(key: string, params?: Record<string, string | number>): string {
@@ -35,15 +40,19 @@ export class TranslationService implements ITranslationService {
     }
 
     getCurrentLocale(): string {
-        return this.localizationService.getCurrentLocale();
+        return this.localizationRepository.getCurrentLocale();
     }
 
     setLocale(locale: string): void {
-        this.localizationService.setCurrentLocale(locale);
+        if (!this.localizationDomainService.isLocaleSupported(locale)) {
+            throw new Error(`Locale '${locale}' is not supported`);
+        }
+
+        this.localizationRepository.setCurrentLocale(locale);
     }
 
     getAvailableLocales(): string[] {
-        return this.localizationService.getAvailableLocales().map((locale: Locale) => locale.code);
+        return this.localizationDomainService.getAvailableLocales().map(locale => locale.code);
     }
 
     private getNestedTranslation(key: string, translations: TranslationObject): string | null {

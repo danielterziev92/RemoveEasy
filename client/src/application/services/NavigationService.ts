@@ -1,5 +1,5 @@
-import {NavigationItem} from "@/domain/entities";
 import type {NavigationItemDto} from "@/application/dto";
+import {NavigationItem} from "@/application/navigation";
 
 export class NavigationService {
     private readonly navigationItems: NavigationItem[] = [
@@ -11,10 +11,6 @@ export class NavigationService {
     ];
 
     getNavigationItems(t: (key: string) => string): NavigationItemDto[] {
-        return this.navigationItems.map(item => ({
-            href: item.href,
-            label: item.getLabel(t),
-            key: item.key
-        }));
+        return this.navigationItems.map(item => item.toDto(t));
     }
 }

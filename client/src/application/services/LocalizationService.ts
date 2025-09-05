@@ -1,8 +1,7 @@
 import {Locale} from "@/domain/entities";
-import {LocalizationDomainService} from "@/domain/services";
+import {type ILocalizationService, LocalizationDomainService} from "@/domain/services";
 import type {ILocalizationRepository} from "@/domain/repositories";
 
-import type {ILocalizationService} from "@/application/services";
 import {InitializeLocaleUseCase, SetLocaleUseCase} from "@/application/use-cases/localization";
 
 export class LocalizationService implements ILocalizationService {
