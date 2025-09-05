@@ -1,5 +1,7 @@
-import type {ILocalizationRepository} from "@/domain/repositories";
 import type {Store} from "@reduxjs/toolkit";
+
+import type {ILocalizationRepository} from "@/domain/repositories";
+
 import {setLocale} from "@/infrastructure/store/slices/localizationSlice.ts";
 
 export class LocalStorageLocalizationRepository implements ILocalizationRepository {

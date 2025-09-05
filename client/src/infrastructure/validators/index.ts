@@ -1,0 +1,1 @@
+export {LucideIconValidator} from "./LucideIconValidator";

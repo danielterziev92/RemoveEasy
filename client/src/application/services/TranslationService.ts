@@ -9,10 +9,10 @@ interface TranslationObject {
 }
 
 export class TranslationService implements ITranslationService {
-    private defaultLocale: string = "bg";
-    private translations: Record<string, TranslationObject>;
-    private localizationDomainService: ILocalizationDomainService;
-    private localizationRepository: ILocalizationRepository;
+    private readonly defaultLocale: string = "bg";
+    private readonly translations: Record<string, TranslationObject>;
+    private readonly localizationDomainService: ILocalizationDomainService;
+    private readonly localizationRepository: ILocalizationRepository;
 
     constructor(
         localizationDomainService: ILocalizationDomainService,

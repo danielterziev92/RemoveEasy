@@ -1,4 +1,4 @@
-import {Locale} from "@/domain/entities";
+import {Locale} from "@/domain/value-objects";
 import {type ILocalizationDomainService} from "@/domain/services";
 import type {ILocalizationRepository} from "@/domain/repositories";
 

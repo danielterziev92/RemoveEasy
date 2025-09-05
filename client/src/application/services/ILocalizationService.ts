@@ -1,4 +1,4 @@
-import {Locale} from "@/domain/entities";
+import {Locale} from "@/domain/value-objects";
 
 export interface ILocalizationService {
     /**

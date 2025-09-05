@@ -1,5 +1,5 @@
 export interface ItemData {
-    id: bigint;
+    id: number;
     iconClass: string;
     titleBg: string;
     titleEn: string;

@@ -26,20 +26,7 @@ export class ManageInventoryUseCase {
     }
 
     async getInventory(): Promise<Inventory> {
-        try {
-            this.repository.setLoading(true);
-            this.repository.clearError();
-
-            return await this.fetchAndStoreInventory();
-        } catch (error) {
-            const errorMessage = error instanceof Error
-                ? error.message
-                : this.translationService.t(this.errorMessages.fetchError);
-            this.repository.setError(errorMessage);
-            throw error;
-        } finally {
-            this.repository.setLoading(false);
-        }
+        return await this.fetchAndStoreInventory();
     }
 
     getCachedInventory(): Inventory | null {
@@ -61,17 +48,5 @@ export class ManageInventoryUseCase {
 
         this.repository.saveInventory(inventory);
         return inventory;
-    }
-
-    isLoading(): boolean {
-        return this.repository.isLoading();
-    }
-
-    getError(): string | null {
-        return this.repository.getError();
-    }
-
-    clearError(): void {
-        this.repository.clearError();
     }
 }
