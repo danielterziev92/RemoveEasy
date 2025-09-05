@@ -1,18 +1,19 @@
 import {Locale} from "@/domain/entities";
-import {type ILocalizationService, LocalizationDomainService} from "@/domain/services";
+import {type ILocalizationDomainService} from "@/domain/services";
 import type {ILocalizationRepository} from "@/domain/repositories";
 
+import type {ILocalizationService} from "@/application/services";
 import {InitializeLocaleUseCase, SetLocaleUseCase} from "@/application/use-cases/localization";
 
 export class LocalizationService implements ILocalizationService {
     private localizationRepository: ILocalizationRepository;
-    private localizationDomainService: LocalizationDomainService;
+    private localizationDomainService: ILocalizationDomainService;
     private setLocaleUseCase: SetLocaleUseCase;
     private initializeLocaleUseCase: InitializeLocaleUseCase;
 
     constructor(
         localizationRepository: ILocalizationRepository,
-        localizationDomainService: LocalizationDomainService,
+        localizationDomainService: ILocalizationDomainService,
         setLocaleUseCase: SetLocaleUseCase,
         initializeLocaleUseCase: InitializeLocaleUseCase
     ) {

@@ -1,13 +1,13 @@
 import type {ILocalizationRepository} from "@/domain/repositories";
-import {LocalizationDomainService} from "@/domain/services";
+import type {ILocalizationDomainService} from "@/domain/services";
 
 export class SetLocaleUseCase {
     private localizationRepository: ILocalizationRepository;
-    private localizationDomainService: LocalizationDomainService;
+    private localizationDomainService: ILocalizationDomainService;
 
     constructor(
         localizationRepository: ILocalizationRepository,
-        localizationDomainService: LocalizationDomainService
+        localizationDomainService: ILocalizationDomainService
     ) {
         this.localizationRepository = localizationRepository;
         this.localizationDomainService = localizationDomainService;

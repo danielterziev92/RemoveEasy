@@ -1,15 +1,19 @@
-import {OrderApiClient} from "@/infrastructure/clients";
+import {OrderId} from "@/domain/value-objects";
+import type {IOrderApiClient} from "@/domain/services";
+import type {OrderData} from "@/domain/types";
+
+import type {IOrderErrorMessages} from "@/application/types";
+
 import type {ITranslationService} from "@/shared/localization/types";
-import type {IOrderApiErrorMessages, OrderApiData, OrderApiResponse} from "@/infrastructure/types";
 
 export class CreateOrderUseCase {
-    private readonly apiClient: OrderApiClient;
-    private readonly errorMessages: IOrderApiErrorMessages;
+    private readonly apiClient: IOrderApiClient;
+    private readonly errorMessages: IOrderErrorMessages;
     private readonly translationService: ITranslationService;
 
     constructor(
-        apiClient: OrderApiClient,
-        errorMessages: IOrderApiErrorMessages,
+        apiClient: IOrderApiClient,
+        errorMessages: IOrderErrorMessages,
         translationService: ITranslationService,
     ) {
         this.apiClient = apiClient;
@@ -17,9 +21,9 @@ export class CreateOrderUseCase {
         this.translationService = translationService;
     }
 
-    async execute(orderData: OrderApiData): Promise<OrderApiResponse> {
+    async execute(orderData: OrderData): Promise<OrderId> {
         try {
-            return await this.apiClient.createOrder(orderData);
+            return this.apiClient.createOrder(orderData);
         } catch (error) {
             if (error instanceof Error) {
                 throw new Error(error.message);

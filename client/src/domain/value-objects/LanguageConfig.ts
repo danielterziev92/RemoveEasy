@@ -1,29 +1,29 @@
+import {DomainValidationError} from "@/domain/errors";
+
 export class LanguageConfig {
     private readonly _currentLocale: string;
     private readonly _availableLocales: string[];
-    private readonly _getLanguageLabel: (locale: string) => string;
-    private readonly _changeLanguage: (locale: string) => void;
 
     constructor(
         currentLocale: string,
         availableLocales: string[],
-        getLanguageLabel: (locale: string) => string,
-        changeLanguage: (locale: string) => void
     ) {
-        if (!currentLocale || currentLocale.trim() === '') {
-            throw new Error('Current locale cannot be empty');
-        }
-        if (!availableLocales || availableLocales.length === 0) {
-            throw new Error('Available locales cannot be empty');
-        }
-        if (!availableLocales.includes(currentLocale)) {
-            throw new Error('Current locale must be in available locales');
-        }
+        this.validate(currentLocale, availableLocales);
 
         this._currentLocale = currentLocale;
         this._availableLocales = [...availableLocales];
-        this._getLanguageLabel = getLanguageLabel;
-        this._changeLanguage = changeLanguage;
+    }
+
+    private validate(currentLocale: string, availableLocales: string[]): void {
+        if (!currentLocale || currentLocale.trim() === '') {
+            throw new DomainValidationError('Current locale cannot be empty');
+        }
+        if (!availableLocales || availableLocales.length === 0) {
+            throw new DomainValidationError('Available locales cannot be empty');
+        }
+        if (!availableLocales.includes(currentLocale)) {
+            throw new DomainValidationError('Current locale must be in available locales');
+        }
     }
 
     get currentLocale(): string {
@@ -34,16 +34,16 @@ export class LanguageConfig {
         return [...this._availableLocales];
     }
 
-    get getLanguageLabel(): (locale: string) => string {
-        return this._getLanguageLabel;
-    }
-
-    get changeLanguage(): (locale: string) => void {
-        return this._changeLanguage;
-    }
-
     isLocaleSupported(locale: string): boolean {
         return this._availableLocales.includes(locale);
+    }
+
+    withCurrentLocale(newLocale: string): LanguageConfig {
+        return new LanguageConfig(newLocale, this._availableLocales);
+    }
+
+    withAvailableLocales(newAvailableLocales: string[]): LanguageConfig {
+        return new LanguageConfig(this._currentLocale, newAvailableLocales);
     }
 
     equals(other: LanguageConfig): boolean {
@@ -54,5 +54,15 @@ export class LanguageConfig {
 
     toString(): string {
         return `LanguageConfig(current: ${this._currentLocale}, available: [${this._availableLocales.join(', ')}])`;
+    }
+
+    toObject(): {
+        currentLocale: string;
+        availableLocales: string[];
+    } {
+        return {
+            currentLocale: this._currentLocale,
+            availableLocales: [...this._availableLocales]
+        };
     }
 }

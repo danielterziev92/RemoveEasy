@@ -1,5 +1,6 @@
 export type {IInventoryApiClient} from "./IInventoryApiClient";
-export type {ILocalizationService} from "./ILocalizationService";
 export type {ILocalizationDomainService} from "./ILocalizationDomainService";
+export type {IOrderApiClient} from "./IOrderApiClient";
+
 export {LocalizationDomainService} from "./LocalizationDomainService";
 
