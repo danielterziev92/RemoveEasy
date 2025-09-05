@@ -7,6 +7,8 @@ import {InitializeLocaleUseCase, SetLocaleUseCase} from "@/application/use-cases
 
 import {LocalStorageLocalizationRepository} from "@/infrastructure/repositories";
 
+import {bg, en} from "@/shared/localization/locales";
+
 export class LocalizationContainer {
     private readonly _domainService: LocalizationDomainService;
     private readonly _repository: LocalStorageLocalizationRepository;
@@ -31,6 +33,7 @@ export class LocalizationContainer {
         );
 
         this._translationService = new TranslationService(
+            {bg, en},
             this._domainService,
             this._repository
         );

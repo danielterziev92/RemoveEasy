@@ -11,7 +11,7 @@ export class ApiToDomainMapper {
 
     static mapSectionApiData(apiData: SectionApiData): SectionData {
         return {
-            id: BigInt(apiData.id),
+            id: apiData.id,
             iconClass: apiData.icon_class,
             titleBg: apiData.title_bg,
             titleEn: apiData.title_en,
@@ -21,7 +21,7 @@ export class ApiToDomainMapper {
 
     static mapItemApiData(apiData: ItemApiData): ItemData {
         return {
-            id: BigInt(apiData.id),
+            id: apiData.id,
             iconClass: apiData.icon_class,
             titleBg: apiData.title_bg,
             titleEn: apiData.title_en,

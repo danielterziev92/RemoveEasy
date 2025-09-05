@@ -6,23 +6,27 @@ import type {IInventoryServiceErrorMessages} from "@/application/types";
 import type {ITranslationService} from "@/shared/localization/types";
 import {Inventory} from "@/domain/aggregates";
 import {InventoryApiResponseDto} from "@/application/dto";
+import type {IconValidator} from "@/domain/validators";
 
 export class ManageInventoryUseCase {
     private readonly repository: IInventoryRepository;
     private readonly apiClient: IInventoryApiClient;
     private readonly errorMessages: IInventoryServiceErrorMessages;
     private readonly translationService: ITranslationService;
+    private readonly iconValidator: IconValidator;
 
     constructor(
         repository: IInventoryRepository,
         apiClient: IInventoryApiClient,
         errorMessages: IInventoryServiceErrorMessages,
-        translationService: ITranslationService
+        translationService: ITranslationService,
+        iconValidator: IconValidator,
     ) {
         this.repository = repository;
         this.apiClient = apiClient;
         this.errorMessages = errorMessages;
         this.translationService = translationService;
+        this.iconValidator = iconValidator;
     }
 
     async getInventory(): Promise<Inventory> {
@@ -44,6 +48,7 @@ export class ManageInventoryUseCase {
             apiResponse,
             this.errorMessages,
             this.translationService,
+            this.iconValidator,
         )
 
         this.repository.saveInventory(inventory);

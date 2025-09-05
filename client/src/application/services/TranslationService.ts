@@ -1,7 +1,6 @@
 import type {ILocalizationDomainService} from "@/domain/services";
 import type {ILocalizationRepository} from "@/domain/repositories";
 
-import {bg, en} from "@/shared/localization/locales";
 import type {ITranslationService} from "@/shared/localization/types";
 
 interface TranslationObject {
@@ -15,10 +14,11 @@ export class TranslationService implements ITranslationService {
     private readonly localizationRepository: ILocalizationRepository;
 
     constructor(
+        translations: Record<string, TranslationObject>,
         localizationDomainService: ILocalizationDomainService,
         localizationRepository: ILocalizationRepository
     ) {
-        this.translations = {bg, en};
+        this.translations = translations;
         this.localizationDomainService = localizationDomainService;
         this.localizationRepository = localizationRepository;
     }
