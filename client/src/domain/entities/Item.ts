@@ -1,5 +1,4 @@
-import {IconClass, ItemId} from "@/domain/value-objects";
-import {Locale} from "@/domain/value-objects/Locale.ts";
+import {IconClass, ItemId, Locale} from "@/domain/value-objects";
 import {DomainValidationError, ItemErrorCode} from "@/domain/errors";
 
 export class Item {

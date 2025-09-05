@@ -1,5 +1,5 @@
-import {ItemId, SectionId} from "@/domain/value-objects";
-import {Item, Section, Locale} from "@/domain/entities";
+import {ItemId, Locale, SectionId} from "@/domain/value-objects";
+import {Item, Section} from "@/domain/entities";
 
 export class Inventory {
     private readonly sections: Map<string, Section> = new Map();

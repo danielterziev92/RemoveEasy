@@ -1,5 +1,5 @@
-import {IconClass, ItemId, SectionId} from "@/domain/value-objects";
-import {Item, Locale} from "@/domain/entities";
+import {IconClass, ItemId, Locale, SectionId} from "@/domain/value-objects";
+import {Item} from "@/domain/entities";
 import {DomainValidationError, SectionErrorCode} from "@/domain/errors";
 
 export class Section {

@@ -3,6 +3,7 @@ import {Inventory} from "@/domain/aggregates";
 import {Item, Section} from "@/domain/entities";
 import {DomainValidationError} from "@/domain/errors";
 import {IconClass, ItemId, SectionId} from "@/domain/value-objects";
+import type {IconValidator} from "@/domain/validators";
 
 import type {IInventoryServiceErrorMessages} from "@/application/types";
 import type {ITranslationService} from "@/shared/localization/types";
@@ -13,6 +14,7 @@ export class InventoryApiResponseDto {
         apiResponse: { sections: Array<SectionData> },
         errorMessages: IInventoryServiceErrorMessages,
         translationService: ITranslationService,
+        iconValidator: IconValidator,
     ): Inventory {
         if (!apiResponse || typeof apiResponse !== 'object') {
             throw new DomainValidationError(translationService.t(errorMessages.invalidApiResponse));
@@ -33,7 +35,7 @@ export class InventoryApiResponseDto {
                         try {
                             const item = Item.create({
                                 id: ItemId.create(itemData.id),
-                                iconClass: IconClass.create(itemData.iconClass),
+                                iconClass: IconClass.create(itemData.iconClass, iconValidator),
                                 titleBg: itemData.titleBg,
                                 titleEn: itemData.titleEn,
                             });
@@ -46,7 +48,7 @@ export class InventoryApiResponseDto {
 
                 const section = Section.create({
                     id: SectionId.create(sectionData.id),
-                    iconClass: IconClass.create(sectionData.iconClass),
+                    iconClass: IconClass.create(sectionData.iconClass, iconValidator),
                     titleBg: sectionData.titleBg,
                     titleEn: sectionData.titleEn,
                     items: items,

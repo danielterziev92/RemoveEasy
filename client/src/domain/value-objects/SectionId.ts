@@ -6,14 +6,14 @@ import {DomainValidationError, SectionErrorCode} from "@/domain/errors";
  * type-safe operations for working with section identifiers.
  */
 export class SectionId {
-    private readonly _value: bigint;
+    private readonly _value: number;
 
     /**
      * Private constructor to enforce creation through static factory methods.
      * @param value - The numeric value for the section ID
      * @throws {DomainValidationError} When the value is less than 1
      */
-    private constructor(value: bigint) {
+    private constructor(value: number) {
         if (value < 1) {
             throw new DomainValidationError(SectionErrorCode.ID_INVALID);
         }
@@ -27,30 +27,15 @@ export class SectionId {
      * @returns A new SectionId instance
      * @throws {DomainValidationError} When the value is less than 1
      */
-    static create(value: bigint): SectionId {
+    static create(value: number): SectionId {
         return new SectionId(value);
-    }
-
-    /**
-     * Creates a new SectionId instance from a string representation.
-     * @param value - The string representation of the section ID
-     * @returns A new SectionId instance
-     * @throws {DomainValidationError} When the string cannot be parsed to a valid bigint or is less than 1
-     */
-    static fromString(value: string): SectionId {
-        try {
-            const numericValue = BigInt(value);
-            return new SectionId(numericValue);
-        } catch {
-            throw new DomainValidationError(SectionErrorCode.ID_INVALID);
-        }
     }
 
     /**
      * Gets the numeric value of the section ID.
      * @returns The numeric value of the section ID
      */
-    get value(): bigint {
+    get value(): number {
         return this._value;
     }
 
