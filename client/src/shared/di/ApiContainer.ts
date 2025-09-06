@@ -1,10 +1,9 @@
 import type {ILocalizationService} from "@/application/services";
 
 import {InventoryApiClient, OrderApiClient} from "@/infrastructure/clients";
-import type {IInventoryApiErrorMessages} from "@/infrastructure/types";
+import type {IInventoryApiErrorMessages, IOrderApiErrorMessages} from "@/infrastructure/types";
 
 import type {ITranslationService} from "@/shared/localization/types";
-import type {IOrderErrorMessages} from "@/application/types";
 
 export class ApiContainer {
     private readonly _inventoryApiClient: InventoryApiClient;
@@ -14,7 +13,7 @@ export class ApiContainer {
         baseUrl: string,
         errorMessages: {
             inventory: IInventoryApiErrorMessages;
-            order: IOrderErrorMessages;
+            order: IOrderApiErrorMessages;
         },
         translationService: ITranslationService,
         localizationService: ILocalizationService

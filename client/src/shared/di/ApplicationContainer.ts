@@ -60,7 +60,7 @@ export class ApplicationContainer {
 
         this._orderContainer = new OrderContainer(
             this._apiContainer.orderApiClient,
-            errorMessages.orderApi,
+            errorMessages.order,
             this._localizationContainer.translationService
         );
 
@@ -124,11 +124,6 @@ export class ApplicationContainer {
 
     public isInitialized(): boolean {
         return this.initialized;
-    }
-
-    public reset(): void {
-        this.initialized = false;
-        console.info('🔄 ApplicationContainer reset');
     }
 
     private ensureInitialized(): void {

@@ -2,6 +2,7 @@ import type {
     IInventoryErrorMessages,
     IInventoryServiceErrorMessages,
     IItemErrorMessages,
+    IOrderErrorMessages,
     ISectionErrorMessages
 } from "@/application/types";
 
@@ -14,6 +15,7 @@ export interface ErrorMessages {
     section: ISectionErrorMessages;
     item: IItemErrorMessages;
     orderApi: IOrderApiErrorMessages;
+    order: IOrderErrorMessages;
 }
 
 export interface ContainerErrorMessages {
