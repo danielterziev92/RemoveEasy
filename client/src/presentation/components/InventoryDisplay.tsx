@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {Toast} from "radix-ui";
 
 import type {RootState} from "@/infrastructure/store/store.ts";
-import {selectIsLoading, selectAllItems, selectSections} from "@/infrastructure/store/slices/inventorySlice.ts";
+import {selectInventory, selectIsLoading} from "@/infrastructure/store/slices/inventorySlice.ts";
 
 import InventorySection from "@/components/InventorySection.tsx";
 import useTranslation from "@/hooks/useTranslation.ts";
@@ -11,37 +11,41 @@ import useTranslation from "@/hooks/useTranslation.ts";
 import type {InventoryDisplayProps} from "@/presentation/types";
 
 import {INVENTORY_ERROR_KEYS} from "@/shared/messages/error_messages.ts";
+import {manageInventoryUseCase} from "@/shared/di";
+import {ItemDisplayDto, SectionDisplayDto} from "@/presentation/dto";
 
 export default function InventoryDisplay({onSelectedItemsChange}: InventoryDisplayProps) {
     const {t} = useTranslation();
 
-    const sections = useSelector((state: RootState) => selectSections(state));
-    const items = useSelector((state: RootState) => selectAllItems(state));
+    const inventory = useSelector((state: RootState) => selectInventory(state));
     const isLoading = useSelector((state: RootState) => selectIsLoading(state));
 
     const [openSections, setOpenSections] = useState<Record<number, boolean>>({});
     const [quantities, setQuantities] = useState<Record<number, number>>({});
     const [showNoItemsToast, setShowNoItemsToast] = useState(false);
 
+    const sections = inventory ? inventory.getAllSections() : [];
+    const totalItems = inventory ? inventory.getTotalItemCount() : 0;
+
     useEffect(() => {
         const loadInventory = async () => {
             try {
-                await dependencyContainer.fetchAndStoreInventoryUseCase.execute();
+                await manageInventoryUseCase.getInventory();
             } catch (error) {
                 console.error('Failed to load inventory:', error);
             }
         };
 
-        if (sections.length === 0 && !isLoading) {
+        if (!inventory && !isLoading) {
             loadInventory();
         }
-    }, [sections.length, isLoading]);
+    }, [inventory, isLoading]);
 
     useEffect(() => {
-        if (!isLoading && sections.length > 0 && items.length === 0) {
+        if (!isLoading && sections.length > 0 && totalItems === 0) {
             setShowNoItemsToast(true);
         }
-    }, [isLoading, sections.length, items.length]);
+    }, [isLoading, sections.length, totalItems]);
 
     useEffect(() => {
         const selectedItems = Object.entries(quantities)
@@ -79,16 +83,17 @@ export default function InventoryDisplay({onSelectedItemsChange}: InventoryDispl
     return (
         <>
             {sections.map((section) => {
-                const sectionItems = items.filter(item => item.belongsToSection(section.getDisplayName()));
+                const sectionDTO = SectionDisplayDto.fromEntity(section);
+                const itemDTOs = section.getAllItems().map(item => ItemDisplayDto.fromEntity(item));
 
                 return (
                     <InventorySection
-                        key={section.id}
-                        section={section}
-                        items={sectionItems}
-                        isOpen={openSections[section.id] || false}
+                        key={section.id.value}
+                        section={sectionDTO}
+                        items={itemDTOs}
+                        isOpen={openSections[section.id.value] || false}
                         quantities={quantities}
-                        onToggle={() => toggleSection(section.id)}
+                        onToggle={() => toggleSection(section.id.value)}
                         onIncreaseItem={increaseQuantity}
                         onDecreaseItem={decreaseQuantity}
                     />

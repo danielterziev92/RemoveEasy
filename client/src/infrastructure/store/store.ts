@@ -12,11 +12,22 @@ export const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: {
                 // Ignore these action types because they contain class instances
-                ignoredActions: ["inventory/setInventoryData"],
+                ignoredActions: [
+                    "inventory/setInventory",
+                    "inventory/setInventoryData",
+                ],
                 // Ignore these field paths in all actions
-                ignoredActionsPaths: ["payload.sections", "payload.items"],
+                ignoredActionsPaths: [
+                    "payload",
+                    "payload.sections",
+                    "payload.items"
+                ],
                 // Ignore these paths in the state
-                ignoredPaths: ["inventory.sections", "inventory.items"],
+                ignoredPaths: [
+                    "inventory.inventory",
+                    "inventory.sections",
+                    "inventory.items"
+                ],
             },
         }),
 });

@@ -15,7 +15,7 @@ export class ApiToDomainMapper {
             iconClass: apiData.icon_class,
             titleBg: apiData.title_bg,
             titleEn: apiData.title_en,
-            items: apiData.items.map(this.mapItemApiData)
+            items: apiData.items.map(ApiToDomainMapper.mapItemApiData)
         }
     }
 

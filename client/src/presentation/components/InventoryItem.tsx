@@ -1,6 +1,4 @@
-import type {LucideIcon} from "lucide-react";
-import * as Icons from "lucide-react";
-
+import {Minus, Plus, X} from "lucide-react";
 import type {InventoryItemProps} from "@/presentation/types";
 
 import useTranslation from "@/hooks/useTranslation.ts";
@@ -8,16 +6,17 @@ import useTranslation from "@/hooks/useTranslation.ts";
 import {Card, CardContent} from "@/components/ui/card.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {INVENTORY_ITEM_KEYS} from "@/shared/messages/messages.ts";
+import {IconService} from "@/infrastructure/services";
+import {IconClass} from "@/domain/value-objects";
+import applicationContainer from "@/shared/di/container.ts";
 
 export default function InventoryItem({item, quantity, onIncrease, onDecrease}: InventoryItemProps) {
     const {t} = useTranslation();
 
-    const IconComponent = getIconFromClass(item.icon_class);
+    const IconComponent = IconService.isValid(item.icon_class)
+        ? IconService.getComponent(IconClass.create(item.icon_class, applicationContainer.iconValidator))
+        : X;
 
-    function getIconFromClass(iconClass: string): LucideIcon {
-        // @ts-ignore
-        return Icons[iconClass] || Icons.X;
-    }
 
     return (
         <Card className="h-full">
@@ -37,7 +36,7 @@ export default function InventoryItem({item, quantity, onIncrease, onDecrease}: 
                         aria-label={t(INVENTORY_ITEM_KEYS.decrease)}
                         onClick={() => onDecrease(item.id)}
                     >
-                        <Icons.Minus/>
+                        <Minus/>
                     </Button>
                     <div className="min-w-10 text-center font-semibold tabular-nums">
                         {quantity}
@@ -48,7 +47,7 @@ export default function InventoryItem({item, quantity, onIncrease, onDecrease}: 
                         aria-label={t(INVENTORY_ITEM_KEYS.increase)}
                         onClick={() => onIncrease(item.id)}
                     >
-                        <Icons.Plus/>
+                        <Plus/>
                     </Button>
                 </div>
             </CardContent>

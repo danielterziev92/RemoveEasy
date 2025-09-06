@@ -1,8 +1,8 @@
-import {Item, Section} from "@/domain/entities";
+import type {ItemDisplayDto, SectionDisplayDto} from "@/presentation/dto";
 
 export interface InventorySectionProps {
-    section: Section;
-    items: Item[];
+    section: SectionDisplayDto;
+    items: ItemDisplayDto[];
     isOpen: boolean;
     quantities: Record<number, number>;
     onToggle: () => void;

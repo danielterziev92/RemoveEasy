@@ -1,7 +1,7 @@
-import {Item} from "@/domain/entities";
+import type {ItemDisplayDto} from "@/presentation/dto";
 
 export interface InventoryItemProps {
-    item: Item;
+    item: ItemDisplayDto;
     quantity: number;
     onIncrease: (itemId: number) => void;
     onDecrease: (itemId: number) => void;
