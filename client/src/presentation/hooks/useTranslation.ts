@@ -1,4 +1,4 @@
-import {useCallback} from "react";
+import {useCallback, useEffect} from "react";
 import {localizationService, translationService} from "@/shared/di/container.ts";
 import {useSelector} from "react-redux";
 import type {RootState} from "@/infrastructure/store/store.ts";
@@ -7,9 +7,13 @@ import {LocaleDisplayDto} from "@/presentation/dto";
 export default function useTranslation() {
     const {currentLocale, isInitialized} = useSelector((state: RootState) => state.localization);
 
+    useEffect(() => {
+        translationService.setLocale(currentLocale);
+    }, [currentLocale]);
+
     const t = useCallback((key: string, params?: Record<string, string | number>) => {
         return translationService.t(key, params);
-    }, []);
+    }, [currentLocale]);
 
     const changeLanguage = useCallback(async (localeCode: string): Promise<{ success: boolean; message?: string }> => {
         try {

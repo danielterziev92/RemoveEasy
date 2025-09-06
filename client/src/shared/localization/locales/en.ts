@@ -178,6 +178,12 @@ export const en = {
         movingDayTitle: "Moving Day",
         movingDayDescription: "Our team arrives on schedule to execute your move efficiently, handling your belongings with utmost care."
     },
+    reviewSection: {
+        sectionTitle: "What Our Clients Say",
+        sectionDescription: "Don't just take our word for it. Here's what some of our satisfied clients have to say about their experience with Re Move Easy.",
+        bulgarianCustomer: "Bulgarian Customer",
+        britishCustomer: "British Customer"
+    },
     contactSection: {
         sectionTitle: "Contact Us",
         sectionDescription: "Need a quote or have questions? Get in touch with our team and we'll get back to you as soon as possible.",

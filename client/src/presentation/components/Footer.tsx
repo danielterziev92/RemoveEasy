@@ -44,8 +44,8 @@ export default function Footer() {
                         <h3 className="text-base md:text-lg font-semibold mb-4">{t(FOOTER_KEYS.quickLinks)}</h3>
                         <ul className="space-y-2 text-sm md:text-base">
 
-                            {navigationItems.map((item) => (
-                                <li>
+                            {navigationItems.map((item, index) => (
+                                <li key={index}>
                                     <a href={item.href} className="text-gray-400 hover:text-primary transition-colors">
                                         {item.label}
                                     </a>
