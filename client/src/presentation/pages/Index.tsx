@@ -7,8 +7,35 @@ import ProcessSection from "@/components/ProcessSection.tsx";
 import ReviewSection from "@/components/ReviewSection.tsx";
 import ContactSection from "@/components/ContactSection.tsx";
 import Footer from "@/components/Footer.tsx";
+import {useEffect} from "react";
 
 export default function Index() {
+    useEffect(() => {
+        const handleHashNavigation = () => {
+            const hash = window.location.hash;
+            if (hash) {
+                const elementId = hash.substring(1);
+                const element = document.getElementById(elementId);
+                if (element) {
+                    setTimeout(() => {
+                        element.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 100);
+                }
+            }
+        };
+
+        handleHashNavigation();
+
+        window.addEventListener('hashchange', handleHashNavigation);
+
+        return () => {
+            window.removeEventListener('hashchange', handleHashNavigation);
+        };
+    }, []);
+
     return (
         <div className={"min-h-screen"}>
             <Header/>
