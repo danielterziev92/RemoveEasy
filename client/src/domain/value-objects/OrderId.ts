@@ -1,10 +1,10 @@
 export type UUID = string;
 
 export class OrderId {
-    private readonly value: UUID;
+    private readonly _value: UUID;
 
     private constructor(value: UUID) {
-        this.value = value;
+        this._value = value;
     }
 
     static create(value: UUID): OrderId {
@@ -18,11 +18,15 @@ export class OrderId {
         return uuidRegex.test(uuid);
     }
 
+    get value(): UUID {
+        return this._value;
+    }
+
     equals(other: OrderId): boolean {
-        return this.value === other.value;
+        return this._value === other._value;
     }
 
     toString(): string {
-        return this.value.toString();
+        return this._value.toString();
     }
 }

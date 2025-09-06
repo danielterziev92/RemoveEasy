@@ -1,6 +1,6 @@
-import type {OrderData} from "@/domain/types";
 import {OrderId} from "@/domain/value-objects";
+import type {OrderApiData} from "@/infrastructure/types";
 
 export interface IOrderApiClient {
-    createOrder(orderData: OrderData): Promise<OrderId>;
+    createOrder(orderApiData: OrderApiData): Promise<OrderId>;
 }

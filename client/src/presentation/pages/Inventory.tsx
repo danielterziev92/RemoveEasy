@@ -1,7 +1,7 @@
 import {type ChangeEvent, type FormEvent, useCallback, useState} from "react";
 import {Toast} from "radix-ui";
 
-import {Boxes, X, Copy} from "lucide-react";
+import {Boxes, Copy, X} from "lucide-react";
 
 import Header from "@/components/Header.tsx";
 import InventoryDisplay from "@/components/InventoryDisplay.tsx";
@@ -81,7 +81,6 @@ export default function Inventory() {
     const copyToClipboard = async (text: string) => {
         try {
             await navigator.clipboard.writeText(text);
-            // Можете да добавите допълнителна Toast нотификация за успешно копиране
         } catch (err) {
             console.error('Неуспешно копиране в clipboard:', err);
         }
@@ -145,27 +144,26 @@ export default function Inventory() {
                 items: selectedItems
             }
 
-            const response = await createOrder(apiData);
+            const orderId = await createOrder(apiData);
 
-            console.log(response)
-            if (response && response.id) {
-                setOrderId(response.id);
+            if (orderId) {
+                setOrderId(orderId.value);
                 setSubmitState({
                     success: true,
-                    message: t(INVENTORY_KEYS.successMessageWithOrderId).replace('{orderId}', response.id)
+                    message: t(INVENTORY_KEYS.successMessageWithOrderId).replace('{orderId}', orderId.value)
                 });
             } else {
                 setSubmitState({
                     success: true,
-                    message: response.message || t(INVENTORY_KEYS.successMessage)
+                    message: t(INVENTORY_KEYS.successMessage)
                 });
             }
 
-            // setCustomerData({fullName: "", phone: "", email: ""});
-            // setLoadingAddressData({town: "", postal_code: "", street: "", house_number: "", address: ""});
-            // setUnloadingAddressData({town: "", postal_code: "", street: "", house_number: "", address: ""});
-            // setAdditionalContext('');
-            // setSelectedItems([]);
+            setCustomerData({fullName: "", phone: "", email: ""});
+            setLoadingAddressData({town: "", postal_code: "", street: "", house_number: "", address: ""});
+            setUnloadingAddressData({town: "", postal_code: "", street: "", house_number: "", address: ""});
+            setAdditionalContext('');
+            setSelectedItems([]);
         } catch {
             setSubmitState({
                 success: false,

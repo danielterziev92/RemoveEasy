@@ -1,12 +1,10 @@
-import type {OrderData} from "@/domain/types";
 import {OrderId} from "@/domain/value-objects";
 import type {IOrderApiClient} from "@/domain/services";
 
 import type {ILocalizationService} from "@/application/services";
 
-import type {IOrderApiErrorMessages, ServerOrderResponse} from "@/infrastructure/types";
+import type {IOrderApiErrorMessages, OrderApiData, ServerOrderResponse} from "@/infrastructure/types";
 import {ApiException, ClientErrorException, ServerErrorException} from "@/infrastructure/exceptions";
-import {OrderMapper} from "@/infrastructure/mappers";
 
 import type {ITranslationService} from "@/shared/localization/types";
 import {API_CONFIG} from "@/shared/constants/api.ts";
@@ -30,9 +28,8 @@ export class OrderApiClient implements IOrderApiClient {
         this.localizationService = localizationService;
     }
 
-    async createOrder(orderData: OrderData): Promise<OrderId> {
+    async createOrder(apiData: OrderApiData): Promise<OrderId> {
         try {
-            const apiData = OrderMapper.domainToApi(orderData);
             this.validateOrderData(apiData);
 
             const currentLocale = this.localizationService.getCurrentLocale();
