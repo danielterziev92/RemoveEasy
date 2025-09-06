@@ -10,8 +10,8 @@ import {IconService} from "@/infrastructure/services";
 import {IconClass} from "@/domain/value-objects";
 import applicationContainer from "@/shared/di/container.ts";
 
-export default function InventoryItem({item, quantity, currentLocale, onIncrease, onDecrease}: InventoryItemProps) {
-    const {t} = useTranslation();
+export default function InventoryItem({item, quantity, onIncrease, onDecrease}: InventoryItemProps) {
+    const {t, currentLocale} = useTranslation();
 
     const IconComponent = IconService.isValid(item.icon_class)
         ? IconService.getComponent(IconClass.create(item.icon_class, applicationContainer.iconValidator))

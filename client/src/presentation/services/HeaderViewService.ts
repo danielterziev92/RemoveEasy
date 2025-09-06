@@ -23,10 +23,7 @@ export class HeaderViewService {
 
     getContactInfo(): ContactInfoDto {
         const contactInfo = new ContactInfo('07405211912');
-        return {
-            phone: contactInfo.phone,
-            whatsapp: contactInfo.whatsapp
-        };
+        return ContactInfoDto.fromEntity(contactInfo);
     }
 
     createLanguageConfig(
@@ -36,20 +33,9 @@ export class HeaderViewService {
         const availableLocales = this.localizationService.getAvailableLocales();
 
         return {
-            currentLocale: this.mapLocaleToDto(currentLocale),
-            availableLocales: availableLocales.map(locale => this.mapLocaleToDto(locale)),
+            currentLocale: LocaleDisplayDto.fromEntity(currentLocale),
+            availableLocales: availableLocales.map(locale => LocaleDisplayDto.fromEntity(locale)),
             changeLanguage
-        };
-    }
-
-    private mapLocaleToDto(locale: any): LocaleDisplayDto {
-        return {
-            code: locale.code,
-            name: locale.name,
-            nativeName: locale.nativeName,
-            getDisplayLabel: () => locale.code.toUpperCase(),
-            getFullName: () => locale.nativeName,
-            hasCode: (code: string) => locale.code === code.toLowerCase()
         };
     }
 }

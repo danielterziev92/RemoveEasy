@@ -4,6 +4,7 @@ import InventoryItem from "@/components/InventoryItem.tsx";
 import {IconService} from "@/infrastructure/services";
 import {IconClass} from "@/domain/value-objects";
 import applicationContainer from "@/shared/di/container.ts";
+import useTranslation from "@/hooks/useTranslation.ts";
 
 export default function InventorySection(
     {
@@ -16,6 +17,8 @@ export default function InventorySection(
         onDecreaseItem
     }: InventorySectionProps
 ) {
+    const {currentLocale} = useTranslation();
+
     const IconComponent = IconService.isValid(section.icon_class)
         ? IconService.getComponent(IconClass.create(section.icon_class, applicationContainer.iconValidator))
         : X;
@@ -32,7 +35,7 @@ export default function InventorySection(
                 >
                     <span className="flex items-center gap-2">
                         <IconComponent className="w-6 h-6 text-white" aria-hidden/>
-                        <span>{section.title}</span>
+                        <span>{section.getDisplayName(currentLocale)}</span>
                     </span>
                     <ChevronDown
                         className={`h-5 w-5 text-white transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`}

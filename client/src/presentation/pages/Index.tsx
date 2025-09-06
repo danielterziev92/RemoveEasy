@@ -4,7 +4,7 @@ import AboutSection from "@/components/AboutSection.tsx";
 import ServicesSection from "@/components/ServicesSection.tsx";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection.tsx";
 import ProcessSection from "@/components/ProcessSection.tsx";
-import ReviewSection from "@/components/ui/ReviewSection.tsx";
+import ReviewSection from "@/components/ReviewSection.tsx";
 import ContactSection from "@/components/ContactSection.tsx";
 import Footer from "@/components/Footer.tsx";
 

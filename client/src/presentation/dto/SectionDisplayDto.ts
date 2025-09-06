@@ -14,10 +14,6 @@ export class SectionDisplayDto {
         this.titleEn = section.titleEn;
     }
 
-    get title(): string {
-        return this.getDisplayName();
-    }
-
     getDisplayName(locale?: LocaleDisplayDto): string {
         return locale?.hasCode('en') ? this.titleEn : this.titleBg;
     }
