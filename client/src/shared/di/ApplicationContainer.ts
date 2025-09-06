@@ -13,6 +13,7 @@ export class ApplicationContainer {
     private _inventoryContainer!: InventoryContainer;
     private _orderContainer!: OrderContainer;
     private _navigationService!: NavigationService;
+    private _iconValidator!: LucideIconValidator;
 
     private constructor() {
     }
@@ -34,6 +35,9 @@ export class ApplicationContainer {
             return;
         }
 
+        // Initialize icon validator
+        this._iconValidator = new LucideIconValidator();
+
         this._localizationContainer = new LocalizationContainer(store);
 
         this._apiContainer = new ApiContainer(
@@ -51,7 +55,7 @@ export class ApplicationContainer {
             this._apiContainer.inventoryApiClient,
             errorMessages.inventoryService,
             this._localizationContainer.translationService,
-            LucideIconValidator
+            this._iconValidator
         );
 
         this._orderContainer = new OrderContainer(
@@ -111,6 +115,11 @@ export class ApplicationContainer {
 
     get navigationService() {
         return this.navigation;
+    }
+
+    get iconValidator() {
+        this.ensureInitialized();
+        return this._iconValidator;
     }
 
     public isInitialized(): boolean {

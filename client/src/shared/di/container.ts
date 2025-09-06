@@ -28,13 +28,10 @@ applicationContainer.initialize(
 );
 
 // Export convenient aliases for most commonly used services
-export const localizationService = dependencyContainer.localizationService;
-export const translationService = dependencyContainer.translationService;
+export const localizationService = applicationContainer.localizationService;
+export const translationService = applicationContainer.translationService;
+export const manageInventoryUseCase = applicationContainer.manageInventoryUseCase;
+export const createOrderUseCase = applicationContainer.createOrderUseCase;
+export const navigationService = applicationContainer.navigationService;
 
-// Export the container for advanced usage
-export {dependencyContainer};
-
-// Export specific use cases for direct access if needed
-export const setLocaleUseCase = dependencyContainer.setLocaleUseCase;
-export const initializeLocaleUseCase = dependencyContainer.initializeLocaleUseCase;
-export const createOrderUseCase = dependencyContainer.createOrderUseCase;
+export default applicationContainer;

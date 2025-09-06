@@ -1,6 +1,6 @@
 import useTranslation from "@/hooks/useTranslation.ts";
 
-import {headerContainer} from "@/shared/di/headerContainer.ts";
+import {headerContainer} from "@/shared/di/HeaderContainer.ts";
 import {FOOTER_KEYS, SERVICES_SECTION_KEYS} from "@/shared/messages/messages";
 
 export default function Footer() {

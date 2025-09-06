@@ -2,7 +2,7 @@ import {Clock, Mail, MapPin, MessageCircle, Phone} from "lucide-react";
 
 import useTranslation from "@/hooks/useTranslation.ts";
 
-import {headerContainer} from "@/shared/di/headerContainer.ts";
+import {headerContainer} from "@/shared/di/HeaderContainer.ts";
 import {CONTACT_SECTION_KEYS} from "@/shared/messages/messages.ts";
 
 export default function ContactSection() {

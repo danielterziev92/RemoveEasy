@@ -5,7 +5,7 @@ import {cn} from "@/lib/utils";
 import Logo from "@/components/Logo.tsx";
 import NavigationFactory from "@/components/header/NavigationFactory.tsx";
 
-import {headerContainer} from "@/shared/di/headerContainer";
+import {headerContainer} from "@/shared/di/HeaderContainer.ts";
 
 import useTranslation from "@/hooks/useTranslation";
 import useIsMobile from "@/hooks/useIsMobile";

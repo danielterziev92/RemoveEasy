@@ -19,7 +19,7 @@ export class InventoryContainer {
         apiClient: IInventoryApiClient,
         errorMessages: IInventoryServiceErrorMessages,
         translationService: ITranslationService,
-        validator: IconValidator,
+        iconValidator: IconValidator,
     ) {
         this._repository = new RTKInventoryRepository(store);
 
@@ -28,7 +28,7 @@ export class InventoryContainer {
             apiClient,
             errorMessages,
             translationService,
-            validator,
+            iconValidator,
         );
     }
 
