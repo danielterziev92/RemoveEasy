@@ -1,6 +1,7 @@
 import type {Store} from "@reduxjs/toolkit";
 
 import type {IInventoryApiClient} from "@/domain/services";
+import type {IconValidator} from "@/domain/validators";
 
 import type {IInventoryServiceErrorMessages} from "@/application/types";
 import {ManageInventoryUseCase} from "@/application/use-cases/inventory";
@@ -17,7 +18,8 @@ export class InventoryContainer {
         store: Store,
         apiClient: IInventoryApiClient,
         errorMessages: IInventoryServiceErrorMessages,
-        translationService: ITranslationService
+        translationService: ITranslationService,
+        validator: IconValidator,
     ) {
         this._repository = new RTKInventoryRepository(store);
 
@@ -25,7 +27,8 @@ export class InventoryContainer {
             this._repository,
             apiClient,
             errorMessages,
-            translationService
+            translationService,
+            validator,
         );
     }
 

@@ -2,6 +2,7 @@ import type {Store} from "@reduxjs/toolkit";
 import {NavigationService} from "@/application/services";
 import {ApiContainer, InventoryContainer, LocalizationContainer, OrderContainer} from "@/shared/di";
 import type {ErrorMessages} from "@/shared/types";
+import {LucideIconValidator} from "@/infrastructure/validators";
 
 export class ApplicationContainer {
     private static instance: ApplicationContainer;
@@ -49,7 +50,8 @@ export class ApplicationContainer {
             store,
             this._apiContainer.inventoryApiClient,
             errorMessages.inventoryService,
-            this._localizationContainer.translationService
+            this._localizationContainer.translationService,
+            LucideIconValidator
         );
 
         this._orderContainer = new OrderContainer(

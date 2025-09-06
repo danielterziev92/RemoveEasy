@@ -1,5 +1,8 @@
+import {ContactInfo} from "@/domain/value-objects";
+
 import type {NavigationService} from "@/application/services/NavigationService.ts";
-import {ContactInfo, LanguageConfig} from "@/domain/value-objects";
+
+import type {LanguageConfigDto} from "@/presentation/dto";
 
 export class HeaderViewService {
     private navigationService: NavigationService;
@@ -13,14 +16,14 @@ export class HeaderViewService {
     }
 
     getContactInfo(): ContactInfo {
-        return new ContactInfo('07405211912', 'https://wa.me/07405211912');
+        return new ContactInfo('07405211912');
     }
 
     createLanguageConfig(
         currentLocale: string,
         availableLocales: string[],
         changeLanguage: (locale: string) => void
-    ): LanguageConfig {
+    ): LanguageConfigDto {
         const getLanguageLabel = (locale: string) => {
             const labels = {
                 'bg': 'БГ',
@@ -29,11 +32,11 @@ export class HeaderViewService {
             return labels[locale as keyof typeof labels] || locale;
         };
 
-        return new LanguageConfig(
+        return {
             currentLocale,
             availableLocales,
             getLanguageLabel,
             changeLanguage
-        );
+        };
     }
 }

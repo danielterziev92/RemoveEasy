@@ -1,4 +1,3 @@
-import {dependencyContainer} from "@/shared/di/DependencyContainer.ts";
 import {store} from "@/infrastructure/store/store.ts";
 import {API_CONFIG} from "@/shared/constants/api.ts";
 import {
@@ -9,9 +8,13 @@ import {
     ORDER_API_ERROR_KEYS,
     SECTION_ERROR_KEYS
 } from "@/shared/messages/error_messages.ts";
+import {ApplicationContainer} from "@/shared/di/ApplicationContainer.ts";
+
+// Get the singleton instance of ApplicationContainer
+const applicationContainer = ApplicationContainer.getInstance();
 
 // Initialize the container with all dependencies
-dependencyContainer.initialize(
+applicationContainer.initialize(
     store,
     API_CONFIG.BASE_URL,
     {

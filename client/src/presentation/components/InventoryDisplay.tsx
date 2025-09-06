@@ -3,21 +3,20 @@ import {useSelector} from "react-redux";
 import {Toast} from "radix-ui";
 
 import type {RootState} from "@/infrastructure/store/store.ts";
-import {selectIsLoading, selectItems, selectSections} from "@/infrastructure/store/slices/inventorySlice.ts";
+import {selectIsLoading, selectAllItems, selectSections} from "@/infrastructure/store/slices/inventorySlice.ts";
 
 import InventorySection from "@/components/InventorySection.tsx";
 import useTranslation from "@/hooks/useTranslation.ts";
 
 import type {InventoryDisplayProps} from "@/presentation/types";
 
-import {dependencyContainer} from "@/shared/di/DependencyContainer.ts";
 import {INVENTORY_ERROR_KEYS} from "@/shared/messages/error_messages.ts";
 
 export default function InventoryDisplay({onSelectedItemsChange}: InventoryDisplayProps) {
     const {t} = useTranslation();
 
     const sections = useSelector((state: RootState) => selectSections(state));
-    const items = useSelector((state: RootState) => selectItems(state));
+    const items = useSelector((state: RootState) => selectAllItems(state));
     const isLoading = useSelector((state: RootState) => selectIsLoading(state));
 
     const [openSections, setOpenSections] = useState<Record<number, boolean>>({});
