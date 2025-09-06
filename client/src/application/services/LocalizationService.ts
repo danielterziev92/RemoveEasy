@@ -32,6 +32,7 @@ export class LocalizationService implements ILocalizationService {
         const result = this.setLocaleUseCase.execute(locale.code);
         if (!result.success) {
             console.warn(result.message);
+            throw new Error(result.message || 'Failed to set locale');
         }
     }
 

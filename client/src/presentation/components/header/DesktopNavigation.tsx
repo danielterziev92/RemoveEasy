@@ -39,12 +39,7 @@ export default function DesktopNavigation({
             </NavigationMenu>
 
             <div className="flex items-center gap-4">
-                <LanguageSelector
-                    currentLocale={languageConfig.currentLocale}
-                    availableLocales={languageConfig.availableLocales}
-                    changeLanguage={languageConfig.changeLanguage}
-                    getLanguageLabel={languageConfig.getLanguageLabel}
-                />
+                <LanguageSelector config={languageConfig}/>
 
                 <Button variant="ghost" size="sm" asChild>
                     <a href={`tel:${contactInfo.phone}`} className="flex items-center gap-1">

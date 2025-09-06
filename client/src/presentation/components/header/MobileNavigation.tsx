@@ -35,12 +35,7 @@ export default function MobileNavigation({
 
                     <div className="space-y-6">
                         <div className="border-b pb-4">
-                            <LanguageSelector
-                                currentLocale={languageConfig.currentLocale}
-                                availableLocales={languageConfig.availableLocales}
-                                changeLanguage={languageConfig.changeLanguage}
-                                getLanguageLabel={languageConfig.getLanguageLabel}
-                            />
+                            <LanguageSelector config={languageConfig}/>
                         </div>
 
                         <nav className="space-y-2">

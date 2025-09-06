@@ -10,13 +10,12 @@ import {IconService} from "@/infrastructure/services";
 import {IconClass} from "@/domain/value-objects";
 import applicationContainer from "@/shared/di/container.ts";
 
-export default function InventoryItem({item, quantity, onIncrease, onDecrease}: InventoryItemProps) {
+export default function InventoryItem({item, quantity, currentLocale, onIncrease, onDecrease}: InventoryItemProps) {
     const {t} = useTranslation();
 
     const IconComponent = IconService.isValid(item.icon_class)
         ? IconService.getComponent(IconClass.create(item.icon_class, applicationContainer.iconValidator))
         : X;
-
 
     return (
         <Card className="h-full">
@@ -26,7 +25,7 @@ export default function InventoryItem({item, quantity, onIncrease, onDecrease}: 
                     <IconComponent className="w-8 h-8" aria-hidden/>
                 </div>
                 <div className="mt-3 text-sm md:text-base font-medium">
-                    {item.getDisplayName()}
+                    {item.getDisplayName(currentLocale)}
                 </div>
 
                 <div className="mt-4 flex items-center gap-3">

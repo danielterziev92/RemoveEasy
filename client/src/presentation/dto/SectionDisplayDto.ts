@@ -1,5 +1,5 @@
 import {Section} from "@/domain/entities";
-import {Locale} from "@/domain/value-objects";
+import type {LocaleDisplayDto} from "@/presentation/dto/LocaleDisplayDto.ts";
 
 export class SectionDisplayDto {
     public readonly id: number;
@@ -18,7 +18,7 @@ export class SectionDisplayDto {
         return this.getDisplayName();
     }
 
-    getDisplayName(locale?: Locale): string {
+    getDisplayName(locale?: LocaleDisplayDto): string {
         return locale?.hasCode('en') ? this.titleEn : this.titleBg;
     }
 

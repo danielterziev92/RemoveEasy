@@ -12,15 +12,22 @@ class HeaderContainer {
         return appContainer.navigationService;
     }
 
-    get headerViewService(): HeaderViewService {
-        if (!this._headerViewService) {
-            this._headerViewService = new HeaderViewService(this.navigationService);
+    get localizationService() {
+        const appContainer = ApplicationContainer.getInstance();
+        if (!appContainer.isInitialized()) {
+            throw new Error('ApplicationContainer must be initialized before using headerContainer');
         }
-        return this._headerViewService;
+        return appContainer.localizationService;
     }
 
-    reset() {
-        this._headerViewService = null;
+    get headerViewService(): HeaderViewService {
+        if (!this._headerViewService) {
+            this._headerViewService = new HeaderViewService(
+                this.navigationService,
+                this.localizationService
+            );
+        }
+        return this._headerViewService;
     }
 }
 

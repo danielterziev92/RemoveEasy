@@ -1,5 +1,5 @@
 import {Item} from "@/domain/entities";
-import {Locale} from "@/domain/value-objects";
+import type {LocaleDisplayDto} from "@/presentation/dto/LocaleDisplayDto.ts";
 
 export class ItemDisplayDto {
     public readonly id: number;
@@ -14,7 +14,7 @@ export class ItemDisplayDto {
         this.titleEn = item.titleEn;
     }
 
-    getDisplayName(locale?: Locale): string {
+    getDisplayName(locale?: LocaleDisplayDto): string {
         return locale?.hasCode("en") ? this.titleEn : this.titleBg;
     }
 

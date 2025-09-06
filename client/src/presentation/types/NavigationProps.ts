@@ -1,9 +1,8 @@
 import type {NavigationItemDto} from "@/application/dto";
-
-import {ContactInfo, LanguageConfig} from "@/domain/value-objects";
+import {ContactInfoDto, type LanguageConfigDto} from "@/presentation/dto";
 
 export interface NavigationProps {
     navigationItems: NavigationItemDto[];
-    languageConfig: LanguageConfig;
-    contactInfo: ContactInfo;
+    languageConfig: LanguageConfigDto;
+    contactInfo: ContactInfoDto;
 }

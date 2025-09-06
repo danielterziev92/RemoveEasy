@@ -2,31 +2,36 @@ import {Globe} from "lucide-react";
 
 import {Button} from "@/components/ui/button.tsx";
 
+import type {LanguageConfigDto} from "@/presentation/dto";
+
 interface LanguageSelectorProps {
-    currentLocale: string;
-    availableLocales: string[];
-    changeLanguage: (locale: string) => void;
-    getLanguageLabel: (locale: string) => string;
+    config: LanguageConfigDto;
 }
 
-export default function LanguageSelector({
-                                             currentLocale,
-                                             availableLocales,
-                                             changeLanguage,
-                                             getLanguageLabel
-                                         }: LanguageSelectorProps) {
-    const toggleLanguage = () => {
-        const currentIndex = availableLocales.indexOf(currentLocale);
+export default function LanguageSelector({config}: LanguageSelectorProps) {
+    const {currentLocale, availableLocales, changeLanguage} = config;
+
+    const toggleLanguage = async () => {
+        const currentIndex = availableLocales.findIndex(locale =>
+            locale.hasCode(currentLocale.code)
+        );
         const nextIndex = (currentIndex + 1) % availableLocales.length;
         const nextLocale = availableLocales[nextIndex];
-        changeLanguage(nextLocale);
+
+        const result = await changeLanguage(nextLocale.code);
+
+        if (!result.success) {
+            console.error('Failed to change language:', result.message);
+        }
     };
 
     const getNextLanguageLabel = () => {
-        const currentIndex = availableLocales.indexOf(currentLocale);
+        const currentIndex = availableLocales.findIndex(locale =>
+            locale.hasCode(currentLocale.code)
+        );
         const nextIndex = (currentIndex + 1) % availableLocales.length;
         const nextLocale = availableLocales[nextIndex];
-        return getLanguageLabel(nextLocale);
+        return nextLocale.getDisplayLabel();
     };
 
     return (

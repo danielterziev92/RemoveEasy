@@ -12,7 +12,7 @@ import useIsMobile from "@/hooks/useIsMobile";
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
-    const {t, currentLocale, availableLocales, changeLanguage} = useTranslation();
+    const {t, changeLanguage} = useTranslation();
     const isMobile = useIsMobile();
     const headerViewService = headerContainer.headerViewService;
 
@@ -28,13 +28,9 @@ export default function Header() {
         };
     }, []);
 
-    const NavigationItems = headerViewService.getNavigationItems(t);
+    const navigationItems = headerViewService.getNavigationItems(t);
     const contactInfo = headerViewService.getContactInfo();
-    const languageConfig = headerViewService.createLanguageConfig(
-        currentLocale,
-        availableLocales,
-        changeLanguage
-    );
+    const languageConfig = headerViewService.createLanguageConfig(changeLanguage);
 
     return (
         <header
@@ -48,7 +44,7 @@ export default function Header() {
 
                 <NavigationFactory
                     isMobile={isMobile}
-                    navigationItems={NavigationItems}
+                    navigationItems={navigationItems}
                     languageConfig={languageConfig}
                     contactInfo={contactInfo}
                 />

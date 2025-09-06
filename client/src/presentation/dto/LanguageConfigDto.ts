@@ -1,6 +1,7 @@
+import type {LocaleDisplayDto} from "@/presentation/dto/LocaleDisplayDto.ts";
+
 export interface LanguageConfigDto {
-    currentLocale: string;
-    availableLocales: string[];
-    getLanguageLabel: (locale: string) => string;
-    changeLanguage: (locale: string) => void;
+    currentLocale: LocaleDisplayDto;
+    availableLocales: LocaleDisplayDto[];
+    changeLanguage: (localeCode: string) => Promise<{ success: boolean; message?: string }>;
 }

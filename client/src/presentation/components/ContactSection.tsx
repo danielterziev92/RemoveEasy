@@ -24,9 +24,9 @@ export default function ContactSection() {
             icon: MessageCircle,
             title: "WhatsApp",
             content: (
-                <a href={`https://wa.me/${contactInfo.whatsapp}`}
+                <a href={contactInfo.whatsapp}
                    className="text-primary hover:underline text-sm md:text-base">
-                    {contactInfo.whatsapp}
+                    {contactInfo.phone}
                 </a>
             )
         },

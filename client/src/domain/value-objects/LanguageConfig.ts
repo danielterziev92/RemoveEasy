@@ -34,18 +34,6 @@ export class LanguageConfig {
         return [...this._availableLocales];
     }
 
-    isLocaleSupported(locale: string): boolean {
-        return this._availableLocales.includes(locale);
-    }
-
-    withCurrentLocale(newLocale: string): LanguageConfig {
-        return new LanguageConfig(newLocale, this._availableLocales);
-    }
-
-    withAvailableLocales(newAvailableLocales: string[]): LanguageConfig {
-        return new LanguageConfig(this._currentLocale, newAvailableLocales);
-    }
-
     equals(other: LanguageConfig): boolean {
         return this._currentLocale === other._currentLocale &&
             this._availableLocales.length === other._availableLocales.length &&
@@ -54,15 +42,5 @@ export class LanguageConfig {
 
     toString(): string {
         return `LanguageConfig(current: ${this._currentLocale}, available: [${this._availableLocales.join(', ')}])`;
-    }
-
-    toObject(): {
-        currentLocale: string;
-        availableLocales: string[];
-    } {
-        return {
-            currentLocale: this._currentLocale,
-            availableLocales: [...this._availableLocales]
-        };
     }
 }
