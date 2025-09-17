@@ -3,6 +3,7 @@ import {NavigationService} from "@/application/services";
 import {ApiContainer, InventoryContainer, LocalizationContainer, OrderContainer} from "@/shared/di";
 import type {ErrorMessages} from "@/shared/types";
 import {LucideIconValidator} from "@/infrastructure/validators";
+import {ServicesContainer} from "@/shared/di/ServicesContainer.ts";
 
 export class ApplicationContainer {
     private static instance: ApplicationContainer;
@@ -14,6 +15,7 @@ export class ApplicationContainer {
     private _orderContainer!: OrderContainer;
     private _navigationService!: NavigationService;
     private _iconValidator!: LucideIconValidator;
+    private _servicesContainer!: ServicesContainer;
 
     private constructor() {
     }
@@ -45,6 +47,7 @@ export class ApplicationContainer {
             {
                 inventory: errorMessages.inventoryApi,
                 order: errorMessages.orderApi,
+                services: errorMessages.servicesApi,
             },
             this._localizationContainer.translationService,
             this._localizationContainer.localizationService
@@ -65,6 +68,14 @@ export class ApplicationContainer {
         );
 
         this._navigationService = new NavigationService();
+
+        this._servicesContainer = new ServicesContainer(
+            store,
+            this._apiContainer.servicesApiClient,
+            errorMessages.servicesService,
+            this._localizationContainer.translationService,
+            this._iconValidator
+        );
 
         this.initialized = true;
     }
@@ -132,5 +143,17 @@ export class ApplicationContainer {
                 'ApplicationContainer not initialized. Call initialize() first.'
             );
         }
+    }
+
+    get services() {
+        this.ensureInitialized();
+        return {
+            manageUseCase: this._servicesContainer.manageServicesUseCase,
+            repository: this._servicesContainer.repository,
+        };
+    }
+
+    get manageServicesUseCase() {
+        return this.services.manageUseCase;
     }
 }

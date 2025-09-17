@@ -3,3 +3,5 @@ export type {IInventoryServiceErrorMessages} from "./IInventoryServiceErrorMessa
 export type {IItemErrorMessages} from "./IItemErrorMessages";
 export type {ISectionErrorMessages} from "./ISectionErrorMessages";
 export type {IOrderErrorMessages} from "./IOrderErrorMessages";
+export type {IServicesErrorMessages} from "./IServicesErrorMessages";
+export type {IServicesServiceErrorMessages} from "./IServicesServiceErrorMessages";

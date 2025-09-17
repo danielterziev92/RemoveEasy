@@ -5,3 +5,5 @@ export {LanguageConfig} from "./LanguageConfig";
 export {IconClass} from "./IconClass";
 export {OrderId} from "./OrderId";
 export {Locale} from "./Locale";
+export {ServiceId} from "./ServiceId";
+export {Price} from "./Price";

@@ -3,10 +3,16 @@ import type {
     IInventoryServiceErrorMessages,
     IItemErrorMessages,
     IOrderErrorMessages,
-    ISectionErrorMessages
+    ISectionErrorMessages,
+    IServicesErrorMessages,
+    IServicesServiceErrorMessages
 } from "@/application/types";
 
-import type {IInventoryApiErrorMessages, IOrderApiErrorMessages} from "@/infrastructure/types";
+import type {
+    IInventoryApiErrorMessages,
+    IOrderApiErrorMessages,
+    IServicesApiErrorMessages
+} from "@/infrastructure/types";
 
 export interface ErrorMessages {
     inventoryApi: IInventoryApiErrorMessages;
@@ -16,6 +22,9 @@ export interface ErrorMessages {
     item: IItemErrorMessages;
     orderApi: IOrderApiErrorMessages;
     order: IOrderErrorMessages;
+    servicesApi: IServicesApiErrorMessages;
+    servicesService: IServicesServiceErrorMessages;
+    services: IServicesErrorMessages;
 }
 
 export interface ContainerErrorMessages {

@@ -239,4 +239,13 @@ export const en = {
             }
         }
     },
+    services: {
+        errors: {
+            fetchError: "Error fetching services",
+            invalidApiResponse: "Invalid API response for services",
+            skippedInvalidService: "Skipped invalid service:",
+            noValidServices: "No valid services in response",
+            serviceNotFound: "Service not found"
+        }
+    },
 };

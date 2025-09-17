@@ -1,19 +1,25 @@
 import type {ILocalizationService} from "@/application/services";
 
-import {InventoryApiClient, OrderApiClient} from "@/infrastructure/clients";
-import type {IInventoryApiErrorMessages, IOrderApiErrorMessages} from "@/infrastructure/types";
+import {InventoryApiClient, OrderApiClient, ServicesApiClient} from "@/infrastructure/clients";
+import type {
+    IInventoryApiErrorMessages,
+    IOrderApiErrorMessages,
+    IServicesApiErrorMessages
+} from "@/infrastructure/types";
 
 import type {ITranslationService} from "@/shared/localization/types";
 
 export class ApiContainer {
     private readonly _inventoryApiClient: InventoryApiClient;
     private readonly _orderApiClient: OrderApiClient;
+    private readonly _servicesApiClient: ServicesApiClient;
 
     constructor(
         baseUrl: string,
         errorMessages: {
             inventory: IInventoryApiErrorMessages;
             order: IOrderApiErrorMessages;
+            services: IServicesApiErrorMessages;
         },
         translationService: ITranslationService,
         localizationService: ILocalizationService
@@ -30,6 +36,12 @@ export class ApiContainer {
             translationService,
             localizationService
         );
+
+        this._servicesApiClient = new ServicesApiClient(
+            baseUrl,
+            errorMessages.services,
+            translationService
+        );
     }
 
     get inventoryApiClient(): InventoryApiClient {
@@ -38,5 +50,9 @@ export class ApiContainer {
 
     get orderApiClient(): OrderApiClient {
         return this._orderApiClient;
+    }
+
+    get servicesApiClient(): ServicesApiClient {
+        return this._servicesApiClient;
     }
 }

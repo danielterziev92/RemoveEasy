@@ -6,12 +6,16 @@ import {
     INVENTORY_SERVICE_ERROR_KEYS,
     ITEM_ERROR_KEYS,
     ORDER_API_ERROR_KEYS,
-    SECTION_ERROR_KEYS
+    SECTION_ERROR_KEYS,
+    SERVICES_API_ERROR_KEYS,
+    SERVICES_ERROR_KEYS,
+    SERVICES_SERVICE_ERROR_KEYS
 } from "@/shared/messages/error_messages.ts";
 import {ApplicationContainer} from "@/shared/di/ApplicationContainer.ts";
 
 // Get the singleton instance of ApplicationContainer
 const applicationContainer = ApplicationContainer.getInstance();
+export const manageServicesUseCase = applicationContainer.manageServicesUseCase;
 
 // Initialize the container with all dependencies
 applicationContainer.initialize(
@@ -24,6 +28,9 @@ applicationContainer.initialize(
         section: SECTION_ERROR_KEYS,
         item: ITEM_ERROR_KEYS,
         orderApi: ORDER_API_ERROR_KEYS,
+        servicesApi: SERVICES_API_ERROR_KEYS,
+        servicesService: SERVICES_SERVICE_ERROR_KEYS,
+        services: SERVICES_ERROR_KEYS,
     }
 );
 

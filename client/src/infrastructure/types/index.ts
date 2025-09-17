@@ -6,3 +6,6 @@ export type {OrderApiData} from "./OrderApiData";
 export type {IOrderApiErrorMessages} from "./IOrderApiErrorMessages";
 export type {OrderApiResponse} from "./OrderApiResponse";
 export type {ServerOrderResponse} from "./ServerOrderResponse";
+export type {ServiceApiData} from "./ServiceApiData";
+export type {ServicesApiResponse} from "./ServicesApiResponse";
+export type {IServicesApiErrorMessages} from "./IServicesApiErrorMessages";

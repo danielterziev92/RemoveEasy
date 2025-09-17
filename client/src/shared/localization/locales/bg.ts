@@ -239,4 +239,13 @@ export const bg = {
             }
         }
     },
+    services: {
+        errors: {
+            fetchError: "Грешка при извличане на услуги",
+            invalidApiResponse: "Невалиден отговор от API за услуги",
+            skippedInvalidService: "Пропусната невалидна услуга:",
+            noValidServices: "Няма валидни услуги в отговора",
+            serviceNotFound: "Услугата не е намерена"
+        }
+    },
 };

@@ -3,6 +3,7 @@ export const API_CONFIG = {
     ENDPOINTS: {
         INVENTORY_ITEMS: "/inventory/items",
         CREATE_ORDER: "/orders/create",
+        SERVICES: "/services/"
     },
     TIMEOUT: 10000
 } as const;

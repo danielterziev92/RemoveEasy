@@ -3,3 +3,4 @@ export {SectionDisplayDto} from "./SectionDisplayDto";
 export type {LanguageConfigDto} from "./LanguageConfigDto";
 export {LocaleDisplayDto} from "./LocaleDisplayDto";
 export {ContactInfoDto} from "./ContactInfoDto";
+export {ServiceDisplayDto} from "./ServiceDisplayDto";
