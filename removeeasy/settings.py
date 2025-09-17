@@ -93,12 +93,18 @@ TEMPLATES = [
 ]
 
 # Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": env.str("DB_ENGINE", default="django.db.backends.sqlite3"),
+        "NAME": env.str("DB_NAME", default=BASE_DIR / "db.sqlite3"),
+        "USER": env.str("DB_USER", default=""),
+        "PASSWORD": env.str("DB_PASSWORD", default=""),
+        "HOST": env.str("DB_HOST", default=""),
+        "PORT": env.str("DB_PORT", default=""),
+        "OPTIONS": {
+            "charset": "utf8mb4",
+            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+        } if env.str("DB_ENGINE", default="").endswith("mysql") else {},
     }
 }
 
@@ -123,7 +129,7 @@ USE_TZ = True
 
 # Static Files Settings
 STATIC_URL = "/static/"
-STATIC_ROOT = "/staticfiles"
+STATIC_ROOT = env.str("STATIC_PATH", default="/staticfiles")
 STATICFILES_DIRS = []
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -145,3 +151,27 @@ MARKDOWNX_MARKDOWN_EXTENSIONS = [
     "markdown.extensions.extra",
     "markdown.extensions.codehilite",
 ]
+
+# Logging Configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': env.str("LOGS_PATH", default=BASE_DIR / "logs") + '/django.log',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}

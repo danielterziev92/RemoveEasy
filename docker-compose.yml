@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.4.6
+    container_name: removeeasy_mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: removeeasy_db
+      MYSQL_USER: removeeasy_user
+      MYSQL_PASSWORD: removeeasy_password
+      MYSQL_ROOT_PASSWORD: root_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    networks:
+      - removeeasy_network
+
+  web:
+    build: .
+    container_name: removeeasy_web
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_HOME=/app
+      - SCRIPTS_PATH=/app/scripts
+      - LOGS_PATH=/app/logs
+      - STATIC_PATH=/app/staticfiles
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+      - logs_volume:/app/logs
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - removeeasy_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: removeeasy_phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: removeeasy_user
+      PMA_PASSWORD: removeeasy_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - removeeasy_network
+
+networks:
+  removeeasy_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
+  static_volume:
+    driver: local
+  media_volume:
+    driver: local
+  logs_volume:
+    driver: local

@@ -1,98 +1,219 @@
-# RemoveEasy - Moving Services Platform
+# RemoveEasy - Docker Setup Guide
 
-> **Educational Django project** showcasing modern API development and multilingual content management
+## 🚀 Quick Start
 
-A comprehensive moving services platform built with Django and Django Ninja, demonstrating professional backend development practices for a real-world application.
+### Prerequisites
+- Docker and Docker Compose installed
+- At least 2GB free disk space
+- Ports 8000, 3306, and 8080 available
 
-## 🚀 Features
+### 1. Clone and Setup Environment
+```bash
+# Clone the repository
+git clone https://github.com/danielterziev92/RemoveEasy
+cd removeeasy
 
-- **Custom User System** with email-based authentication
-- **Multilingual Support** (Bulgarian/English) with django-modeltranslation
-- **Modern API** with Django Ninja and Pydantic validation
-- **Order Management** with email notifications
-- **Admin Interface** with MarkdownX editor
-- **Inventory System** with hierarchical categories
+# Create necessary directories
+mkdir -p docker/mysql/conf.d scripts
 
-## 🛠️ Tech Stack
+# The .env file is already included with sensible defaults
+# Modify it if needed for your specific setup
+```
 
-- **Django 5.2.5** - Backend framework
-- **Django Ninja** - Modern API development
-- **SQLite** - Database (easily configurable for PostgreSQL)
-- **Pydantic** - Data validation
-- **MarkdownX** - Rich text editor
+### 2. Start the Application
+```bash
+# Build and start all services
+make setup
 
-## 📋 Quick Start
+# Or manually:
+docker-compose build
+docker-compose up -d
+docker-compose exec web python manage.py migrate
+docker-compose exec web python manage.py createsuperaccount
+```
 
-1. **Clone & Install**
-   ```bash
-   git clone https://github.com/yourusername/removeeasy.git
-   cd removeeasy
-   uv sync  # or pip install -e .
-   ```
+### 3. Access the Application
+- **Web Application**: http://localhost:8000
+- **Django Admin**: http://localhost:8000/admin/
+- **API Documentation**: http://localhost:8000/api/docs/
+- **phpMyAdmin**: http://localhost:8080
 
-2. **Setup Database**
-   ```bash
-   python manage.py migrate
-   python manage.py createsuperaccount
-   ```
+### Default Credentials
+- **Admin Email**: admin@removeeasy.com
+- **Admin Password**: admin123
 
-3. **Run Development Server**
-   ```bash
-   python manage.py runserver
-   ```
+## 🐳 Available Make Commands
 
-4. **Access**
-   - Admin: `http://localhost:8000/admin/`
-   - API Docs: `http://localhost:8000/api/docs/`
+### Development
+- `make setup` - Initial setup (build, start, migrate, create superuser)
+- `make dev` - Start services with logs visible
+- `make up` - Start all services in background
+- `make down` - Stop all services
+- `make restart` - Restart all services
+
+### Database Operations
+- `make migrate` - Run Django migrations
+- `make makemigrations` - Create new migrations
+- `make superuser` - Create Django superuser
+- `make db-shell` - Access MySQL shell
+
+### Monitoring
+- `make logs` - View logs from all services
+- `make web-logs` - View web service logs only
+- `make status` - Show service status
+- `make health` - Check service health
+
+### Utilities
+- `make shell` - Access Django shell
+- `make bash` - Access container bash
+- `make collectstatic` - Collect static files
+- `make test` - Run Django tests
+
+### Cleanup
+- `make clean` - Remove unused Docker resources
+- `make reset` - Complete reset (rebuild everything)
 
 ## 📁 Project Structure
-
 ```
-apps/
-├── accounts/     # Custom user model & authentication
-├── inventory/    # Items & categories management
-├── orders/       # Order processing & emails
-├── services/     # Moving services with pricing
-└── settings/     # Email configuration
+removeeasy/
+├── docker/
+│   └── mysql/
+│       └── conf.d/
+│           └── mysql.cnf       # MySQL configuration
+├── scripts/                    # Shell scripts for container setup
+│   ├── entrypoint.sh          # Main container entrypoint
+│   ├── initialize.sh          # Django initialization
+│   ├── setup_static.sh        # Static files setup
+│   └── collect_static.sh      # Static files collection
+├── apps/                      # Django applications
+├── templates/                 # Django templates
+├── docker-compose.yml         # Docker services definition
+├── Dockerfile                 # Django container build
+├── .env                       # Environment variables
+└── Makefile                   # Development commands
 ```
-
-## 🎯 Learning Highlights
-
-This project demonstrates:
-- ✅ Custom Django User Model
-- ✅ API development with Django Ninja
-- ✅ Multilingual content with ModelTranslation
-- ✅ Custom Managers & QuerySets
-- ✅ Email templates & SMTP configuration
-- ✅ Professional Django app structure
 
 ## 🔧 Configuration
 
-Create `.env` file:
+### Environment Variables (.env)
+Key variables you might want to modify:
+
 ```bash
-SECRET_KEY=your-secret-key
+# Security
+SECRET_KEY=your-super-secret-key-change-this-in-production
 DEBUG=True
-ALLOWED_HOSTS=localhost,127.0.0.1
-CORS_ALLOWED_ORIGINS=http://localhost:3000
+
+# Database
+DB_NAME=removeeasy_db
+DB_USER=removeeasy_user
+DB_PASSWORD=removeeasy_password
+
+# Superuser
+SUPERUSER_EMAIL=admin@removeeasy.com
+SUPERUSER_PASSWORD=admin123
 ```
 
-## 📝 API Endpoints
+### Docker Services
 
-- `GET /api/services/` - List moving services
-- `GET /api/inventory/items` - Get inventory with categories
-- `POST /api/orders/create` - Create new order with email notification
+#### Web Service (Django)
+- **Container**: removeeasy_web
+- **Port**: 8000
+- **Volume Mounts**: staticfiles, mediafiles, logs
 
-## 🤝 Contributing
+#### Database Service (MySQL 8.0)
+- **Container**: removeeasy_mysql
+- **Port**: 3306
+- **Volume**: Persistent database storage
 
-1. Fork the project
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+#### phpMyAdmin (Optional)
+- **Container**: removeeasy_phpmyadmin
+- **Port**: 8080
+- **Access**: Web-based MySQL administration
 
-## 📄 License
+## 🐛 Troubleshooting
 
-MIT License - see [LICENSE](LICENSE) file for details.
+### Common Issues
 
----
+#### Database Connection Issues
+```bash
+# Check if MySQL is running
+make status
 
-**Educational Purpose**: This project demonstrates Django best practices for building scalable web applications with modern API architecture.
+# View database logs
+make db-logs
+
+# Wait for database to be ready
+docker-compose logs web | grep "MySQL is ready"
+```
+
+#### Permission Issues
+```bash
+# Fix file permissions
+sudo chown -R $USER:$USER .
+```
+
+#### Port Conflicts
+If ports are already in use, modify docker-compose.yml:
+```yaml
+services:
+  web:
+    ports:
+      - "8001:8000"  # Changed from 8000:8000
+  db:
+    ports:
+      - "3307:3306"  # Changed from 3306:3306
+```
+
+#### Static Files Issues
+```bash
+# Manually collect static files
+make collectstatic
+
+# Check static files directory
+docker-compose exec web ls -la /app/staticfiles/
+```
+
+### Logs and Debugging
+```bash
+# View all logs
+make logs
+
+# View specific service logs
+make web-logs
+make db-logs
+
+# Check service status
+make status
+make health
+```
+
+## 🔐 Security Notes
+
+### Production Deployment
+- Change default passwords in `.env`
+- Set `DEBUG=False` in production
+- Use strong `SECRET_KEY`
+- Consider using Docker secrets for sensitive data
+- Enable HTTPS/TLS encryption
+- Configure proper firewall rules
+
+### Database Security
+- Change default MySQL root password
+- Use strong database passwords
+- Limit database access to application only
+- Regular database backups
+
+## 📚 Additional Resources
+
+- [Django Documentation](https://docs.djangoproject.com/)
+- [Docker Documentation](https://docs.docker.com/)
+- [MySQL 8.0 Documentation](https://dev.mysql.com/doc/refman/8.0/en/)
+- [Django Ninja API Documentation](https://django-ninja.rest-framework.com/)
+
+## 🆘 Support
+
+If you encounter issues:
+1. Check the troubleshooting section above
+2. Review container logs with `make logs`
+3. Verify environment configuration in `.env`
+4. Check Docker and Docker Compose versions
