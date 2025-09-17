@@ -4,6 +4,7 @@ import type {
     IInventoryErrorMessages,
     IInventoryServiceErrorMessages,
     IItemErrorMessages,
+    IOrderErrorMessages,
     ISectionErrorMessages,
     IServicesErrorMessages,
     IServicesServiceErrorMessages
@@ -27,3 +28,4 @@ export const ORDER_API_ERROR_KEYS: IOrderApiErrorMessages = {
 export const SERVICES_ERROR_KEYS: IServicesErrorMessages = createTranslationKeysAdapter<IServicesErrorMessages>("services.errors");
 export const SERVICES_SERVICE_ERROR_KEYS: IServicesServiceErrorMessages = createTranslationKeysAdapter<IServicesServiceErrorMessages>("services.errors");
 export const SERVICES_API_ERROR_KEYS: IServicesApiErrorMessages = createTranslationKeysAdapter<IServicesApiErrorMessages>("api.errors");
+export const ORDER_ERROR_KEYS: IOrderErrorMessages = createTranslationKeysAdapter<IOrderErrorMessages>("order");

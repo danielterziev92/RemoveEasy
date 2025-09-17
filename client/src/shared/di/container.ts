@@ -6,6 +6,7 @@ import {
     INVENTORY_SERVICE_ERROR_KEYS,
     ITEM_ERROR_KEYS,
     ORDER_API_ERROR_KEYS,
+    ORDER_ERROR_KEYS,
     SECTION_ERROR_KEYS,
     SERVICES_API_ERROR_KEYS,
     SERVICES_ERROR_KEYS,
@@ -15,7 +16,6 @@ import {ApplicationContainer} from "@/shared/di/ApplicationContainer.ts";
 
 // Get the singleton instance of ApplicationContainer
 const applicationContainer = ApplicationContainer.getInstance();
-export const manageServicesUseCase = applicationContainer.manageServicesUseCase;
 
 // Initialize the container with all dependencies
 applicationContainer.initialize(
@@ -27,6 +27,7 @@ applicationContainer.initialize(
         inventoryRepository: INVENTORY_ERROR_KEYS,
         section: SECTION_ERROR_KEYS,
         item: ITEM_ERROR_KEYS,
+        order: ORDER_ERROR_KEYS,
         orderApi: ORDER_API_ERROR_KEYS,
         servicesApi: SERVICES_API_ERROR_KEYS,
         servicesService: SERVICES_SERVICE_ERROR_KEYS,
@@ -40,5 +41,6 @@ export const translationService = applicationContainer.translationService;
 export const manageInventoryUseCase = applicationContainer.manageInventoryUseCase;
 export const createOrderUseCase = applicationContainer.createOrderUseCase;
 export const navigationService = applicationContainer.navigationService;
+export const manageServicesUseCase = applicationContainer.manageServicesUseCase;
 
 export default applicationContainer;

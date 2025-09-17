@@ -1,8 +1,11 @@
-import {useSelector} from "react-redux";
-import type {RootState} from "@reduxjs/toolkit/query";
-import {selectError, selectIsLoading, selectServices} from "@/infrastructure/store/slices/servicesSlice.ts";
 import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+
+import type {RootState} from "@/infrastructure/store/store.ts";
+import {selectError, selectIsLoading, selectServices} from "@/infrastructure/store/slices/servicesSlice.ts";
+
 import {ServiceDisplayDto} from "@/presentation/dto";
+
 import {manageServicesUseCase} from "@/shared/di/container.ts";
 
 export default function useServices() {

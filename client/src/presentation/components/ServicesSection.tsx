@@ -41,45 +41,6 @@ export default function ServicesSection() {
             </section>
         );
     }
-    //
-    // const services = [
-    //     {
-    //         title: t(SERVICES_SECTION_KEYS.transportOnlyTitle),
-    //         subtitle: t(SERVICES_SECTION_KEYS.transportOnlySubtitle),
-    //         description: t(SERVICES_SECTION_KEYS.transportOnlyDescription),
-    //         icon: Truck,
-    //         price: t(SERVICES_SECTION_KEYS.transportOnlyPrice),
-    //         features: [
-    //             t(SERVICES_SECTION_KEYS.transportOnlyEconomical),
-    //             t(SERVICES_SECTION_KEYS.transportOnlyFlexible),
-    //             t(SERVICES_SECTION_KEYS.transportOnlyCareful)
-    //         ]
-    //     },
-    //     {
-    //         title: t(SERVICES_SECTION_KEYS.transportWithHelpersTitle),
-    //         subtitle: t(SERVICES_SECTION_KEYS.transportWithHelpersSubtitle),
-    //         description: t(SERVICES_SECTION_KEYS.transportWithHelpersDescription),
-    //         icon: Users,
-    //         price: t(SERVICES_SECTION_KEYS.transportWithHelpersPrice),
-    //         features: [
-    //             t(SERVICES_SECTION_KEYS.transportWithHelpersExperience),
-    //             t(SERVICES_SECTION_KEYS.transportWithHelpersEquipment),
-    //             t(SERVICES_SECTION_KEYS.transportWithHelpersPrecision)
-    //         ]
-    //     },
-    //     {
-    //         title: t(SERVICES_SECTION_KEYS.fullServiceTitle),
-    //         subtitle: t(SERVICES_SECTION_KEYS.fullServiceSubtitle),
-    //         description: t(SERVICES_SECTION_KEYS.fullServiceDescription),
-    //         icon: Building2,
-    //         price: t(SERVICES_SECTION_KEYS.fullServicePrice),
-    //         features: [
-    //             t(SERVICES_SECTION_KEYS.fullServiceStressFree),
-    //             t(SERVICES_SECTION_KEYS.fullServiceSuitable),
-    //             t(SERVICES_SECTION_KEYS.fullServiceComplete)
-    //         ]
-    //     },
-    // ];
 
     return (
         <section id="services" className="section-padding bg-blue-50">
@@ -102,7 +63,6 @@ export default function ServicesSection() {
                         const subtitle = service.getDisplaySubtitle(currentLocale);
                         const buttonText = service.getDisplayButtonText(currentLocale) || t(SERVICES_SECTION_KEYS.describeInventoryButton);
 
-                        // Parse description to extract features (lines starting with -)
                         const description = service.getDisplayDescription(currentLocale);
                         const parts = description.split('\n\n');
                         const mainDescription = parts[0] || '';
